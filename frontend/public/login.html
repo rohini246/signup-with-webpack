@@ -8,27 +8,31 @@
     <title>LOGIN PAGE</title>
 </head>
 <body>
+    <span class="successfull-login"></span>
     <div class="main">
         <h1>LOG IN</h1>
         <form class="loginForm"> 
 
             <input type="email"
                    name="email" 
-                   id="email" 
+                   id="login-email" 
                    placeholder="Email" 
-                   required
+                  
             />
             
             <input type="password" 
                    name="password"
-                   id="password" 
+                   id="login-password" 
                     placeholder="Password" 
-                   required
+                  
             />
             <button id="redirect_forgot" onclick="window.location.href='./forgotPassword.html'">FORGOT PASSWORD</button>
             <button type="submit" id="loginSubmit" > log in </button>
+            <br>
+            <br>
+            <span class="login-error"></span> 
+        </form>  
 
-        </form>      
     </div>
 
     <script src="./bundle.js"></script>

@@ -1,38 +1,41 @@
-console.log('in here');
-const emailElm = document.querySelector('#email') as HTMLInputElement;
-const passwordElm = document.querySelector('#password') as HTMLInputElement;
-
 interface User {
   email : string,
   password : string
 }
 
-export const test = 'bcjhbdscjsfd';
-export const loginForm=()=>{
-  const userLogin : User = ({
-    email: emailElm.value,
-    password: passwordElm.value
-  });
-  if(!userLogin.email || !userLogin.password){
-    alert("Please enter all fields.");
+export const loginForm=async(form:HTMLFormElement)=>{
+  const emailElm = document.querySelector('#login-email') as HTMLInputElement;
+  const passwordElm = document.querySelector('#login-password') as HTMLInputElement;
+  const errorElm = document.querySelector('.login-error') as HTMLSpanElement;
+ 
+  if(!emailElm.value || !passwordElm.value){
+   errorElm.innerHTML="Please enter all fields.";
   }
   else{
-    callLoginApi(userLogin);
+   const msg = await callLoginApi(emailElm.value,passwordElm.value);
+   errorElm.innerHTML=msg;
+
   }  
 }
-const callLoginApi = async(userLogin:User)=>{
+const callLoginApi = async(email:string,password:string)=>{
+  const successElm = document.querySelector('.successfull-login') as HTMLSpanElement;
   const res = await fetch('http://localhost:8080/login', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json;charset=utf-8'
   },
-  body: JSON.stringify(userLogin)
+  body: JSON.stringify({
+    email:email,
+    password:password
   })
-  const data = await res.json();
-  alert(data);
-  if (data === "Login Successfully.") {
+  })
+  const json = await res.text()
+  const obj = await JSON.parse(json);
+  if (obj.message === "Login Successfully.") {
     window.location.href = './homePage.html' 
-  } 
+    successElm.innerHTML=obj.message;
+  }
+  return obj.message;
 }
 
 

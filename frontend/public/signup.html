@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <title>Signup</title>
     <link rel="stylesheet" href="./style.css">
 </head>
@@ -12,47 +11,41 @@
     <div class="main">
         <h1>SIGN UP</h1>
         <form class="signupForm" > 
-               
+              <span class="successfull-signup"></span>  
             <input type="text"
                    name="name"
-                   id="name"
+                   id="signup-name"
                    placeholder="user name"
-                   required
             />
 
             <input type="email"
                    name="email" 
-                   id="email" 
+                   id="signup-email" 
                    placeholder="Email"
-                   required
             />
             <input type="text"
                    name="address"
-                   id="address"
+                   id="signup-address"
                    placeholder="Please enter your address here"
-                   required
             />
-
-
-
             <input type="password" 
                    name="password"
-                   id="password" 
+                   id="signup-password" 
                    placeholder="Password" 
-                   required
               />
-
             <input type="password" 
                    name="confirm_password"
-                   id="confirm_password"
-                   required
+                   id="signup-confirm_password"
                    placeholder="Confirm Password"
             />
             <button id="redirect_login" onclick="window.location.href='./login.html'">Already have an account?</button>
             <button id="signupSubmit"  > sign up </button>
+            <br>
+            <br>
+            <span class="signup-error"></span>          
         </form>      
     </div>
-    <!-- <script src="./bundle.js"></script> -->
+    <script src="./bundle.js"></script>
 </body>
 
 </html>

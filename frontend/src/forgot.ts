@@ -1,22 +1,24 @@
-const emailElem = document.querySelector('#email') as HTMLInputElement;
-
-
-export const forgotForm = ()=>{
+export const forgotForm = (form:HTMLFormElement)=>{
+  const emailElem = document.querySelector('#email') as HTMLInputElement;
+  const errorElem = document.querySelector('.forgot-error') as HTMLSpanElement;
   const email:string = emailElem.value;
   if(!email){
-    alert('Please enter email')
+    errorElem.innerHTML = 'Please enter email';
+    //alert('Please enter email')
   }
   else{
-    checkValidEmailOrNot(email);
+    checkValidEmailOrNot(email,errorElem);
   }
 }
-const checkValidEmailOrNot=(email:string)=>{
+const checkValidEmailOrNot=(email:string,errorElem:any)=>{
   if(!email.includes('@') || !email.includes(".com")){
-    alert("Please enter valid email");
+    errorElem.innerHTML="Please enter valid email";
+    //alert("Please enter valid email");
   }
-  else callForgotApi(email);
+  else callForgotApi(email,errorElem);
 }
-const callForgotApi=async(email:string)=>{
+const callForgotApi=async(email:string,errorElem:any)=>{
+  const success = document.querySelector('.success') as HTMLSpanElement;
  const res =await fetch('http://localhost:8080/forgot',{
   method: 'POST',
   headers: {
@@ -24,6 +26,12 @@ const callForgotApi=async(email:string)=>{
   },
   body: JSON.stringify(email)
  })
- const data = await res.json();
- alert(data); 
+ const json = await res.text()
+ const obj = await JSON.parse(json);
+ //alert(obj.message);
+ if(obj.message==="Successful"){
+   success.innerHTML=obj.message;
+   
+ } 
+ errorElem.innerHTML = obj.message;
 }

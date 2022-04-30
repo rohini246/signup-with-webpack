@@ -1,25 +1,23 @@
-import { NextFunction, Request,Response } from "express";
+import { Request} from "express";
 import user from "../models/user";
 import bcrypt from 'bcryptjs';
-export const loginService = async(req:Request,res:Response,next:NextFunction)=>{
- 
+export const loginService = async(req:Request)=>{
         const {email,password} = req.body;
         const existingUser = await user.findOne({email:email})
-        if(!existingUser){
-            return next("Please enter valid registered email.");
-        }
-        else{
+        var message:string='';
+        var status:number=0;
+        if(existingUser){
             const isMatch = await bcrypt.compare(password,existingUser.password)
             if(!isMatch){
-                res.json("password didn't match")    
+                message="Password or email do not match.\nPlease try again.";
+                status = 401;
             }
             else{
-                   res.json("Login Successfully.")
-                }
+                message="Login Successfully.";
+                status = 201;
+            }
+            
         }
-        
-        
-            
-        
-            
+        return {message,status}  
+                 
 }

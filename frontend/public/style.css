@@ -42,3 +42,33 @@ body{
     color: white;
     border-radius: 8px;
 }
+.login-error{
+    color: red;
+    background-color: rgb(244, 162, 162);
+    font-size:large;
+    font: bold;
+    text-align: left;
+
+}
+.forgot-error{
+    color: red;
+    background-color: rgb(244, 162, 162);
+    font-size:large;
+    font: bold;
+    text-align: left;
+
+}
+.signup-error{
+    color: red;
+    background-color: rgb(244, 162, 162);
+    font-size:large;
+    font: bold;
+    text-align: left;
+
+}
+.successfull-login{
+    color: green;
+    background-color: lightgreen;
+    font-size: large;
+    font: bold;
+}

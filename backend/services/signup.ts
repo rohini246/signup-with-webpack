@@ -1,17 +1,19 @@
-import { NextFunction, Request,Response } from "express";
+import {Request} from "express";
 import user from "../models/user";
 import bcrypt from 'bcryptjs';
-export const signService = async(req:Request,res:Response,next:NextFunction)=>{
+export const signService = async(req:Request)=>{
     const userExist = await user.findOne({email:req.body.email})
+    var message:string="";
+    var status:number=0;
     if(userExist){
         console.log(userExist);
-        //res.json("User already registered.");
-        return next("User already registered.");
+        message="User already registered.";
+        status=409;
         }else{
             bcrypt.hash(req.body.password,10,async(error:Error,hash:string)=>{
                 if(error){
-                    res.send(error);
-                    return;
+                    message=error.message;
+                    status=404;
                 }else{
                     const newUser=new user({
                         name:req.body.name,
@@ -19,16 +21,16 @@ export const signService = async(req:Request,res:Response,next:NextFunction)=>{
                         address:req.body.address,
                         password:hash
                     });
-                    console.log(newUser);
                     const newUserData = await  newUser.save();
                     if(!newUserData){
-                   //res.json("Internal server error");
-                   return next("Internal server error");
+                        message= "Internal server error";
+                        status=500;
                    }else{
-                    //res.json("Successfully Registered.")
-                    return next("Successfully Registered.");
+                    message="Successfully Registered.";
+                    status=201;
                    }  
                 }
             })    
-        }            
+        }  
+        return {message,status};          
 }
