@@ -49,20 +49,24 @@ import { forgotForm } from "./forgot";
 
 // }
 // })
-const signupFormEle = document.querySelector('form')!;
-signupFormEle.addEventListener('submit',(e:Event)=>{
-    e.preventDefault();
-    signupForm(signupFormEle);
-})
-const loginFormEle = document.querySelector('form')!;
-loginFormEle.addEventListener('submit',(e)=>{
+const signupFormEle = document.querySelector('#signupSubmit') as HTMLButtonElement;
+if(signupFormEle !== null){
+    signupFormEle.addEventListener('click',(e:Event)=>{
         e.preventDefault();
-         loginForm(loginFormEle);
-})
+        signupForm(signupFormEle);
+    })
+}
+const loginFormEle = document.querySelector('#loginSubmit') as HTMLButtonElement;
+if(loginFormEle !== null){
+    loginFormEle.addEventListener('click',(e)=>{
+        e.preventDefault();
+        loginForm(loginFormEle);
+    })
+}
 
-const forgotFormEle = document.querySelector('form')!;
-forgotFormEle.addEventListener('submit',(e:Event)=>{
-    e.preventDefault();
-    forgotForm(forgotFormEle);
-})
+// const forgotFormEle = document.querySelector('#forgotSubmit') as HTMLButtonElement;
+// forgotFormEle.addEventListener('click',(e:Event)=>{
+//     e.preventDefault();
+//     forgotForm(forgotFormEle);
+// })
 

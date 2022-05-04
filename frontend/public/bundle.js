@@ -17,7 +17,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.loginForm = void 0;
-const loginForm = (form) => __awaiter(void 0, void 0, void 0, function* () {
+const loginForm = (button) => __awaiter(void 0, void 0, void 0, function* () {
     const emailElm = document.querySelector('#login-email');
     const passwordElm = document.querySelector('#login-password');
     const errorElm = document.querySelector('.login-error');
@@ -32,7 +32,7 @@ const loginForm = (form) => __awaiter(void 0, void 0, void 0, function* () {
 exports.loginForm = loginForm;
 const callLoginApi = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
     const successElm = document.querySelector('.successfull-login');
-    const res = yield fetch('http://localhost:8080/login', {
+    const res = yield fetch('http://localhost:5000/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
@@ -68,7 +68,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.signupForm = void 0;
-const signupForm = (form) => {
+const signupForm = (button) => {
     const name = document.querySelector('#signup-name');
     const email = document.querySelector('#signup-email');
     const address = document.querySelector('#signup-address');
@@ -135,62 +135,6 @@ const callApi = (name, email, address, password, confirmPassword, error, success
 });
 
 
-/***/ }),
-/* 3 */
-/***/ (function(__unused_webpack_module, exports) {
-
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.forgotForm = void 0;
-const forgotForm = (form) => {
-    const emailElem = document.querySelector('#email');
-    const errorElem = document.querySelector('.forgot-error');
-    const email = emailElem.value;
-    if (!email) {
-        errorElem.innerHTML = 'Please enter email';
-        //alert('Please enter email')
-    }
-    else {
-        checkValidEmailOrNot(email, errorElem);
-    }
-};
-exports.forgotForm = forgotForm;
-const checkValidEmailOrNot = (email, errorElem) => {
-    if (!email.includes('@') || !email.includes(".com")) {
-        errorElem.innerHTML = "Please enter valid email";
-        //alert("Please enter valid email");
-    }
-    else
-        callForgotApi(email, errorElem);
-};
-const callForgotApi = (email, errorElem) => __awaiter(void 0, void 0, void 0, function* () {
-    const success = document.querySelector('.success');
-    const res = yield fetch('http://localhost:8080/forgot', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify(email)
-    });
-    const json = yield res.text();
-    const obj = yield JSON.parse(json);
-    //alert(obj.message);
-    if (obj.message === "Successful") {
-        success.innerHTML = obj.message;
-    }
-    errorElem.innerHTML = obj.message;
-});
-
-
 /***/ })
 /******/ 	]);
 /************************************************************************/
@@ -227,7 +171,6 @@ var exports = __webpack_exports__;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const login_1 = __webpack_require__(1);
 const signup_1 = __webpack_require__(2);
-const forgot_1 = __webpack_require__(3);
 // document.addEventListener("DOMContentLoaded", function () {
 //     const login = document.getElementById('#loginSubmit') as HTMLButtonElement;
 //     const signup = document.querySelector('.signupSubmit') as HTMLButtonElement;
@@ -273,21 +216,25 @@ const forgot_1 = __webpack_require__(3);
 //     })
 // }
 // })
-const signupFormEle = document.querySelector('form');
-signupFormEle.addEventListener('submit', (e) => {
-    e.preventDefault();
-    (0, signup_1.signupForm)(signupFormEle);
-});
-const loginFormEle = document.querySelector('form');
-loginFormEle.addEventListener('submit', (e) => {
-    e.preventDefault();
-    (0, login_1.loginForm)(loginFormEle);
-});
-const forgotFormEle = document.querySelector('form');
-forgotFormEle.addEventListener('submit', (e) => {
-    e.preventDefault();
-    (0, forgot_1.forgotForm)(forgotFormEle);
-});
+const signupFormEle = document.querySelector('#signupSubmit');
+if (signupFormEle !== null) {
+    signupFormEle.addEventListener('click', (e) => {
+        e.preventDefault();
+        (0, signup_1.signupForm)(signupFormEle);
+    });
+}
+const loginFormEle = document.querySelector('#loginSubmit');
+if (loginFormEle !== null) {
+    loginFormEle.addEventListener('click', (e) => {
+        e.preventDefault();
+        (0, login_1.loginForm)(loginFormEle);
+    });
+}
+// const forgotFormEle = document.querySelector('#forgotSubmit') as HTMLButtonElement;
+// forgotFormEle.addEventListener('click',(e:Event)=>{
+//     e.preventDefault();
+//     forgotForm(forgotFormEle);
+// })
 
 })();
 

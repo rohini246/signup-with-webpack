@@ -3,7 +3,7 @@ interface User {
   password : string
 }
 
-export const loginForm=async(form:HTMLFormElement)=>{
+export const loginForm=async(button:HTMLButtonElement)=>{
   const emailElm = document.querySelector('#login-email') as HTMLInputElement;
   const passwordElm = document.querySelector('#login-password') as HTMLInputElement;
   const errorElm = document.querySelector('.login-error') as HTMLSpanElement;
@@ -19,7 +19,7 @@ export const loginForm=async(form:HTMLFormElement)=>{
 }
 const callLoginApi = async(email:string,password:string)=>{
   const successElm = document.querySelector('.successfull-login') as HTMLSpanElement;
-  const res = await fetch('http://localhost:8080/login', {
+  const res = await fetch('http://localhost:5000/login', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json;charset=utf-8'

@@ -1,4 +1,4 @@
-export const forgotForm = (form:HTMLFormElement)=>{
+export const forgotForm = (button:HTMLButtonElement)=>{
   const emailElem = document.querySelector('#email') as HTMLInputElement;
   const errorElem = document.querySelector('.forgot-error') as HTMLSpanElement;
   const email:string = emailElem.value;

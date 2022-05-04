@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import { ErrorHandler } from './errorMiddleware/errorHandler';
 
-const port: number = 8080;
+const port: number = 5000;
 const url:string = "mongodb://localhost:27017/users";
 
 mongoose.connect(url, (err: any) =>{

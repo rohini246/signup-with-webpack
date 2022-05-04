@@ -1,5 +1,5 @@
 
-export const signupForm=(form:HTMLFormElement)=>{
+export const signupForm=(button:HTMLButtonElement)=>{
 const name = document.querySelector('#signup-name') as HTMLInputElement;
 const email = document.querySelector('#signup-email') as HTMLInputElement;
 const address = document.querySelector('#signup-address') as HTMLInputElement;
