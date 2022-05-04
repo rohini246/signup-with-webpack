@@ -72,3 +72,9 @@ body{
     font-size: large;
     font: bold;
 }
+.successfull-signup{
+    color: green;
+    background-color: lightgreen;
+    font-size: large;
+    font: bold;
+}

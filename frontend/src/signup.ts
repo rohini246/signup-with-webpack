@@ -38,13 +38,12 @@ const passwordValidation =  async(name:string,email:string,address:string,passwo
    }
    else if(password!==confirmPassword){
       error.innerHTML="Confirm password didn't match";
-      // alert("Confirm password didn't match");
    }else{
       callApi(name,email,address,password,confirmPassword,error,success);
    }
 }
 const callApi=async(name:string,email:string,address:string,password:string,confirmPassword:string,error:any,success:any)=>{
-   const url: string = "http://localhost:8080/signup";
+   const url: string = "http://localhost:5000/signup";
    const res = await fetch(url, {
       method: 'POST',
       headers: {

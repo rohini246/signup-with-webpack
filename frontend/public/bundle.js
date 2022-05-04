@@ -102,14 +102,13 @@ const passwordValidation = (name, email, address, password, confirmPassword, err
     }
     else if (password !== confirmPassword) {
         error.innerHTML = "Confirm password didn't match";
-        // alert("Confirm password didn't match");
     }
     else {
         callApi(name, email, address, password, confirmPassword, error, success);
     }
 });
 const callApi = (name, email, address, password, confirmPassword, error, success) => __awaiter(void 0, void 0, void 0, function* () {
-    const url = "http://localhost:8080/signup";
+    const url = "http://localhost:5000/signup";
     const res = yield fetch(url, {
         method: 'POST',
         headers: {

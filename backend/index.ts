@@ -6,13 +6,6 @@ import { ErrorHandler } from './errorMiddleware/errorHandler';
 const port: number = 5000;
 const url:string = "mongodb://localhost:27017/users";
 
-mongoose.connect(url, (err: any) =>{
-    if (err) {
-    console.log(err.message);
-    } else {
-    console.log(`Connecting to MONGO`);
-    } 
-});
 const signupRoutes = require('./routes/signup');
 const loginRoutes = require('./routes/login')
 const forgotRoutes = require('./routes/forgot')
@@ -27,5 +20,13 @@ app.use('/forgot',forgotRoutes);
 const errorHandler = new ErrorHandler();
 app.use(errorHandler.errorHandler);
 
-app.listen(port, () => {console.log(`Listening on port ${port}`);});
 
+mongoose.connect(url, (err: any) =>{
+    if (err) {
+    console.log(err.message);
+    } else {
+    console.log(`Connecting to MONGO`);
+    } 
+});
+
+app.listen(port, () => {console.log(`Listening on port ${port}`);});
