@@ -1,0 +1,120 @@
+body {
+    margin: 0 auto; 
+}
+header {
+   height: 80px;
+   background-color: palevioletred;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+header > h1 {
+   width: calc(100% - 150px);
+   text-align: center;
+   font-size: 45px;
+   color: white;
+}
+header > .top {
+   position: absolute;
+   left: 20px;
+}
+header > .top a.menu_icon i {
+   color: #000;
+   font-size: 40px;
+   padding-top: 5px;
+   transition: .2s ease;
+}
+header > .top a.menu_icon:hover i {
+   color: whitesmoke;
+}
+header >a >i{
+   color: black;
+}
+header >a:hover >i{
+   color: whitesmoke;
+}
+/* nav.menu {
+   width: 300px;
+   min-height: calc(100vh - 121px);
+   background-color: #03a9f4;
+   position: absolute;
+   left: -300px;
+  transition: .3s all; 
+}
+nav.menu > a {
+   display: block;
+   padding: 5px;
+   margin: 15px 0 0px 20px;
+   color: #494949;
+   text-transform: uppercase;
+}*/
+
+ footer {
+   height: 70px;
+   background-color:palevioletred;
+   border-bottom: 1px solid #494949;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+} 
+.main{
+   text-align: center;
+   justify-content: center;
+}
+
+.mens{
+   padding: 10px;
+   background-color:palevioletred;
+   width: 50%;
+   height:60px;
+   color:black;
+   font-size: 25px;
+   text-align: left;
+}
+.womens{
+   padding: 10px;
+   background-color:palevioletred;
+   width: 50%;
+   height:60px;
+   color:black;
+   font-size: 25px;
+   text-align: left;
+}
+.home{
+   padding: 10px;
+   background-color:palevioletred;
+   width: 50%;
+   height:60px;
+   color:black;
+   font-size: 25px;
+   text-align: left;
+}
+.kids{
+   padding: 10px;
+   background-color:palevioletred;
+   width: 50%;
+   height:60px;
+   color:black;
+   font-size: 25px;
+   text-align: left;
+}
+#filter_btn{
+   background-color: white;
+    color: palevioletred;
+    border-radius: 8px;
+    text-align: left;   
+}
+#filter_btn:hover{
+   cursor: pointer;
+}
+
+#product_filter{
+   background-color: white;
+    color: palevioletred;
+    border-radius: 8px;
+    text-align: left;   
+
+}
+#product_filter:hover{
+   cursor: pointer;
+}

@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "commonjs",
   "scripts": {
-    "server": "webpack-dev-server",
-    "build": "webpack"
+    "server": "webpack-dev-server --progress",
+    "build": "webpack --progress --watch"
   },
   "author": "",
   "license": "ISC",

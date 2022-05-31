@@ -1,8 +1,9 @@
 import express from 'express';
-import { userLogin } from '../controllers/login';
-import {authenticateToken} from '../authenticateToken'
+import { userLogin} from '../controllers/login';
+
 const router = express.Router();
 
-router.post('/',authenticateToken ,userLogin);
+router.post('/' ,userLogin);
+//router.use(authenticateToken);
 
-module.exports=router;
+export default router;

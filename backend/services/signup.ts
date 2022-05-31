@@ -1,11 +1,11 @@
-import {Request} from "express";
+import {query, Request} from "express";
 import user from "../models/user";
 import bcrypt from 'bcryptjs';
 export const signService = async(req:Request)=>{
     const userExist = await user.findOne({email:req.body.email});
     let message:string;
     message = "User already registered.";
-    let status:number=409;
+    let status=409;
     if(!userExist){
             const hashedValue = await bcrypt.hash(req.body.password,10)
                 const newUser=new user({

@@ -1,8 +1,9 @@
 import express from 'express';
-import { forgot } from '../controllers/forgot';
+import { forgot,tokenValidation} from '../controllers/forgot';
 
 const router = express.Router();
 
 router.post('/',forgot);
+router.post('/:token',tokenValidation);
 
-module.exports=router;
+export default router;

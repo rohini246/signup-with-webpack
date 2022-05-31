@@ -4,51 +4,73 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing: border-box;
-        }
-        body{
-            background-color:whitesmoke;
-            display: grid;
-            place-items: center;
-            width: 100vw;
-            height: 100vh;
-        }
-        .main{
-            width:600px;
-            max-width: 90%;
-            text-align: center;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-        }
-        .main > h1 {
-            font-size: 30px;
-            color: rgb(26,25, 25);
-            margin: 0 0 30px 0;
-        
-        }
-        .main  >button{
-            background-color: orange;
-            padding: 15px;
-            width: 40%;
-            border: none;
-            color: white;
-            border-radius: 8px;
-        }
-    </style>
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles/shoppingApp.css">
+    <link rel="stylesheet" href="./styles/products.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="./bundle.js" async></script>
 </head>
-<body>
-    <div class="main">
-        <h1>WELCOME</h1>
-        
-        <button id="submit" onclick="window.location.href='./login.html'">LOGIN</button>
-        <button onclick="window.location.href='./signup.html'">SIGNUP</button>
+<body class="shoppingApp">
+    <header>
+        <a href="./shoppingApp.html?filter=home" class="menu_icon" >
+            <div  class="home" id="home"><strong>Home</strong></div>
+        </a>
+			<a href="./shoppingApp.html?filter=mens" class="menu_icon" >
+                <div  class="mens" id="mens"><strong>Mens</strong></div>
+            </a>
+            <a href="./shoppingApp.html?filter=womens" class="menu_icon">
+                <div class="womens"  id="womens"><strong>Womens</strong></div>
+            </a>
+            <a href="./shoppingApp.html?filter=kids" class="menu_icon" >
+                <div class="kids" id="kids"><strong>Kids</strong></div>
+            </a>
+            <h1><strong>Shopping Cart</strong></h1>
+        <a href="./placedOrders.html">
+            <i class="placed_orders"><strong>Placed Orders</strong></i>
+        </a>    
+        <i class="material-icons">fa</i>
+        <a href="./cart.html">
+            <i  class="fa fa-shopping-cart fa_custom fa-3x"></i>
+        </a>
+        <i class="material-icons">fa</i>
+        <a id='login' href="./login.html">
+            <i color="back" >Login</i>
+        </a>
+        <button id='logout' style="background-color:palevioletred">
+            <i color="back" >Logout</i>
+        </button> 
 
-    </div>      
+    </header>
+    <br>
+    <main id="product_main">
+        <div>
+        <input type="text" style=" padding:15px;text-align:'center'" class="search_bar" placeholder="Enter items to be searched" >
+        <button style="background-color:palevioletred;padding:15px" id="search">search</button>
+        <div id="product_filter">Filters
+            <div id="show_product_filter" style="display:none ;">
+            Red:<input  type="checkbox" name="filter" value="red" style="display: inline-block">
+            Black:<input  type="checkbox" name="filter"  value="black" style="display: inline-block;">
+            Blue:<input type="checkbox"  name="filter" value="blue" style="display: inline-block;">
+            White:<input  type="checkbox" name="filter" value="white" style="display: inline-block;">
+            Pink:<input type="checkbox" name="filter"   value="pink" style="display: inline-block;">
+            <div>
+                Small:<input type="checkbox" name="size_filter" value="S" style="display: inline-block;">
+                Medium:<input type="checkbox" name="size_filter" value="M" style="display: inline-block;">
+                Large:<input type="checkbox" name="size_filter" value="L" style="display: inline-block;">
+                XL:<input type="checkbox" name="size_filter" value="XL"style="display: inline-block;">
+                XXL:<input type="checkbox" name="size_filter" value="XXL"style="display: inline-block;">
+            </div> 
+            <!-- <div id="filter_btn">search</div> -->
+            </div>
+        </div>
+        </div>
+        <br>
+        <div class="products"></div>
+    </main>
+    <footer>
+        <a href="contact.html"><strong>Contact Us</strong></a>
+    </footer>
+    
 </body>
 </html>

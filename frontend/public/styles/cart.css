@@ -1,0 +1,29 @@
+.checkout{
+    background-color: paleturquoise;
+    padding: 5px;
+    width: 40%;
+    border: none;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.heading{
+    background-color: paleturquoise;
+    border-radius: 8px;
+}
+.total{
+    background-color: white;
+    color: blueviolet;
+    text-align: center;
+}
+.back_to_shopping_cart{
+    background-color: white;
+    color:black;
+    border-radius: 8px;
+}
+body{
+    background-color:whitesmoke;
+    place-items: center;
+    width: 150vw;
+    height: 90vh;
+}

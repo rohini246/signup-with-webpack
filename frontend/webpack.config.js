@@ -12,7 +12,14 @@ module.exports = {
       ]
     },
     resolve:{
-      extensions:['.ts','.js']
+      extensions:['.ts','.js'],
+    //   fallback: {
+    //     "util": false,
+    //     "buffer": false,
+    //     "stream":false,
+    //     "crypto": false
+                  
+    //  }
     },
     output: {
       publicPath:'public',

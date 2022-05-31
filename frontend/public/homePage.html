@@ -41,14 +41,20 @@
             border-radius: 8px;
         }
     </style>
+    <script>
+        function preventBack(){
+            window.history.forward();
+        }
+        setTimeout("preventBack()",0);
+        window.onunload= function(){null;}
+    </script>
 </head>
-<body>
+<body id="home-page">
     <div class="main">
         <h1>WELCOME</h1>
-        
-        <button id="submit" onclick="window.location.href='./login.html'">LOGOUT</button>
-            
-
-    </div>      
+        <p id="user-data"></p><br>
+        <button class=".redirect_login" onclick="window.location.href='./login.html'">LOGOUT</button>
+    </div>  
+    <script src="./bundle.js"></script>    
 </body>
 </html>

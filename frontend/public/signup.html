@@ -5,12 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <title>Signup</title>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./styles/login.css">
 </head>
 <body>
     <div class="main">
         <h1>SIGN UP</h1>
-        <form class="signupForm" > 
+        <form class="signupForm" name="myForm" > 
               <span class="successfull-signup"></span>  
             <input type="text"
                    name="name"
@@ -38,7 +38,7 @@
                    id="signup-confirm_password"
                    placeholder="Confirm Password"
             />
-            <button id="redirect_login" onclick="window.location.href='./login.html'">Already have an account?</button>
+            <div class="redirect_login">Already have an account?</div>
             <button id="signupSubmit"  > sign up </button>
             <br>
             <br>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Reset Password</title>
+    <link rel="stylesheet" href="./styles/login.css">
+    <!-- <script>
+
+            const query = window.location.search;
+            const url = new URLSearchParams(query);
+            const mail = url.get('email');
+            const form = document.getElementsByClassName('resetForm');
+            console.log(form);
+            
+    </script> -->
+</head>
+<body id="resetPage">
+    <div class="main">
+        <h1>Reset your password</h1>
+        <form class="resetForm" name="myForm" > 
+              <span class="successfull-reset"></span>  
+
+            <input type="email"
+                   name="email" 
+                   id="forgot-email" 
+                   placeholder="Email"
+            />
+            <input type="password"
+                   name="password" 
+                   id="forgot-password" 
+                   placeholder="Password"
+            />
+            <input type="password" 
+                   name="confirm_password"
+                   id="forgot-confirm_password"
+                   placeholder="Confirm Password"
+            />
+            <button id="resetSubmit"  > send </button>
+            <br>
+            <br>
+            <span class="reset-error"></span>          
+        </form>      
+    </div>
+    <script src="./bundle.js"></script>
+</body>
+
+</html>

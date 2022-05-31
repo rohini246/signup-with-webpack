@@ -1,6 +1,10 @@
-import { Request,Response,NextFunction } from "express";
-import { forgotService } from "../services/forgot";
-export const forgot = async(req:Request,res:Response,next:NextFunction)=>{   
-   const forgotData= await forgotService(req,res,next);   
+import { Request,Response } from "express";
+import { forgotService,tokenValidationService} from "../services/forgot";
+export const forgot = async(req:Request,res:Response)=>{   
+   const forgotData= await forgotService(req);   
    res.status(forgotData.status).json({message:forgotData.message,status:forgotData.status});           
+}
+ export const tokenValidation = async(req:Request,res:Response)=>{
+   const tokenValidationData = await tokenValidationService(req);
+   res.status(tokenValidationData.status).json({message:tokenValidationData.message,status:tokenValidationData.status,email:tokenValidationData.email});
  }

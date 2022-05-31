@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles/shoppingApp.css">
+    <link rel="stylesheet" href="./styles/products.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script>
+        function preventBack(){
+            window.history.forward();
+        }
+        setTimeout("preventBack()",0);
+        window.onunload= function(){null;}
+    </script>
+    <script src="./bundle.js" async></script>
+</head>
+<body class="shoppingApp">
+    <header>
+        <a href="./shoppingApp.html" class="menu_icon">
+            <div  class="mens"><strong>Home</strong></div>
+        </a>
+			<a href="v" class="menu_icon">
+                <div  class="mens"><strong>Mens</strong></div>
+            </a>
+           
+            <a href="./shoppingApp.html" class="menu_icon">
+                <div class="mens"><strong>Womens</strong></div>
+            </a>
+            
+            <a href="./shoppingApp.html" class="menu_icon">
+                <div class="mens"><strong>Kids</strong></div>
+            </a>
+            <h1><strong>Shopping Cart</strong></h1>
+        <a href="./cart.html">
+            <i  class="fa fa-shopping-cart fa_custom fa-3x"></i>
+        </a>
+        <i class="material-icons">fa</i>
+        <a id='login' href="./login.html">
+            <i color="back" >Login</i>
+        </a>
+        <button id='logout' style="background-color:palevioletred">
+            <i color="back" >Logot</i>
+        </button> 
+
+    </header>
+    <br>
+    <main class="product_main">
+        <input type="text" style=" padding:15px;text-align:'center'" class="search_bar" placeholder="Enter items to be searched" >
+        <button style="background-color:palevioletred;padding:15px" id="search">search</button>
+        <br>
+        <div class="mens_products"></div>
+    </main>
+    <footer>
+        <a href="contact.html"><strong>Contact Us</strong></a>
+    </footer>
+    
+</body>
+</html>

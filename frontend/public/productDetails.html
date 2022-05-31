@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products Details</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing: border-box;
+        }
+        body{
+            background-color:whitesmoke;
+            display: grid;
+            place-items: center;
+            width: 100vw;
+            height: 100vh;
+        }
+        .product_details{
+            width:600px;
+            max-width: 90%;
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .product_details .title{
+            text-align: center;
+            padding-top: 30px;
+            padding-bottom: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+         }
+         .product_details .description{
+            padding: 0 20px 20px 20px;
+            line-height: 22px;
+         }
+         .product_details .category{
+            padding: 0 20px 20px 20px;
+            line-height: 22px;
+         }
+    </style>
+    <script src="./bundle.js" async></script>
+</head>
+<body id="details">
+    <p class="product_details"></p>
+</body>
+</html>
