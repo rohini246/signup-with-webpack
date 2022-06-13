@@ -1,4 +1,4 @@
-import { isValidPassword } from "../utilities/validation";
+import { isValidPassword } from "./utilities/validation";
 
 export const resetForm=(button:HTMLButtonElement)=>{
     const email = document.querySelector('#forgot-email') as HTMLInputElement;

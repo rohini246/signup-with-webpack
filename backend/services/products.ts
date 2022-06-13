@@ -15,25 +15,29 @@ interface Iproducts{
 }
 export const productsService = async(req:Request)=>{
     const filter:string = req.body.filter;
+    console.log(filter);
     const color:string = req.body.color;
     const size:string= req.body.size;
     const products:Iproducts[] = require('./product.json');
     var data:Iproducts[]=[]; 
-    switch(filter){
-        case "womens":{
-            data = findFilteredProducts("Womens",products);           
-           break;
-        }
-        case "mens":{
-            data = findFilteredProducts("Mens",products);
-            break;
-        }
-        case "kids":{
-            data = findFilteredProducts("Kids",products);
-            break;
-        }
-        default: data=products;
-    } 
+    // switch(filter){
+    //     case "womens":{
+    //         data = findFilteredProducts("Womens",products);           
+    //        break;
+    //     }
+    //     case "mens":{
+    //         data = findFilteredProducts("Mens",products);
+    //         break;
+    //     }
+    //     case "kids":{
+    //         console.log("in kids");
+    //         data = findFilteredProducts("kids",products);
+    //         console.log(data);
+    //         break;
+    //     }
+    //     default: data=products;
+    // } 
+    data = findFilteredProducts(filter.toLowerCase(),products); 
     var colorData:Iproducts[]=[];
     var sizeData:Iproducts[]=[];
     if(color!==null && size===null){
@@ -56,12 +60,15 @@ export const productsService = async(req:Request)=>{
 }
 
 const findFilteredProducts = (filter:string,products:Iproducts[])=>{
-    var filteredProducts:Iproducts[] = [];
-    for(var product of products){
-        if(product.title.includes(filter)){
-            filteredProducts.push(product);
-        }
-    }
+    // var filteredProducts:Iproducts[] = [];
+   const filteredProducts = products.filter(item=>item.title.toLowerCase().includes(filter))
+    // for(var product of products){
+    //     const data = product.title.toLowerCase();
+        
+    //     if(data.includes(filter)){
+    //         filteredProducts.push(product);
+    //     }
+    // }
     return filteredProducts;
 }
 

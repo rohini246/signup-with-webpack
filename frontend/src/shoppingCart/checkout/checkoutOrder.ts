@@ -33,7 +33,6 @@ const callCheckoutApi = async(title:string[],table:HTMLTableElement,headings:any
                console.log(headings[len]);
                table.deleteRow(len);
                const total = document.querySelector('.total') as HTMLInputElement;
-               //console.log(document.querySelector('.total'));
                if(total){
                    total.value = "0";
                }

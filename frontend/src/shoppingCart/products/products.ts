@@ -1,5 +1,5 @@
- import { showProductsDetails } from "../showProductsDetails";
-import { addToCart } from "./addToCart";
+ import { showProductsDetails } from "../productDetails/showProductsDetails";
+import { addToCart } from "../cart/addToCart";
 const out = document.querySelector('.products') as HTMLParagraphElement;
 export const product=()=>{
     const params:string|null= getParams();
@@ -26,7 +26,7 @@ const productService=async(params:string|null,color?:string|null,size?:string|nu
               <span>price ${item.price}</span>
            </p><br><br>
            <button style="color:palevioletred" name="addCart">Add to cart</button>
-           <div style="color:palevioletred" name="view">Details</div>
+           <div style="color:palevioletred" name="view" class="view">Details</div>
         </div>`
     }
     out.innerHTML = output; 
@@ -43,7 +43,9 @@ const productFetchApi = async(params:string|null,color?:string|null,size?:string
   ,
   body: JSON.stringify({color:color,size:size,filter:params})
 });
+console.log(typeof response);
     const json = await response.text();
+    console.log(typeof json);
     const obj = await JSON.parse(json);
     return obj;
 };

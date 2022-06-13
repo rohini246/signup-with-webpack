@@ -1,4 +1,4 @@
-import { isValidEmail, isValidPassword } from "../utilities/validation";
+import { isValidEmail, isValidPassword } from "./utilities/validation";
 export const signupForm=(button:HTMLButtonElement)=>{
 const name = document.querySelector('#signup-name') as HTMLInputElement;
 const email = document.querySelector('#signup-email') as HTMLInputElement;

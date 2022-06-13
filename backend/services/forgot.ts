@@ -1,6 +1,7 @@
 import { Request} from "express";
 import user from "../models/user";
 import jwt from 'jsonwebtoken';
+import { findUser, updateUser } from "../repo/user";
 var nodemailer = require('nodemailer');
 var secretKey:string;
 var token:string;
@@ -13,10 +14,10 @@ var tranporter = nodemailer.createTransport({
   }
 });
 export const forgotService = async(req:Request)=>{
-  const {email} = req.body;
+  const email = req.body.email;
   var message:string;
   var status:number; 
-  const existingUser = await user.findOne({email:req.body.email})
+  const existingUser = await findUser(email);
   if(!existingUser){
     message="Please enter registered email";
     status=409;
@@ -24,37 +25,32 @@ export const forgotService = async(req:Request)=>{
   else{
     secretKey = "my-secret-key-of-forgot-work-flow";
     secret = secretKey + existingUser.password;
-   const data = {
+    const data = {
     email:existingUser.email
-  }
+   }
   token =  jwt.sign(data, secret,{expiresIn:'1m'});
-    var mailOptions = {
-      from:'shoppingcart158@gmail.com',
-      to:"rohinimittal246@gmail.com",
-      subject: 'change password',
-      text:"The link for rest password.",
-      html:`<p>http://localhost:8080/resetPass.html?token=${token}<br></button>`
-    } 
-    tranporter.sendMail(mailOptions,async function(error:any,info:any){
-      if(error){
-        console.log(error)
-      }
-        const newUserData =  await user.updateOne({email:req.body.email},{$set:{token:token}});
-        if(!newUserData){
-          console.log("internal error");
-        }
-        else{
-          console.log('mail sent');
-
-        }
-        
-    })
-    message="Mail sent successfully";
-    status=201;
-        
-    
+  sendMail(token,email)
+  message="Mail sent successfully";
+  status=201;   
 }     
   return {message,status};      
+}
+
+const sendMail = (token:string,email:string)=>{
+  var mailOptions = {
+    from:'shoppingcart158@gmail.com',
+    to:"rohinimittal246@gmail.com",
+    subject: 'change password',
+    text:"The link for rest password.",
+    html:`<p>http://localhost:8080/resetPass.html?token=${token}<br></button>`
+  }
+  tranporter.sendMail(mailOptions,async function(error:any,info:any){
+    if(error){
+      console.log(error)
+    }
+    await updateUser(email,"token",token);    
+  }) 
+
 }
 
 export const tokenValidationService = async(req:Request)=>{
@@ -68,10 +64,11 @@ export const tokenValidationService = async(req:Request)=>{
     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
   }).join(''));
   const obj = JSON.parse(jsonPayload);
-  const isExistingUser = await user.findOne({email:obj.email});
+  const isExistingUser = await findUser(obj.email);
   if(isExistingUser){
     var secret = "my-secret-key-of-forgot-work-flow"+ isExistingUser.password;
     jwt.verify(token,secret,(error:any,payloads:any)=>{
+      console.log(payloads);
       if(error){
         message="not exist"
         status=400;

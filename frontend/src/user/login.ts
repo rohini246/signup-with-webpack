@@ -1,4 +1,4 @@
-import { isValidEmail } from "../utilities/validation";
+import { isValidEmail } from "./utilities/validation";
 interface User {
   email : string,
   password : string

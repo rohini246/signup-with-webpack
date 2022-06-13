@@ -1,7 +1,7 @@
 const path = require('path');
 module.exports = {
     mode:'none',
-    entry: ['./src/index.ts'],
+    entry: ['./src/user.ts','./src/shoppingCart.ts'],
     module: {
       rules: [
         { 
@@ -13,17 +13,10 @@ module.exports = {
     },
     resolve:{
       extensions:['.ts','.js'],
-    //   fallback: {
-    //     "util": false,
-    //     "buffer": false,
-    //     "stream":false,
-    //     "crypto": false
-                  
-    //  }
     },
     output: {
       publicPath:'public',
-      filename: 'bundle.js',
+      filename: ['user','shoppingCart'].js,
       path:path.resolve(__dirname,'public'),
 
     },

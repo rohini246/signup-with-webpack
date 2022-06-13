@@ -88,3 +88,6 @@
     padding-left: 10px;
  }
  
+ .product .view:hover{
+   cursor: pointer;
+}

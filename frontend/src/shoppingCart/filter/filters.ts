@@ -1,4 +1,4 @@
-import { product } from "./products";
+import { product } from "../products/products";
 export const showProductFilter = (productFilter:Element)=>{
   if(document.getElementById('show_product_filter')!.style.display==='block'){
     document.getElementById('show_product_filter')!.style.display==='none'
@@ -13,9 +13,9 @@ export const showProductFilter = (productFilter:Element)=>{
       }
   }
   for (var checkbox of checkboxeOnSize) {
-    if (checkbox.checked===true){
-        console.log(checkbox.value)
-        localStorage.setItem('size',checkbox.value);
+    if(checkbox.checked===true){
+      console.log(checkbox.value)
+      localStorage.setItem('size',checkbox.value);
     }
 }
 product();

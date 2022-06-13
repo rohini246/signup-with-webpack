@@ -1,15 +1,9 @@
-import { loginForm} from "./services/login";
-import { signupForm } from "./services/signup";
-import { forgotForm } from "./services/forgot";
-import { resetForm } from "./services/resetPass";
-import {product} from './services/shoppingCart/products';
-import {addCartItem} from './services/cart';
-import {search} from './services/serachBar';
-import { checkoutOrder } from "./services/checkoutOrder";
-import { placedOrders } from "./services/placedOrders";
-import { showProductFilter } from "./services/shoppingCart/filters";
-import { callApiToGetProductDetails, detailsPage } from "./services/productsDetailsPage";
-// import { showProductsDetails } from "./services/showProductsDetails";
+import { loginForm} from "./user/login";
+import { signupForm } from "./user/signup";
+import { forgotForm } from "./user/forgot";
+import { resetForm } from "./user/resetPass";
+import {product} from "./shoppingCart/products/products"
+
 
 const loginBtn = document.querySelector('#login') as HTMLAnchorElement;
 const logoutBtn = document.querySelector('#logout') as HTMLButtonElement;
@@ -127,58 +121,3 @@ if(shoppingApp){
     }
         product(); 
 }
-
-const cartElm = document.querySelector('#cart') as HTMLBodyElement;
-if(cartElm){
-    addCartItem(cartElm);
-}
-
-const detailsElm = document.querySelector('#details') as HTMLBodyElement;
-console.log(detailsElm,"detailsPage");
-if(detailsElm){
-    detailsPage(detailsElm);
-    //callApiToGetProductDetails(detailsElm);
-    // detailsElm.addEventListener('load',(e)=>{
-    //     e.preventDefault();
-    //     //detailsPage(detailsElm);
-    // })
-}
-
-const placedElm = document.querySelector('#placed_orders') as HTMLBodyElement;
-if(placedElm){
-    placedOrders(placedElm);
-}
-
-const searchBar = document.querySelector('.search_bar') as HTMLInputElement;
-if(searchBar!==null){
-    searchBar.addEventListener('keyup',(e:Event)=>{
-        e.preventDefault();
-        search(searchBar,e);
-    })
-}
-
-const productFilter= document.querySelector('#product_filter') as HTMLDivElement;
-if(productFilter){
-    productFilter.addEventListener('click',(e)=>{
-        e.preventDefault();
-        showProductFilter(productFilter);
-    })
-}
-
-const checkout = document.querySelector('.checkout') as HTMLDivElement;
-if(checkout){
-    checkout.addEventListener('click',(e)=>{
-        e.preventDefault();
-        checkoutOrder();
-        alert("confirm order")
-    })
-}
-
-// const showProducts = document.querySelector('#product_main') as HTMLBodyElement;
-// if(showProducts){
-//     console.log('product page');
-//     showProducts.addEventListener('mouseup',(e)=>{
-//         e.preventDefault();
-//         showProductsDetails(showProducts);
-//     })
-// }

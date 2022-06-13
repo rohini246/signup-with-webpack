@@ -14,7 +14,7 @@ const addItemsToCartAddedBeforeLogin =async()=>{
             method: 'POST',
             headers: {
            'Content-Type': 'application/json;charset=utf-8'
-      },
+        },
       body: JSON.stringify({title:localStorage.getItem('title'),price:localStorage.getItem('price'),email:localStorage.getItem('login')})
     });
     const json = await res.text()
@@ -23,7 +23,6 @@ const addItemsToCartAddedBeforeLogin =async()=>{
         localStorage.removeItem('title');
         localStorage.removeItem('price');
     }
-
     }
 }
 

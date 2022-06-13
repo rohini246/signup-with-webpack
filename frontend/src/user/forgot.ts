@@ -1,4 +1,4 @@
-import { isValidEmail } from "../utilities/validation";
+import { isValidEmail } from "./utilities/validation";
 
 export const forgotForm = (button:HTMLButtonElement)=>{
   const emailElem = document.querySelector('#forgot-email') as HTMLInputElement;

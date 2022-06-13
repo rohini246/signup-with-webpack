@@ -10,7 +10,7 @@ export const placedOrders = async(body:HTMLBodyElement)=>{
     const json = await res.text();
     const object = await JSON.parse(json);
     console.log(object.date.length);
-    if(localStorage.getItem('login')===null || object.date.length===null){
+    if(localStorage.getItem('login')===null || object.date[0]==='null'){
         body.replaceWith('PLEASE ORDER SOMETHING')
     }
     var count=0;

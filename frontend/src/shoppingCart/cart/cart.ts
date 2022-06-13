@@ -21,7 +21,7 @@ export const addCartItem = async(body:HTMLBodyElement)=>{
     }
     console.log(object.price,object.title);
     var count=0;
-    var total = 0;    
+    var total = 0;
     for(var item of object.title){
     const cartTitleList = document.createElement('td');
     const cartPriceList = document.createElement('td');
