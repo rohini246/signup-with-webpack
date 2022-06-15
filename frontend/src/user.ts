@@ -66,6 +66,7 @@ if(form !== null){
 }
 
 const loginFormEle = document.querySelector('#loginSubmit') as HTMLButtonElement;
+console.log(loginFormEle);
 if(loginFormEle !== null){
  loginFormEle.addEventListener('click',(e)=>{  
      e.preventDefault();

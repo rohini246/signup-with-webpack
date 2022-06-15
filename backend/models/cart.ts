@@ -1,22 +1,28 @@
-import mongoose from 'mongoose';
-import {Schema} from 'mongoose';
-export const cartSchema = new Schema({
-    id: { type: mongoose.Schema.Types.ObjectId, required: false },
-    title:{
-        type:String    
-    },
-    price: {
-        type:String 
-    },
-    email:{
-        type:String
-    },
-    quantity:{
-        type:String
-    },
-    date:{
-        type:String
-    }
-});
-const cart = mongoose.model("carts", cartSchema);
-export default cart;
+export interface Iproducts{
+    image: string,
+     category:string,
+     sub_category:string,
+     target_group:string,
+     size:[],
+     color:[],
+     title: string,
+     description: string,
+     price: string,
+     available_units:string
+
+}
+
+export interface Icart{
+    email:string,
+    title:string,
+    price:string
+}
+
+export interface Iproduct{
+    title:string,
+    price:string,
+    email:string,
+    quantity:string,
+    date:string
+}
+

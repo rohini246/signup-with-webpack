@@ -1,4 +1,3 @@
-import * as mysql from 'mysql';
 import {db} from '../dbConfig/config'
 export const runQuery = async (sql: string): Promise<any> => {
     return await new Promise(

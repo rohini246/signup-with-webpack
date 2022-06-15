@@ -1,6 +1,8 @@
-import {Request} from "express";
 import bcrypt from 'bcryptjs';
 import { findUser,saveUser } from "../repo/user";
+import { Status } from "../constants/status";
+import { Message } from "../constants/message";
+import { IuserSignup } from "../models/user";
 
 export interface IUser{
     name:string,
@@ -8,15 +10,15 @@ export interface IUser{
     address:string,
     password:string
 }
-export const signService = async(req:Request)=>{ 
-    const userExist = await findUser(req.body.email);
+export const signService = async(data:IuserSignup)=>{ 
+    const userExist = await findUser(data.email);
     console.log("userExist",userExist[0]);
-    var message:string;
-    message = "User already registered.";
-    var status=409;
-    if(userExist[0]===undefined){
-        const hashedValue = await bcrypt.hash(req.body.password,10)        
-        await saveUser(req.body.name,req.body.email, req.body.address,hashedValue);
+   let message:string;
+    message = Message.userAlreadyRegistered;
+    let status=Status.conflict;
+    if(!userExist[0]){
+        const hashedValue = await bcrypt.hash(data.password,10)        
+        await saveUser(data,hashedValue);
         message="Successfully Registered.";
         status=201;             
     }

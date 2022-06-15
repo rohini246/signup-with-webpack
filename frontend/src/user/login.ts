@@ -18,11 +18,12 @@ export const loginForm=(button:HTMLButtonElement)=>{
 }
 
 const checkValidEmail=(email:string,password:string,errorElm:HTMLSpanElement)=>{
-  if(isValidEmail(email)){
-    callLoginApi(email,password,errorElm);
+  const filter = /^[a-zA-Z.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z-]+)+$/;
+  if(!email.match(filter)){
+     errorElm.innerHTML='Please enter valid email.';
   }
   else{
-    errorElm.innerHTML='Please enter valid email.';
+    callLoginApi(email,password,errorElm);
   }
 }
 const callLoginApi = async(email:string,password:string,errorElm:HTMLSpanElement)=>{

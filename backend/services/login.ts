@@ -1,23 +1,28 @@
-import { Request} from "express";
 import dotenv from 'dotenv'
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import {findUser} from '../repo/user';
+import { Message } from "../constants/message";
+import { Status } from "../constants/status";
+import { Iuser } from "../models/user";
 dotenv.config();
 
-export const loginService = async(req:Request)=>{
-        const email = req.body;
+export const loginService = async(data:Iuser)=>{
+    console.log("in body");
+        const email:string = data.email;
+        const password:string = data.password;
         let message:string = '';
         let status=0;
         let emailId:string='';
         const existingUser= await findUser(email);
         if(!existingUser[0]){
-            message="Invalid Credentials";
-            status = 401;
+            console.log(existingUser[0]);
+            console.log("in not existingUser")
+            message=Message.unauthorized
+            status =Status.unauthorized;
             return {message,status,emailId}
         }
         else{
-         const data =  userIsNotExisting(req.body.password,existingUser[0].name,existingUser[0].email,existingUser[0].password);
+         const data =  userIsNotExisting(password,existingUser[0].name,existingUser[0].email,existingUser[0].password);
          return data;
             
         }       
@@ -30,13 +35,14 @@ const userIsNotExisting = async(password:string,existingName:string,existingEmai
     const isMatch = await  bcrypt.compare(password,existingPassword);
     if(!isMatch){
         console.log("not matched");
-        message="Invalid Credentials";
-        status = 401;
+        message=Message.unauthorized;
+        status = Status.unauthorized;
     }
     else{
         console.log('matched');
-        message="Login Successfully.";
-        status = 201;         
+        message=Message.loginSuccessfully;
+        status = Status.success; 
+        emailId = existingEmail;       
     }       
     return {message,status,emailId}
 }

@@ -1,84 +1,54 @@
-import { Request } from "express";
-
-interface Iproducts{
-    image: string,
-     category:string,
-     sub_category:string,
-     target_group:string,
-     size:[],
-     color:[],
-     title: string,
-     description: string,
-     price: string,
-     available_units:string
-
-}
-export const productsService = async(req:Request)=>{
-    const filter:string = req.body.filter;
-    console.log(filter);
-    const color:string = req.body.color;
-    const size:string= req.body.size;
+import { Iproducts } from "../models/cart";
+export const productsService = async(filter:string,color:string,size:string)=>{
     const products:Iproducts[] = require('./product.json');
-    var data:Iproducts[]=[]; 
-    // switch(filter){
-    //     case "womens":{
-    //         data = findFilteredProducts("Womens",products);           
-    //        break;
-    //     }
-    //     case "mens":{
-    //         data = findFilteredProducts("Mens",products);
-    //         break;
-    //     }
-    //     case "kids":{
-    //         console.log("in kids");
-    //         data = findFilteredProducts("kids",products);
-    //         console.log(data);
-    //         break;
-    //     }
-    //     default: data=products;
-    // } 
-    data = findFilteredProducts(filter.toLowerCase(),products); 
-    var colorData:Iproducts[]=[];
-    var sizeData:Iproducts[]=[];
-    if(color!==null && size===null){
-        colorData =  findFilteredProductsOnColor(products,color);
-        return data.filter(x => colorData.indexOf(x) !== -1);
-    }
-    else if(color!==null && size!==null){
-        colorData =  findFilteredProductsOnColor(products,color);
-        sizeData = findFilteredProductsOnSize(products,size);
-        return ((colorData.filter(x=>sizeData.indexOf(x))).filter(y=>data.indexOf(y) !== -1));
-
-    } 
-    else if(color===null && size!==null ){
-        sizeData = findFilteredProductsOnSize(products,size);
-        return (data.filter(x => sizeData.indexOf(x) !== -1)) 
+    let data:Iproducts[]=[]; 
+    let output:Iproducts[]=[];
+    if(filter!==null){
+        data = findFilteredProducts(filter.toLowerCase(),products); 
+        let colorData:Iproducts[]=[];
+        let sizeData:Iproducts[]=[];
+        if(color!==null && size===null){
+            colorData =  findFilteredProductsOnColor(products,color);
+            output= data.filter(x => colorData.indexOf(x) !== -1);
+        }
+        else if(color!==null && size!==null){
+            colorData =  findFilteredProductsOnColor(products,color);
+            sizeData = findFilteredProductsOnSize(products,size);
+            output= ((colorData.filter(x=>sizeData.indexOf(x))).filter(y=>data.indexOf(y) !== -1));
+    
+        } 
+        else if(color===null && size!==null ){
+            sizeData = findFilteredProductsOnSize(products,size);
+           output= (data.filter(x => sizeData.indexOf(x) !== -1)) 
+        }
+        else{
+            output=data
+        }
     }
     else{
-        return data;
+        output = products;
     }
+    return output;
 }
 
 const findFilteredProducts = (filter:string,products:Iproducts[])=>{
-    // var filteredProducts:Iproducts[] = [];
-   const filteredProducts = products.filter(item=>item.title.toLowerCase().includes(filter))
-    // for(var product of products){
-    //     const data = product.title.toLowerCase();
-        
-    //     if(data.includes(filter)){
-    //         filteredProducts.push(product);
-    //     }
-    // }
+    let filteredProducts:Iproducts[]=[];
+    if(filter==='home'){
+        filteredProducts=products;
+    }
+    else{
+       filteredProducts = products.filter(item=>item.title.toLowerCase().includes(filter))
+   }
     return filteredProducts;
 }
 
 const findFilteredProductsOnColor = (products:Iproducts[],filter:string)=>{
-    var filteredProducts:Iproducts[] = [];
-    var setOfColors = new Set();
-    var check:number=0;
-    for(var product of products){
+    let filteredProducts:Iproducts[] = [];
+    let setOfColors = new Set();
+    let check:number=0;
+    for(let product of products){
        const colorArray:string[] = product.color;
-       var length:number = colorArray.length;
+       let length:number = colorArray.length;
        while(length--){
            setOfColors.add(colorArray[length]);
         if(colorArray[length]===filter){
@@ -99,11 +69,11 @@ const findFilteredProductsOnColor = (products:Iproducts[],filter:string)=>{
 }
 
 const findFilteredProductsOnSize = (products:Iproducts[],filter:string)=>{
-    var filteredProducts:Iproducts[] = [];
-    var check:number=0;
-    for(var product of products){
+    let filteredProducts:Iproducts[] = [];
+    let check:number=0;
+    for(let product of products){
         const sizeArray:string[]  = product.size;
-        var length:number = sizeArray.length;
+        let length:number = sizeArray.length;
         while(length--){
             if(sizeArray[length]===filter){
                 check = 1;
@@ -122,23 +92,20 @@ const findFilteredProductsOnSize = (products:Iproducts[],filter:string)=>{
 }
 
 
-export const productDetailsService = async(req:Request)=>{
+export const productDetailsService = async(title:string,price:string)=>{
     const products:Iproducts[] = require('./product.json');
-    var title:string = req.body.title;
-    var price:string = req.body.price;
-    var message:string ='';
-    var status:number=0;
+    let message:string ='';
+    let status:number=0;
     if(title===null && price===null){
         message="unsuccessful";
         status=402;
     }
-    var image:string = '';
-    var description:string = '';
-    var targetGroup:string ='';
-    // console.log(products[0].title.toLowerCase(),title.toLowerCase());
-    for(var product of products){
-        var productTitle = product.title.toLowerCase();
-        var filterTitle = title.toLowerCase();
+    let image:string = '';
+    let description:string = '';
+    let targetGroup:string ='';
+    for(let product of products){
+        let productTitle = product.title.toLowerCase();
+        let filterTitle = title.toLowerCase();
         if(productTitle===filterTitle){
             image = product.image;
             description=product.description;
@@ -148,7 +115,5 @@ export const productDetailsService = async(req:Request)=>{
         
         }
     }
-    //console.log(description);
-    // console.log(image,description,targetGroup);
     return {title,price,image,description,targetGroup,message,status};
 }

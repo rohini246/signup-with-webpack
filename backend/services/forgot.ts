@@ -1,22 +1,20 @@
-import { Request} from "express";
-import user from "../models/user";
 import jwt from 'jsonwebtoken';
 import { findUser, updateUser } from "../repo/user";
-var nodemailer = require('nodemailer');
-var secretKey:string;
-var token:string;
-var secret:string;
-var tranporter = nodemailer.createTransport({
+let nodemailer = require('nodemailer');
+let secretKey:string;
+let token:string;
+let secret:string;
+let tranporter = nodemailer.createTransport({
   service:'gmail',
   auth:{
     user:'shoppingcart158@gmail.com',
-    pass:'ShoppingCart1234@'
+    pass:'ShoppingCart1234@',
   }
 });
-export const forgotService = async(req:Request)=>{
-  const email = req.body.email;
-  var message:string;
-  var status:number; 
+export const forgotService = async(data:string)=>{
+  const email = data;
+  let message:string;
+  let status:number; 
   const existingUser = await findUser(email);
   if(!existingUser){
     message="Please enter registered email";
@@ -37,7 +35,7 @@ export const forgotService = async(req:Request)=>{
 }
 
 const sendMail = (token:string,email:string)=>{
-  var mailOptions = {
+  let mailOptions = {
     from:'shoppingcart158@gmail.com',
     to:"rohinimittal246@gmail.com",
     subject: 'change password',
@@ -46,27 +44,27 @@ const sendMail = (token:string,email:string)=>{
   }
   tranporter.sendMail(mailOptions,async function(error:any,info:any){
     if(error){
-      console.log(error)
+      console.log("error",error)
     }
     await updateUser(email,"token",token);    
   }) 
 
 }
 
-export const tokenValidationService = async(req:Request)=>{
-  var message:string="";
-  var status:number=0;
-  var email:string="";
-  var token = req.body.token;
+export const tokenValidationService = async(data:string)=>{
+  let message:string="";
+  let status:number=0;
+  let email:string="";
+  let token = data;
   const [headers,payloads] = token.split('.');
-  var base64 = payloads.replace(/-/g, '+').replace(/_/g, '/');
-  var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+  let base64 = payloads.replace(/-/g, '+').replace(/_/g, '/');
+  let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
   }).join(''));
   const obj = JSON.parse(jsonPayload);
   const isExistingUser = await findUser(obj.email);
   if(isExistingUser){
-    var secret = "my-secret-key-of-forgot-work-flow"+ isExistingUser.password;
+    let secret = "my-secret-key-of-forgot-work-flow"+ isExistingUser.password;
     jwt.verify(token,secret,(error:any,payloads:any)=>{
       console.log(payloads);
       if(error){

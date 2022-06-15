@@ -16,7 +16,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const login_1 = __webpack_require__(1);
-const signup_1 = __webpack_require__(3);
+const signup_1 = __webpack_require__(2);
 const forgot_1 = __webpack_require__(4);
 const resetPass_1 = __webpack_require__(5);
 const products_1 = __webpack_require__(6);
@@ -82,6 +82,7 @@ if (form !== null) {
     });
 }
 const loginFormEle = document.querySelector('#loginSubmit');
+console.log(loginFormEle);
 if (loginFormEle !== null) {
     loginFormEle.addEventListener('click', (e) => {
         e.preventDefault();
@@ -135,7 +136,7 @@ if (shoppingApp) {
 
 /***/ }),
 /* 1 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports) {
 
 
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -149,7 +150,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.loginForm = void 0;
-const validation_1 = __webpack_require__(2);
 const loginForm = (button) => {
     const emailElm = document.querySelector('#login-email');
     const passwordElm = document.querySelector('#login-password');
@@ -164,11 +164,12 @@ const loginForm = (button) => {
 };
 exports.loginForm = loginForm;
 const checkValidEmail = (email, password, errorElm) => {
-    if ((0, validation_1.isValidEmail)(email)) {
-        callLoginApi(email, password, errorElm);
+    const filter = /^[a-zA-Z.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z-]+)+$/;
+    if (!email.match(filter)) {
+        errorElm.innerHTML = 'Please enter valid email.';
     }
     else {
-        errorElm.innerHTML = 'Please enter valid email.';
+        callLoginApi(email, password, errorElm);
     }
 };
 const callLoginApi = (email, password, errorElm) => __awaiter(void 0, void 0, void 0, function* () {
@@ -199,23 +200,6 @@ const callLoginApi = (email, password, errorElm) => __awaiter(void 0, void 0, vo
 
 /***/ }),
 /* 2 */
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isValidPassword = exports.isValidEmail = void 0;
-const isValidEmail = (email) => {
-    return (!email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) ? false : true;
-};
-exports.isValidEmail = isValidEmail;
-const isValidPassword = (password) => {
-    return (password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$/)) ? true : false;
-};
-exports.isValidPassword = isValidPassword;
-
-
-/***/ }),
-/* 3 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -230,7 +214,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.signupForm = void 0;
-const validation_1 = __webpack_require__(2);
+const validation_1 = __webpack_require__(3);
 const signupForm = (button) => {
     const name = document.querySelector('#signup-name');
     const email = document.querySelector('#signup-email');
@@ -265,8 +249,9 @@ const emailValidation = (name, email, address, password, confirmPassword, error)
     }
 };
 const passwordValidation = (name, email, address, password, confirmPassword, error) => {
-    if (!(0, validation_1.isValidPassword)(password)) {
-        error.innerHTML = 'Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters';
+    const filter = /^[a-zA-Z.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z-]+)+$/;
+    if (!email.match(filter)) {
+        error.innerHTML = 'Please provide a valid email address';
     }
     else if (password !== confirmPassword) {
         error.innerHTML = "Confirm password didn't match";
@@ -303,6 +288,23 @@ const callApi = (name, email, address, password, confirmPassword, error) => __aw
 
 
 /***/ }),
+/* 3 */
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isValidPassword = exports.isValidEmail = void 0;
+const isValidEmail = (email) => {
+    return !(email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) ? false : true;
+};
+exports.isValidEmail = isValidEmail;
+const isValidPassword = (password) => {
+    return (password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$/)) ? true : false;
+};
+exports.isValidPassword = isValidPassword;
+
+
+/***/ }),
 /* 4 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -318,7 +320,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.forgotForm = void 0;
-const validation_1 = __webpack_require__(2);
+const validation_1 = __webpack_require__(3);
 const forgotForm = (button) => {
     const emailElem = document.querySelector('#forgot-email');
     const errorElem = document.querySelector('.forgot-error');
@@ -375,7 +377,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.resetForm = void 0;
-const validation_1 = __webpack_require__(2);
+const validation_1 = __webpack_require__(3);
 const resetForm = (button) => {
     const email = document.querySelector('#forgot-email');
     const password = document.querySelector('#forgot-password');

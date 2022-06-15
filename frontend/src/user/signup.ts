@@ -39,8 +39,9 @@ const emailValidation = (name:string,email:string,address:string,password:string
    }
 }  
 const passwordValidation = (name:string,email:string,address:string,password:string,confirmPassword:string,error:HTMLSpanElement)=>{
-   if(!isValidPassword(password)) {
-      error.innerHTML = 'Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters';
+   const filter = /^[a-zA-Z.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z-]+)+$/;
+   if(!email.match(filter)){
+     error.innerHTML = 'Please provide a valid email address';
    }
    else if(password!==confirmPassword){
       error.innerHTML="Confirm password didn't match";
