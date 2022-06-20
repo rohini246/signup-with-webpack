@@ -181,62 +181,79 @@
 
 // }
 
-export const addToCart =(out:HTMLParagraphElement)=>{
+export const addToCart = (out: HTMLParagraphElement) => {
     addItemsToCartAddedBeforeLogin();
     const addToCartBtn = out.getElementsByTagName('button');
-    for(var btn of addToCartBtn){
+    for (var btn of addToCartBtn) {
         const title = btn.parentElement?.querySelector('.title')?.textContent;
         const price = btn.parentElement?.querySelector('.price')?.textContent;
         const image = btn.parentElement?.querySelector('.image');
+        const addBtn = btn.parentElement?.querySelector('.add-btn') as HTMLDivElement;
+        const quantityText = btn.parentElement?.querySelector('.quantity') as HTMLDivElement;
+        const subBtn = btn.parentElement?.querySelector('.subtract-btn') as HTMLDivElement
 
-        btnOfAddToCartBtns(btn,title!,price!,image?.getAttribute('src'));     
+        btnOfAddToCartBtns(btn, title!, price!, image?.getAttribute('src'), addBtn, quantityText, subBtn);
     }
 }
 
-const addItemsToCartAddedBeforeLogin =async()=>{
-    if(localStorage.getItem('title') && localStorage.getItem('price') && localStorage.getItem('login')){
-        const res = await fetch(`http://localhost:5500/cart`,{
+const addItemsToCartAddedBeforeLogin = async () => {
+    if (localStorage.getItem('title') && localStorage.getItem('price') && localStorage.getItem('login')) {
+        const res = await fetch(`http://localhost:5500/cart`, {
             method: 'POST',
             headers: {
-           'Content-Type': 'application/json;charset=utf-8'
-        },
-      body: JSON.stringify({title:localStorage.getItem('title'),price:localStorage.getItem('price'),email:localStorage.getItem('login'), image: localStorage.getItem('image')})
-    });
-    const json = await res.text()
-    const object = await JSON.parse(json);
-    if(object.status===200){
-        localStorage.removeItem('title');
-        localStorage.removeItem('price');
-    }
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({ title: localStorage.getItem('title'), price: localStorage.getItem('price'), email: localStorage.getItem('login'), image: localStorage.getItem('image') })
+        });
+        const json = await res.text()
+        const object = await JSON.parse(json);
+        if (object.status === 200) {
+            localStorage.removeItem('title');
+            localStorage.removeItem('price');
+        }
     }
 }
 
-const btnOfAddToCartBtns = (btn:HTMLButtonElement,title:string,price:string,image:any)=>{
-    btn.addEventListener('click',async(e)=>{
+const btnOfAddToCartBtns = (btn: HTMLButtonElement, title: string, price: string, image: any, addBtn: HTMLDivElement, quantityText: HTMLDivElement, subBtn: HTMLDivElement) => {
+    btn.addEventListener('click', async (e) => {
         e.preventDefault();
-        if(localStorage.getItem('login')===null){
-            if(title !=null && price!=null && image!=null){
-                localStorage.setItem("title",title);
-                localStorage.setItem("price",price);
-                localStorage.setItem("image",image)
+
+        if (localStorage.getItem('login') === null) {
+            if (title != null && price != null && image != null) {
+                localStorage.setItem("title", title);
+                localStorage.setItem("price", price);
+                localStorage.setItem("image", image)
             }
-            window.location.href='./login.html';    
+            window.location.href = './login.html';
         }
-        callAddToCartApi(localStorage.getItem('login')!,title!,price!,image);
+        else {
+            btn.style.display = 'none';
+            addBtn.style.display = 'block';
+            quantityText.style.display = 'block';
+            subBtn.style.display = 'block';
+            callAddToCartApi(localStorage.getItem('login')!, title!, price!, image, addBtn, quantityText, subBtn);
+        }
     })
 }
 
-const callAddToCartApi = async(email:string,title:string,price:string,image:any)=>{
-    const res = await fetch(`http://localhost:5500/cart`,{
+const callAddToCartApi = async (email: string, title: string, price: string, image: any, addBtn: HTMLDivElement, quantityText: HTMLDivElement, subBtn: HTMLDivElement) => {
+    const res = await fetch(`http://localhost:5500/cart`, {
         method: 'POST',
         headers: {
-       'Content-Type': 'application/json;charset=utf-8'
-  },
-  body: JSON.stringify({title:title?.trim(),price:price,email:localStorage.getItem('login'),image:image})
-});
-const json = await res.text()
-const object = await JSON.parse(json);
-if(object.status===402){ 
-  window.location.href='./login.html';
-}
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({ title: title?.trim(), price: price, email: localStorage.getItem('login'), image: image })
+    });
+    const json = await res.text()
+    const object = await JSON.parse(json);
+    if (object.status === 402) {
+        window.location.href = './login.html';
+    } 
+    if(object.status===300){
+
+        quantityText.innerHTML = `${object.quantity}`;
+    }
+    else{
+        quantityText.innerHTML = `${1}`
+    }
 }
