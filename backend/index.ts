@@ -8,6 +8,7 @@ import forgotRoutes from './routes/forgot';
 import resetRoutes from './routes/resetPass';
 import cartRoutes from './routes/cart';
 import productsRoutes from './routes/products';
+import addressRoutes from './routes/address';
 import {db} from './dbConfig/config';
 
 dotenv.config();
@@ -18,12 +19,14 @@ app.use(express.json());
 app.use(cors({
   origin:'http://localhost:8080'
 }));
+
 app.use('/signup',signupRoutes);
 app.use('/login',loginRoutes);
 app.use('/forgot',forgotRoutes);
 app.use('/resetPass',resetRoutes);
 app.use('/cart',cartRoutes);
 app.use('/products',productsRoutes);
+app.use('/address',addressRoutes)
 
 const errorHandler = new ErrorHandler();
 app.use(errorHandler.errorHandler);

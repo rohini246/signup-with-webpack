@@ -37,7 +37,7 @@ const findFilteredProducts = (filter:string,products:Iproducts[])=>{
         filteredProducts=products;
     }
     else{
-       filteredProducts = products.filter(item=>item.title.toLowerCase().includes(filter))
+       filteredProducts = products.filter(item=>item.target_group.toLowerCase()===filter)
    }
     return filteredProducts;
 }

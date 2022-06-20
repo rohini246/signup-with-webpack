@@ -1,145 +1,158 @@
 const totalElm = document.querySelector('.total') as HTMLInputElement;
-const heading = document.querySelector('.heading') as HTMLHeadingElement;
 const table = document.querySelector('.myTable') as HTMLTableElement;
-const checkout = document.querySelector('.checkout') as HTMLTableElement;
-export const addCartItem = async(body:HTMLBodyElement)=>{
-    if(localStorage.getItem('login')===null){
+export const addCartItem = async (body: HTMLBodyElement) => {
+    if (localStorage.getItem('login') === null) {
         body.replaceWith('PLEASE LOGIN');
     }
-    const res = await fetch(`http://localhost:5500/cart/items`,{
-              method: 'POST',
-              headers: {
-             'Content-Type': 'application/json;charset=utf-8'
+    const res = await fetch(`http://localhost:5500/cart/items`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
         },
-        body: JSON.stringify({email:localStorage.getItem('login')})
+        body: JSON.stringify({ email: localStorage.getItem('login') })
     });
     const json = await res.text()
     const object = await JSON.parse(json);
-    console.log(object);
-    if(object.price.length===0){
-          body.replaceWith('PLEASE ADD ITEMS TO CART')
+    // console.log(object);
+    if (object.price.length === 0) {
+        window.location.href= './emptyCart.html';
     }
-    console.log(object.price,object.title);
-    var count=0;
+    // console.log(object.price, object.title);
+    var count = 0;
     var total = 0;
-    for(var item of object.title){
-    const cartTitleList = document.createElement('td');
-    const cartPriceList = document.createElement('td');
-    const cartQuantityList = document.createElement('td');
-    const row = document.createElement('tr');
-   
-    const cartTitleListText = document.createElement('span');
-    const cartPriceListText = document.createElement('span');
-    const cartQuantityListText = document.createElement('span');
-    const cartRemoveBtn =  document.createElement('button');
-    const cartAddBtn = document.createElement('button');
-    const cartDeleteBtn = document.createElement('button');
+    
+    for (let item of object.title) {
+        const cartTitleList = document.createElement('td');
+        const cartPriceList = document.createElement('td');
+        const cartQuantityList = document.createElement('td');
+        const cartImageList = document.createElement('td');
+        const row = document.createElement('tr');
 
-    cartTitleListText.textContent = `${object.title[count]}`;
-    cartTitleList.appendChild(cartTitleListText);
-    console.log(typeof object.price[count])
-    cartPriceListText.textContent = `${object.price[count]}`;
-    cartPriceList.appendChild(cartPriceListText);
+        const cartTitleListText = document.createElement('span');
+        const cartPriceListText = document.createElement('span');
+        const cartQuantityListText = document.createElement('span');
+        const cartImageListText = document.createElement('span');
+        const cartRemoveBtn = document.createElement('button');
+        const cartAddBtn = document.createElement('button');
+        const cartDeleteBtn = document.createElement('button');
 
-    cartAddBtn.textContent = `+`;
-    cartQuantityList.appendChild(cartAddBtn);
+        const img = document.createElement('img');
+        img.src=`${object.image[count]}`;
+        img.style.width='25%';
+        img.style.height='20%';
 
-    cartQuantityListText.textContent = `${object.quantity[count]}`;
-    cartQuantityList.appendChild(cartQuantityListText);
+        cartTitleListText.textContent = `${object.title[count]}`;
+        cartTitleList.appendChild(cartTitleListText);
 
-    cartDeleteBtn.textContent = `-`;
-    cartQuantityList.appendChild(cartDeleteBtn);
+        cartPriceListText.textContent = `${object.price[count]}`;
+        cartPriceList.appendChild(cartPriceListText);
 
-    cartRemoveBtn.textContent = `REMOVE`;
-    cartQuantityList.appendChild(cartRemoveBtn);
+        cartImageListText.appendChild(img);
+        cartImageList.appendChild(cartImageListText);
 
-    row.appendChild(cartTitleList);
-    row.appendChild(cartPriceList);
-    row.appendChild(cartQuantityList);
+        cartAddBtn.textContent = `+`;
+        cartQuantityList.appendChild(cartAddBtn);
 
-    table.appendChild(row)
+        cartQuantityListText.textContent = `${object.quantity[count]}`;
+        cartQuantityList.appendChild(cartQuantityListText);
 
-    callCartAddBtn(cartAddBtn,cartTitleListText,cartPriceListText,cartQuantityListText);
-    callCartDeleteBTn(cartDeleteBtn,cartTitleListText,cartPriceListText,cartQuantityListText,row,table);
+        cartDeleteBtn.textContent = `-`;
+        cartQuantityList.appendChild(cartDeleteBtn);
 
-    cartRemoveBtn.addEventListener('click', () => {
-        table.removeChild(row);
-        callApiRemove(cartTitleListText,cartPriceListText,cartQuantityListText);
-    });
-    var matches = object.price[count].match(/(\d+)/);
-    if(matches){
-        var price ='';
-        price=matches[0];
-        total += parseInt(object.quantity[count])*parseInt(price);
+        cartRemoveBtn.textContent = `REMOVE`;
+        cartQuantityList.appendChild(cartRemoveBtn);
+
+        row.appendChild(cartImageList);
+        row.appendChild(cartTitleList);
+        row.appendChild(cartPriceList);
+        row.appendChild(cartQuantityList);
+
+        table.appendChild(row)
+
+        callCartAddBtn(cartAddBtn, cartTitleListText, cartPriceListText, cartQuantityListText,cartImageListText);
+        callCartDeleteBTn(cartDeleteBtn, cartTitleListText, cartPriceListText, cartQuantityListText,cartImageListText,row, table);
+
+        cartRemoveBtn.addEventListener('click', () => {
+            table.removeChild(row);
+            callApiRemove(cartTitleListText, cartPriceListText, cartQuantityListText,cartImageListText);
+        });
+        var matches = object.price[count].match(/(\d+)/);
+        if (matches) {
+            var price = '';
+            price = matches[0];
+            total += parseInt(object.quantity[count]) * parseInt(price);
+        }
+        // console.log("grandTotal", total);
+        totalElm.value = total.toString();
+        count = count + 1;
     }
-    console.log("grandTotal",total);
-    totalElm.value = total.toString();
-    count = count+1;
-}   
 }
 
-const callCartAddBtn = (cartAddBtn:HTMLButtonElement,cartTitleListText:HTMLSpanElement,cartPriceListText:HTMLSpanElement,cartQuantityListText:HTMLSpanElement)=>{
-    cartAddBtn.addEventListener('click',()=>{
+const callCartAddBtn = (cartAddBtn: HTMLButtonElement, cartTitleListText: HTMLSpanElement, cartPriceListText: HTMLSpanElement, cartQuantityListText: HTMLSpanElement,cartImageListText:HTMLSpanElement) => {
+    cartAddBtn.addEventListener('click', () => {
         var data = cartQuantityListText.textContent;
-        if(data!=null){
-            cartQuantityListText.textContent = (parseInt(data)+1).toString();
-            callUpdateCartQuantityApi(cartTitleListText,cartPriceListText,cartQuantityListText);
+        if (data != null) {
+            cartQuantityListText.textContent = (parseInt(data) + 1).toString();
+            callUpdateCartQuantityApi(cartTitleListText, cartPriceListText, cartQuantityListText, cartImageListText);
         }
     });
 }
 
-const callCartDeleteBTn = (cartDeleteBtn:HTMLButtonElement,cartTitleListText:HTMLSpanElement,cartPriceListText:HTMLSpanElement,cartQuantityListText:HTMLSpanElement,row:HTMLTableRowElement,table:HTMLTableElement)=>{
-    cartDeleteBtn.addEventListener('click',()=>{
+const callCartDeleteBTn = (cartDeleteBtn: HTMLButtonElement, cartTitleListText: HTMLSpanElement, cartPriceListText: HTMLSpanElement, cartQuantityListText: HTMLSpanElement,cartImageListText:HTMLSpanElement, row: HTMLTableRowElement, table: HTMLTableElement) => {
+    cartDeleteBtn.addEventListener('click', () => {
         var data = cartQuantityListText.textContent;
-        if(data!=null && parseInt(data)>1){
-            cartQuantityListText.textContent = (parseInt(data)-1).toString();
-            callUpdateCartQuantityApi(cartTitleListText,cartPriceListText,cartQuantityListText);
+        if (data != null && parseInt(data) > 1) {
+            cartQuantityListText.textContent = (parseInt(data) - 1).toString();
+            callUpdateCartQuantityApi(cartTitleListText, cartPriceListText, cartQuantityListText,cartImageListText);
         }
-       else{
-           table.removeChild(row);
-           callApiRemove(cartTitleListText,cartPriceListText,cartQuantityListText);          
-       }
+        else {
+            table.removeChild(row);
+            callApiRemove(cartTitleListText, cartPriceListText, cartQuantityListText,cartImageListText);
+        }
     })
 
 }
 
-const callApiRemove = async(cartTitleListText:HTMLSpanElement,cartPriceListText:HTMLSpanElement,cartQuantityListText:HTMLSpanElement)=>{
-    console.log(cartTitleListText.textContent);
-    const res = await fetch(`http://localhost:5500/cart/remove`,{
-              method: 'POST',
-              headers: {
-             'Content-Type': 'application/json;charset=utf-8'
+export const callApiRemove = async (cartTitleListText: HTMLSpanElement, cartPriceListText: HTMLSpanElement, cartQuantityListText: HTMLSpanElement, cartImageListText:HTMLSpanElement) => {
+    // console.log(cartTitleListText.textContent);
+    const res = await fetch(`http://localhost:5500/cart/remove`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
         },
-        body: JSON.stringify({title:cartTitleListText.textContent,
-                              price:cartPriceListText.textContent,
-                              quantity:cartQuantityListText.textContent,
-                              email:localStorage.getItem('login')
+        body: JSON.stringify({
+            title: cartTitleListText.textContent,
+            price: cartPriceListText.textContent,
+            quantity: cartQuantityListText.textContent,
+            email: localStorage.getItem('login')
         })
     });
     const json = await res.text()
     const object = await JSON.parse(json);
     console.log(object.message);
-    window.location.href='./cart.html'
+    window.location.href = './cart.html'
 
 }
 
-const callUpdateCartQuantityApi = async(cartTitleListText:HTMLSpanElement,cartPriceListText:HTMLSpanElement,cartQuantityListText:HTMLSpanElement)=>{
+export const callUpdateCartQuantityApi = async (cartTitleListText: HTMLSpanElement, cartPriceListText: HTMLSpanElement, cartQuantityListText: HTMLSpanElement, cartImageListText:HTMLSpanElement) => {
     console.log(cartTitleListText.textContent);
-    const res = await fetch(`http://localhost:5500/cart/update`,{
-              method: 'POST',
-              headers: {
-             'Content-Type': 'application/json;charset=utf-8'
+    const res = await fetch(`http://localhost:5500/cart/update`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
         },
-        body: JSON.stringify({title:cartTitleListText.textContent,
-                              price:cartPriceListText.textContent,
-                              quantity:cartQuantityListText.textContent,
-                              email:localStorage.getItem('login')
+        body: JSON.stringify({
+            title: cartTitleListText.textContent,
+            price: cartPriceListText.textContent,
+            quantity: cartQuantityListText.textContent,
+            email: localStorage.getItem('login'),
+            image:cartImageListText.textContent
         })
     });
     const json = await res.text()
     const object = await JSON.parse(json);
-    console.log(object.message);
-    window.location.href='./cart.html'
+    // console.log(object.message);
+    window.location.href = './cart.html'
 
 }
 

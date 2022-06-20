@@ -15,7 +15,8 @@ export interface Iproducts{
 export interface Icart{
     email:string,
     title:string,
-    price:string
+    price:string,
+    image:any
 }
 
 export interface Iproduct{
@@ -23,6 +24,9 @@ export interface Iproduct{
     price:string,
     email:string,
     quantity:string,
-    date:string
+    date:string,
+    address:string,
+    image:any
+   
 }
 

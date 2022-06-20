@@ -9,22 +9,43 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script src="./main.js" async></script>
 </head>
+
 <body id="cart">
     <a href="./shoppingApp.html">
         <i class="fa fa-arrow-left" aria-hidden="true"></i>
     </a>
     <table class="myTable">
         <tr>
-          <th class="heading">Title</th>
-          <th  class="heading">Price</th>
-          <th class="heading">Quantity</th>
+            <th class="heading">Product Image</th>
+            <th class="heading">Title</th>
+            <th class="heading">Price</th>
+            <th class="heading">Quantity</th>
         </tr>
-    </table> 
-    <br> 
-<h2 class="heading">Total$:
-   <input value="0" class="total" disabled>
-</h2>
-   <br>
-    <div type="button" value="checkout" class="checkout">CHECKOUT</div>  
+    </table>
+    <br>
+    <h2 class="heading">Total$:
+        <input value="0" class="total" disabled>
+    </h2>
+    <br>
+    <div id="address">
+        <div id="country">
+            <label for="country">Country</label>
+            <select name="country"id='select_country'>
+                <option>Select Country</option>
+                <option>INDIA</option>
+                <option>USA</option>
+            </select>
+        </div>
+
+
+        <div id="state">
+        </div>
+        <div id="city">
+        </div>
+        <div id="zip"></div>
+
+    </div>
+    <div type="button" value="checkout" class="checkout">CHECKOUT</div>
 </body>
+
 </html>

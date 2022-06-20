@@ -1,5 +1,6 @@
- import { showProductsDetails } from "../productDetails/showProductsDetails";
+import { showProductsDetails } from "../productDetails/showProductsDetails";
 import { addToCart } from "../cart/addToCart";
+import { onceAddedProductInCart } from "../cart/onceAddedProductInCart";
 const out = document.querySelector('.products') as HTMLParagraphElement;
 export const product=()=>{
     const params:string|null= getParams();
@@ -20,17 +21,25 @@ const productService=async(params:string|null,color?:string|null,size?:string|nu
     for(let item of product){   
         output += `
         <div class="product" name="product">
-           <img src="${item.image}"  alt="${item.description}">
+           <img class="image" src="${item.image}">
            <p class="title">${item.title}</p>
            <p class="price">
               <span>price ${item.price}</span>
-           </p><br><br>
+              </p><br><br>
            <button style="color:palevioletred" name="addCart">Add to cart</button>
-           <div style="color:palevioletred" name="view" class="view">Details</div>
+           <div>
+           <div style="display:none;color:palevioletred" class="add-btn">+</div>
+           <div style="display:none;color:palevioletred" class="quantity"></div>
+           <div style="display:none;color:palevioletred" class="subtract-btn">-</div>
+           </div>
+
+           <br><br>
+           <div style="color:palevioletred" style="cursor:pointer;" name="view" class="view-details">Details</div>
         </div>`
     }
     out.innerHTML = output; 
     addToCart(out);
+    // onceAddedProductInCart(out);
     showProductsDetails(out,product);
 }
 

@@ -10,6 +10,9 @@
 .heading{
     background-color: paleturquoise;
     border-radius: 8px;
+    height: fit-content;
+    width:fit-content;
+    inline-size: 0%;
 }
 .total{
     background-color: white;
@@ -24,6 +27,6 @@
 body{
     background-color:whitesmoke;
     place-items: center;
-    width: 150vw;
-    height: 90vh;
+    width: 70%;
+    height: 70%;
 }

@@ -1,1108 +1,186 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ([
-/* 0 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/******/ 	var __webpack_modules__ = ({
 
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const login_1 = __webpack_require__(1);
-const signup_1 = __webpack_require__(2);
-const forgot_1 = __webpack_require__(4);
-const resetPass_1 = __webpack_require__(5);
-const products_1 = __webpack_require__(6);
-const loginBtn = document.querySelector('#login');
-const logoutBtn = document.querySelector('#logout');
-if (loginBtn && localStorage.getItem('login') && logoutBtn) {
-    if (loginBtn.style.display === "none") {
-        loginBtn.style.display = "block";
-    }
-    else {
-        logoutBtn.style.display = 'block';
-        loginBtn.style.display = "none";
-    }
-}
-if (logoutBtn) {
-    logoutBtn.onclick = (e) => {
-        e.preventDefault();
-        localStorage.removeItem('login');
-        if (logoutBtn.style.display === "none") {
-            logoutBtn.style.display = "block";
-        }
-        else {
-            logoutBtn.style.display = "none";
-        }
-        loginBtn.style.display = 'block';
-    };
-}
-const l = document.getElementById('loginPage');
-if (l && localStorage.getItem('login')) {
-    window.location.href = 'shoppingApp.html';
-}
-const signupFormEle = document.querySelector('#signupSubmit');
-if (signupFormEle !== null) {
-    signupFormEle.addEventListener('click', (e) => {
-        e.preventDefault();
-        (0, signup_1.signupForm)(signupFormEle);
-    });
-}
-const form = document.getElementById('resetPage');
-if (form !== null) {
-    form.onload = (e) => __awaiter(void 0, void 0, void 0, function* () {
-        e.preventDefault();
-        const query = window.location.search;
-        const url = new URLSearchParams(query);
-        const token = yield url.get('token');
-        const res = yield fetch(`http://localhost:5500/forgot/token}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({ token: token })
-        });
-        const json = yield res.text();
-        const object = yield JSON.parse(json);
-        console.log(object);
-        if (object.status === 400 || object.status === 404) {
-            window.location.href = './expiredPage.html';
-        }
-        else {
-            const mailArea = document.getElementById('forgot-email');
-            mailArea.value = object.email;
-        }
-    });
-}
-const loginFormEle = document.querySelector('#loginSubmit');
-console.log(loginFormEle);
-if (loginFormEle !== null) {
-    loginFormEle.addEventListener('click', (e) => {
-        e.preventDefault();
-        (0, login_1.loginForm)(loginFormEle);
-    });
-}
-const resetFormEle = document.querySelector('#resetSubmit');
-if (resetFormEle !== null) {
-    resetFormEle.addEventListener('click', (e) => {
-        e.preventDefault();
-        (0, resetPass_1.resetForm)(resetFormEle);
-    });
-}
-const forgotFormEle = document.querySelector('#forgotSubmit');
-if (forgotFormEle !== null) {
-    forgotFormEle.addEventListener('click', (e) => {
-        e.preventDefault();
-        (0, forgot_1.forgotForm)(forgotFormEle);
-    });
-}
-const redirectLogin = document.querySelector('.redirect_login');
-if (redirectLogin !== null) {
-    redirectLogin.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.location.href = './login.html';
-    });
-}
-const redirectSignup = document.querySelector('.redirect_signup');
-if (redirectSignup !== null) {
-    redirectSignup.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.location.href = './signup.html';
-    });
-}
-const redirectForgot = document.querySelector('#redirect_forgot');
-if (redirectForgot !== null) {
-    redirectForgot.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.location.href = './forgot.html';
-    });
-}
-const shoppingApp = document.querySelector('.shoppingApp');
-if (shoppingApp) {
-    logoutBtn.style.display = 'none';
-    if (localStorage.getItem('login')) {
-        logoutBtn.style.display = 'block';
-    }
-    (0, products_1.product)();
-}
-
-
-/***/ }),
-/* 1 */
-/***/ (function(__unused_webpack_module, exports) {
-
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.loginForm = void 0;
-const loginForm = (button) => {
-    const emailElm = document.querySelector('#login-email');
-    const passwordElm = document.querySelector('#login-password');
-    const errorElm = document.querySelector('.login-error');
-    errorElm.innerHTML = '';
-    if (!emailElm.value || !passwordElm.value) {
-        errorElm.innerHTML = "Please enter all fields.";
-    }
-    else {
-        checkValidEmail(emailElm.value, passwordElm.value, errorElm);
-    }
-};
-exports.loginForm = loginForm;
-const checkValidEmail = (email, password, errorElm) => {
-    const filter = /^[a-zA-Z.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z-]+)+$/;
-    if (!email.match(filter)) {
-        errorElm.innerHTML = 'Please enter valid email.';
-    }
-    else {
-        callLoginApi(email, password, errorElm);
-    }
-};
-const callLoginApi = (email, password, errorElm) => __awaiter(void 0, void 0, void 0, function* () {
-    const successElm = document.querySelector('.successfull-login');
-    const res = yield fetch('http://localhost:5500/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify({
-            email: email,
-            password: password
-        })
-    });
-    const json = yield res.text();
-    const obj = yield JSON.parse(json);
-    console.log(obj.status);
-    if (obj.message === 'Login Successfully.') {
-        window.location.href = `./shoppingApp.html`;
-        localStorage.setItem('login', obj.email);
-        successElm.innerHTML = obj.message;
-    }
-    else {
-        errorElm.innerHTML = obj.message;
-    }
-});
-
-
-/***/ }),
-/* 2 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.signupForm = void 0;
-const validation_1 = __webpack_require__(3);
-const signupForm = (button) => {
-    const name = document.querySelector('#signup-name');
-    const email = document.querySelector('#signup-email');
-    const address = document.querySelector('#signup-address');
-    const password = document.querySelector('#signup-password');
-    const confirmPassword = document.querySelector('#signup-confirm_password');
-    const error = document.querySelector(".signup-error");
-    error.innerHTML = "";
-    const user = {
-        name: name.value,
-        email: email.value,
-        address: address.value,
-        password: password.value
-    };
-    if (checkFields(user.name, user.email, user.password, confirmPassword.value, user.address)) {
-        emailValidation(user.name, user.email, user.address, user.password, confirmPassword.value, error);
-    }
-    else {
-        error.innerHTML = 'Please enter all fields.';
-    }
-};
-exports.signupForm = signupForm;
-const checkFields = (name, email, password, confirmPassword, address) => {
-    return (name && email && password && address) ? true : false;
-};
-const emailValidation = (name, email, address, password, confirmPassword, error) => {
-    if ((0, validation_1.isValidEmail)(email)) {
-        passwordValidation(name, email, address, password, confirmPassword, error);
-    }
-    else {
-        error.innerHTML = 'Please provide a valid email address.';
-    }
-};
-const passwordValidation = (name, email, address, password, confirmPassword, error) => {
-    const filter = /^[a-zA-Z.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z-]+)+$/;
-    if (!email.match(filter)) {
-        error.innerHTML = 'Please provide a valid email address';
-    }
-    else if (password !== confirmPassword) {
-        error.innerHTML = "Confirm password didn't match";
-    }
-    else {
-        callApi(name, email, address, password, confirmPassword, error);
-    }
-};
-const callApi = (name, email, address, password, confirmPassword, error) => __awaiter(void 0, void 0, void 0, function* () {
-    const success = document.querySelector(".successfull-signup");
-    const url = "http://localhost:5500/signup";
-    const res = yield fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify({
-            name,
-            email,
-            address,
-            password
-        })
-    });
-    const json = yield res.text();
-    const obj = yield JSON.parse(json);
-    if (obj.message === "Successfully Registered.") {
-        success.innerHTML = obj.message;
-        window.location.href = './login.html';
-    }
-    else {
-        error.innerHTML = obj.message;
-    }
-});
-
-
-/***/ }),
-/* 3 */
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isValidPassword = exports.isValidEmail = void 0;
-const isValidEmail = (email) => {
-    return !(email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) ? false : true;
-};
-exports.isValidEmail = isValidEmail;
-const isValidPassword = (password) => {
-    return (password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$/)) ? true : false;
-};
-exports.isValidPassword = isValidPassword;
-
-
-/***/ }),
-/* 4 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.forgotForm = void 0;
-const validation_1 = __webpack_require__(3);
-const forgotForm = (button) => {
-    const emailElem = document.querySelector('#forgot-email');
-    const errorElem = document.querySelector('.forgot-error');
-    const successElem = document.querySelector('.successfull-mail-sent');
-    const email = emailElem.value;
-    if (!email) {
-        errorElem.innerHTML = 'Please enter email';
-    }
-    else {
-        checkValidEmailOrNot(email, errorElem, successElem);
-    }
-};
-exports.forgotForm = forgotForm;
-const checkValidEmailOrNot = (email, errorElem, successElem) => {
-    if ((0, validation_1.isValidEmail)(email)) {
-        callForgotApi(email, errorElem, successElem);
-    }
-    else {
-        errorElem.innerHTML = 'Please provide a valid email address.';
-    }
-};
-const callForgotApi = (email, errorElem, successElem) => __awaiter(void 0, void 0, void 0, function* () {
-    const res = yield fetch('http://localhost:5500/forgot', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify({ email: email })
-    });
-    const json = yield res.text();
-    const obj = yield JSON.parse(json);
-    if (obj.message === "Mail sent successfully") {
-        successElem.innerHTML = obj.message;
-    }
-    else {
-        errorElem.innerHTML = obj.message;
-    }
-});
-
-
-/***/ }),
-/* 5 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.resetForm = void 0;
-const validation_1 = __webpack_require__(3);
-const resetForm = (button) => {
-    const email = document.querySelector('#forgot-email');
-    const password = document.querySelector('#forgot-password');
-    const confirmPassword = document.querySelector('#forgot-confirm_password');
-    const error = document.querySelector(".reset-error");
-    const success = document.querySelector(".successfull-reset");
-    const user = {
-        password: password.value
-    };
-    if (user.password && confirmPassword.value) {
-        passwordValidation(email.value, user.password, confirmPassword.value, error, success);
-    }
-    else {
-        error.innerHTML = 'Please enter all fields.';
-    }
-};
-exports.resetForm = resetForm;
-const passwordValidation = (email, password, confirmPassword, error, success) => {
-    if (!(0, validation_1.isValidPassword)(password)) {
-        error.innerHTML = 'Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters';
-    }
-    else if (password !== confirmPassword) {
-        error.innerHTML = "Confirm password didn't match";
-    }
-    else {
-        callResetPassApi(email, password, confirmPassword, error, success);
-    }
-};
-const callResetPassApi = (email, password, confirmPassword, error, success) => __awaiter(void 0, void 0, void 0, function* () {
-    const query = window.location.search;
-    const url = new URLSearchParams(query);
-    const token = url.get('token');
-    const api = "http://localhost:5500/resetPass";
-    const res = yield fetch(api, {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify({
-            email,
-            password,
-            token
-        })
-    });
-    const json = yield res.text();
-    const obj = yield JSON.parse(json);
-    if (obj.message === "Password Reset Successfully") {
-        success.innerHTML = obj.message;
-        window.location.href = './login.html';
-    }
-    else if (obj.status === 404) {
-        window.location.href = './expiredPage.html';
-    }
-    else {
-        error.innerHTML = obj.message;
-    }
-});
-
-
-/***/ }),
-/* 6 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.product = void 0;
-const showProductsDetails_1 = __webpack_require__(7);
-const addToCart_1 = __webpack_require__(8);
-const out = document.querySelector('.products');
-const product = () => {
-    const params = getParams();
-    productService(params, localStorage.getItem('color'), localStorage.getItem('size'));
-};
-exports.product = product;
-const getParams = () => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const param = urlParams.get('filter');
-    console.log(param);
-    return param;
-};
-const productService = (params, color, size) => __awaiter(void 0, void 0, void 0, function* () {
-    const product = yield productFetchApi(params, color, size);
-    let output = "";
-    for (let item of product) {
-        output += `
-        <div class="product" name="product">
-           <img src="${item.image}"  alt="${item.description}">
-           <p class="title">${item.title}</p>
-           <p class="price">
-              <span>price ${item.price}</span>
-           </p><br><br>
-           <button style="color:palevioletred" name="addCart">Add to cart</button>
-           <div style="color:palevioletred" name="view" class="view">Details</div>
-        </div>`;
-    }
-    out.innerHTML = output;
-    (0, addToCart_1.addToCart)(out);
-    (0, showProductsDetails_1.showProductsDetails)(out, product);
-});
-const productFetchApi = (params, color, size) => __awaiter(void 0, void 0, void 0, function* () {
-    const response = yield fetch(`http://localhost:5500/products`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify({ color: color, size: size, filter: params })
-    });
-    console.log(typeof response);
-    const json = yield response.text();
-    console.log(typeof json);
-    const obj = yield JSON.parse(json);
-    return obj;
-});
-
-
-/***/ }),
-/* 7 */
-/***/ (function(__unused_webpack_module, exports) {
-
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.showProductsDetails = void 0;
-const showProductsDetails = (out, product) => {
-    var _a, _b, _c, _d, _e, _f;
-    console.log(product[0], "product");
-    const viewProductDetailsBtn = out.getElementsByTagName('div');
-    for (var btn of viewProductDetailsBtn) {
-        const title = (_c = ((_b = (_a = btn.parentElement) === null || _a === void 0 ? void 0 : _a.querySelector('.title')) === null || _b === void 0 ? void 0 : _b.textContent)) === null || _c === void 0 ? void 0 : _c.toLowerCase();
-        const price = (_f = ((_e = (_d = btn.parentElement) === null || _d === void 0 ? void 0 : _d.querySelector('.price')) === null || _e === void 0 ? void 0 : _e.textContent)) === null || _f === void 0 ? void 0 : _f.toLowerCase();
-        btnOfviewProductDetailsBtns(btn, title, price, product);
-    }
-};
-exports.showProductsDetails = showProductsDetails;
-const btnOfviewProductDetailsBtns = (btn, title, price, product) => {
-    console.log(title, price);
-    btn.addEventListener('click', (e) => __awaiter(void 0, void 0, void 0, function* () {
-        e.preventDefault();
-        for (let data of product) {
-            if ((data.title).toLowerCase() === title && (data.price).toLowerCase() === price) {
-                console.log("match");
-            }
-        }
-        if (localStorage.getItem('title')) {
-            window.location.href = './productDetails.html';
-            return;
-        }
-        localStorage.setItem('title', title);
-        localStorage.setItem('price', price);
-        console.log(title, price, "title");
-    }));
-};
-
-
-/***/ }),
-/* 8 */
-/***/ (function(__unused_webpack_module, exports) {
-
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.addToCart = void 0;
-const addToCart = (out) => {
-    var _a, _b, _c, _d;
-    addItemsToCartAddedBeforeLogin();
-    const addToCartBtn = out.getElementsByTagName('button');
-    for (var btn of addToCartBtn) {
-        const title = (_b = (_a = btn.parentElement) === null || _a === void 0 ? void 0 : _a.querySelector('.title')) === null || _b === void 0 ? void 0 : _b.textContent;
-        const price = (_d = (_c = btn.parentElement) === null || _c === void 0 ? void 0 : _c.querySelector('.price')) === null || _d === void 0 ? void 0 : _d.textContent;
-        btnOfAddToCartBtns(btn, title, price);
-    }
-};
-exports.addToCart = addToCart;
-const addItemsToCartAddedBeforeLogin = () => __awaiter(void 0, void 0, void 0, function* () {
-    if (localStorage.getItem('title') && localStorage.getItem('price') && localStorage.getItem('login')) {
-        const res = yield fetch(`http://localhost:5500/cart`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({ title: localStorage.getItem('title'), price: localStorage.getItem('price'), email: localStorage.getItem('login') })
-        });
-        const json = yield res.text();
-        const object = yield JSON.parse(json);
-        if (object.status === 200) {
-            localStorage.removeItem('title');
-            localStorage.removeItem('price');
-        }
-    }
-});
-const btnOfAddToCartBtns = (btn, title, price) => {
-    btn.addEventListener('click', (e) => __awaiter(void 0, void 0, void 0, function* () {
-        e.preventDefault();
-        if (localStorage.getItem('login') === null) {
-            if (title != null && price != null) {
-                localStorage.setItem("title", title);
-                localStorage.setItem("price", price);
-            }
-            window.location.href = './login.html';
-        }
-        callAddToCartApi(localStorage.getItem('login'), title, price);
-    }));
-};
-const callAddToCartApi = (email, title, price) => __awaiter(void 0, void 0, void 0, function* () {
-    const res = yield fetch(`http://localhost:5500/cart`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify({ title: title === null || title === void 0 ? void 0 : title.trim(), price: price, email: localStorage.getItem('login') })
-    });
-    const json = yield res.text();
-    const object = yield JSON.parse(json);
-    if (object.status === 402) {
-        window.location.href = './login.html';
-    }
-});
-
-
-/***/ }),
-/* 9 */
+/***/ "./src/shoppingCart.ts":
+/*!*****************************!*\
+  !*** ./src/shoppingCart.ts ***!
+  \*****************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const cart_1 = __webpack_require__(10);
-const serachBar_1 = __webpack_require__(11);
-const checkoutOrder_1 = __webpack_require__(12);
-const placedOrders_1 = __webpack_require__(13);
-const filters_1 = __webpack_require__(14);
-const productsDetailsPage_1 = __webpack_require__(15);
-const cartElm = document.querySelector('#cart');
-if (cartElm) {
-    (0, cart_1.addCartItem)(cartElm);
-}
-const detailsElm = document.querySelector('#details');
-console.log(detailsElm, "detailsPage");
-if (detailsElm) {
-    (0, productsDetailsPage_1.detailsPage)(detailsElm);
-    //callApiToGetProductDetails(detailsElm);
-    // detailsElm.addEventListener('load',(e)=>{
-    //     e.preventDefault();
-    //     //detailsPage(detailsElm);
-    // })
-}
-const placedElm = document.querySelector('#placed_orders');
-if (placedElm) {
-    (0, placedOrders_1.placedOrders)(placedElm);
-}
-const searchBar = document.querySelector('.search_bar');
-if (searchBar !== null) {
-    searchBar.addEventListener('keyup', (e) => {
-        e.preventDefault();
-        (0, serachBar_1.search)(searchBar, e);
-    });
-}
-const productFilter = document.querySelector('#product_filter');
-if (productFilter) {
-    productFilter.addEventListener('click', (e) => {
-        e.preventDefault();
-        (0, filters_1.showProductFilter)(productFilter);
-    });
-}
-const checkout = document.querySelector('.checkout');
-if (checkout) {
-    checkout.addEventListener('click', (e) => {
-        e.preventDefault();
-        (0, checkoutOrder_1.checkoutOrder)();
-        alert("confirm order");
-    });
-}
-// const showProducts = document.querySelector('#product_main') as HTMLBodyElement;
-// if(showProducts){
-//     console.log('product page');
-//     showProducts.addEventListener('mouseup',(e)=>{
-//         e.preventDefault();
-//         showProductsDetails(showProducts);
-//     })
-// }
-
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nconst cart_1 = __webpack_require__(/*! ./shoppingCart/cart/cart */ \"./src/shoppingCart/cart/cart.ts\");\r\nconst serachBar_1 = __webpack_require__(/*! ./shoppingCart/searchBar/serachBar */ \"./src/shoppingCart/searchBar/serachBar.ts\");\r\nconst checkoutOrder_1 = __webpack_require__(/*! ./shoppingCart/checkout/checkoutOrder */ \"./src/shoppingCart/checkout/checkoutOrder.ts\");\r\nconst placedOrders_1 = __webpack_require__(/*! ./shoppingCart/placedOrders/placedOrders */ \"./src/shoppingCart/placedOrders/placedOrders.ts\");\r\nconst filters_1 = __webpack_require__(/*! ./shoppingCart/filter/filters */ \"./src/shoppingCart/filter/filters.ts\");\r\nconst productsDetailsPage_1 = __webpack_require__(/*! ./shoppingCart/productDetails/productsDetailsPage */ \"./src/shoppingCart/productDetails/productsDetailsPage.ts\");\r\nconst address_1 = __webpack_require__(/*! ./shoppingCart/cart/address */ \"./src/shoppingCart/cart/address.ts\");\r\nconst country = document.querySelector('#country');\r\nif (country) {\r\n    country.addEventListener('change', (e) => {\r\n        e.preventDefault();\r\n        (0, address_1.getCountry)(country);\r\n    });\r\n}\r\nconst cartElm = document.querySelector('#cart');\r\nif (cartElm) {\r\n    (0, cart_1.addCartItem)(cartElm);\r\n}\r\nconst detailsElm = document.querySelector('#details');\r\nconsole.log(detailsElm, \"detailsPage\");\r\nif (detailsElm) {\r\n    (0, productsDetailsPage_1.detailsPage)(detailsElm);\r\n}\r\nconst placedElm = document.querySelector('#placed_orders');\r\nif (placedElm) {\r\n    (0, placedOrders_1.placedOrders)(placedElm);\r\n}\r\nconst searchBar = document.querySelector('.search_bar');\r\nif (searchBar !== null) {\r\n    searchBar.addEventListener('keyup', (e) => {\r\n        e.preventDefault();\r\n        (0, serachBar_1.search)(searchBar, e);\r\n    });\r\n}\r\nconst productFilter = document.querySelector('#product_filter');\r\nif (productFilter) {\r\n    productFilter.addEventListener('click', (e) => {\r\n        e.preventDefault();\r\n        (0, filters_1.showProductFilter)(productFilter);\r\n    });\r\n}\r\nconst checkout = document.querySelector('.checkout');\r\nif (checkout) {\r\n    checkout.addEventListener('click', (e) => {\r\n        e.preventDefault();\r\n        const countryName = country.querySelector('#select_country');\r\n        if (countryName.value === 'Select Country') {\r\n            alert('please select region');\r\n        }\r\n        else {\r\n            (0, checkoutOrder_1.checkoutOrder)();\r\n            alert(\"confirm order\");\r\n        }\r\n    });\r\n}\r\nconst searchBtn = document.querySelector('#search');\r\nif (searchBtn) {\r\n    searchBtn.addEventListener('click', (e) => {\r\n        e.preventDefault();\r\n        console.log(searchBar.value);\r\n        if (!searchBar.value) {\r\n            alert('please enter something.');\r\n        }\r\n    });\r\n}\r\n\n\n//# sourceURL=webpack://frontend/./src/shoppingCart.ts?");
 
 /***/ }),
-/* 10 */
+
+/***/ "./src/shoppingCart/cart/addToCart.ts":
+/*!********************************************!*\
+  !*** ./src/shoppingCart/cart/addToCart.ts ***!
+  \********************************************/
 /***/ (function(__unused_webpack_module, exports) {
 
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.addCartItem = void 0;
-const totalElm = document.querySelector('.total');
-const heading = document.querySelector('.heading');
-const table = document.querySelector('.myTable');
-const checkout = document.querySelector('.checkout');
-const addCartItem = (body) => __awaiter(void 0, void 0, void 0, function* () {
-    if (localStorage.getItem('login') === null) {
-        body.replaceWith('PLEASE LOGIN');
-    }
-    const res = yield fetch(`http://localhost:5500/cart/items`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify({ email: localStorage.getItem('login') })
-    });
-    const json = yield res.text();
-    const object = yield JSON.parse(json);
-    console.log(object);
-    if (object.price.length === 0) {
-        body.replaceWith('PLEASE ADD ITEMS TO CART');
-    }
-    console.log(object.price, object.title);
-    var count = 0;
-    var total = 0;
-    for (var item of object.title) {
-        const cartTitleList = document.createElement('td');
-        const cartPriceList = document.createElement('td');
-        const cartQuantityList = document.createElement('td');
-        const row = document.createElement('tr');
-        const cartTitleListText = document.createElement('span');
-        const cartPriceListText = document.createElement('span');
-        const cartQuantityListText = document.createElement('span');
-        const cartRemoveBtn = document.createElement('button');
-        const cartAddBtn = document.createElement('button');
-        const cartDeleteBtn = document.createElement('button');
-        cartTitleListText.textContent = `${object.title[count]}`;
-        cartTitleList.appendChild(cartTitleListText);
-        console.log(typeof object.price[count]);
-        cartPriceListText.textContent = `${object.price[count]}`;
-        cartPriceList.appendChild(cartPriceListText);
-        cartAddBtn.textContent = `+`;
-        cartQuantityList.appendChild(cartAddBtn);
-        cartQuantityListText.textContent = `${object.quantity[count]}`;
-        cartQuantityList.appendChild(cartQuantityListText);
-        cartDeleteBtn.textContent = `-`;
-        cartQuantityList.appendChild(cartDeleteBtn);
-        cartRemoveBtn.textContent = `REMOVE`;
-        cartQuantityList.appendChild(cartRemoveBtn);
-        row.appendChild(cartTitleList);
-        row.appendChild(cartPriceList);
-        row.appendChild(cartQuantityList);
-        table.appendChild(row);
-        callCartAddBtn(cartAddBtn, cartTitleListText, cartPriceListText, cartQuantityListText);
-        callCartDeleteBTn(cartDeleteBtn, cartTitleListText, cartPriceListText, cartQuantityListText, row, table);
-        cartRemoveBtn.addEventListener('click', () => {
-            table.removeChild(row);
-            callApiRemove(cartTitleListText, cartPriceListText, cartQuantityListText);
-        });
-        var matches = object.price[count].match(/(\d+)/);
-        if (matches) {
-            var price = '';
-            price = matches[0];
-            total += parseInt(object.quantity[count]) * parseInt(price);
-        }
-        console.log("grandTotal", total);
-        totalElm.value = total.toString();
-        count = count + 1;
-    }
-});
-exports.addCartItem = addCartItem;
-const callCartAddBtn = (cartAddBtn, cartTitleListText, cartPriceListText, cartQuantityListText) => {
-    cartAddBtn.addEventListener('click', () => {
-        var data = cartQuantityListText.textContent;
-        if (data != null) {
-            cartQuantityListText.textContent = (parseInt(data) + 1).toString();
-            callUpdateCartQuantityApi(cartTitleListText, cartPriceListText, cartQuantityListText);
-        }
-    });
-};
-const callCartDeleteBTn = (cartDeleteBtn, cartTitleListText, cartPriceListText, cartQuantityListText, row, table) => {
-    cartDeleteBtn.addEventListener('click', () => {
-        var data = cartQuantityListText.textContent;
-        if (data != null && parseInt(data) > 1) {
-            cartQuantityListText.textContent = (parseInt(data) - 1).toString();
-            callUpdateCartQuantityApi(cartTitleListText, cartPriceListText, cartQuantityListText);
-        }
-        else {
-            table.removeChild(row);
-            callApiRemove(cartTitleListText, cartPriceListText, cartQuantityListText);
-        }
-    });
-};
-const callApiRemove = (cartTitleListText, cartPriceListText, cartQuantityListText) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(cartTitleListText.textContent);
-    const res = yield fetch(`http://localhost:5500/cart/remove`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify({ title: cartTitleListText.textContent,
-            price: cartPriceListText.textContent,
-            quantity: cartQuantityListText.textContent,
-            email: localStorage.getItem('login')
-        })
-    });
-    const json = yield res.text();
-    const object = yield JSON.parse(json);
-    console.log(object.message);
-    window.location.href = './cart.html';
-});
-const callUpdateCartQuantityApi = (cartTitleListText, cartPriceListText, cartQuantityListText) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(cartTitleListText.textContent);
-    const res = yield fetch(`http://localhost:5500/cart/update`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify({ title: cartTitleListText.textContent,
-            price: cartPriceListText.textContent,
-            quantity: cartQuantityListText.textContent,
-            email: localStorage.getItem('login')
-        })
-    });
-    const json = yield res.text();
-    const object = yield JSON.parse(json);
-    console.log(object.message);
-    window.location.href = './cart.html';
-});
-
+eval("\r\n// export const addToCart = (out: HTMLParagraphElement) => {\r\n//     addItemsToCartAddedBeforeLogin();\r\n//     const addToCartBtn = out.getElementsByTagName('button');\r\nvar __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\r\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\r\n    return new (P || (P = Promise))(function (resolve, reject) {\r\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\r\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\r\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\r\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\r\n    });\r\n};\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.addToCart = void 0;\r\n//     for (var btn of addToCartBtn) {\r\n//         const addBtn = btn.parentElement?.querySelector('.add-btn') as HTMLDivElement;\r\n//         const quantityText = btn.parentElement?.querySelector('.quantity') as HTMLDivElement;\r\n//         const subBtn = btn.parentElement?.querySelector('.subtract-btn') as HTMLDivElement\r\n//         const title = btn.parentElement?.querySelector('.title')?.textContent;\r\n//         const price = btn.parentElement?.querySelector('.price')?.textContent;\r\n//         const image = btn.parentElement?.querySelector('.image');\r\n//         // console.log(image);\r\n//         btnOfAddToCartBtns(btn, title!, price!, image?.getAttribute('src'), addBtn, quantityText, subBtn);\r\n//     }\r\n// }\r\n// const addItemsToCartAddedBeforeLogin = async () => {\r\n//     if (localStorage.getItem('title') && localStorage.getItem('price') && localStorage.getItem('login')) {\r\n//         const res = await fetch(`http://localhost:5500/cart`, {\r\n//             method: 'POST',\r\n//             headers: {\r\n//                 'Content-Type': 'application/json;charset=utf-8'\r\n//             },\r\n//             body: JSON.stringify({ title: localStorage.getItem('title'), price: localStorage.getItem('price'), email: localStorage.getItem('login'), image: localStorage.getItem('image') })\r\n//         });\r\n//         const json = await res.text()\r\n//         const object = await JSON.parse(json);\r\n//         if (object.status === 200) {\r\n//             localStorage.removeItem('title');\r\n//             localStorage.removeItem('price');\r\n//         }\r\n//     }\r\n// }\r\n// const btnOfAddToCartBtns = (btn: HTMLButtonElement, title: string, price: string, image: any, addBtn: HTMLDivElement, quantityText: HTMLDivElement, subBtn: HTMLDivElement) => {\r\n//     // alert(image);\r\n//     btn.addEventListener('click', async (e) => {\r\n//         e.preventDefault();\r\n//         if (localStorage.getItem('login') === null) {\r\n//             if (title != null && price != null && image != null) {\r\n//                 localStorage.setItem(\"title\", title);\r\n//                 localStorage.setItem(\"price\", price);\r\n//                 localStorage.setItem(\"image\", image);\r\n//             }\r\n//             window.location.href = './login.html';\r\n//         }\r\n//         else {\r\n//             btn.style.display = 'none';\r\n//             addBtn.style.display = 'block';\r\n//             quantityText.style.display = 'block';\r\n//             subBtn.style.display = 'block';\r\n//             //    const data = await callAddToCartApi(btn, localStorage.getItem('login')!, title!, price!, image);\r\n//             //     addBtn.addEventListener('click',(e)=>{\r\n//             //         e.preventDefault();\r\n//             //         callUpdateCartQuantityApi(title,price,data.quantity,image);\r\n//             //     });\r\n//             //     subBtn.addEventListener('click',(e)=>{\r\n//             //         e.preventDefault();\r\n//             //         callUpdateCartQuantityApi(title,price,data.quantity,image)\r\n//             //     })\r\n//         }\r\n//     })\r\n// }\r\n// const callAddToCartApi = async (btn: HTMLButtonElement, email: string, title: string, price: string, image: any) => {\r\n//     // const span = document.createElement('span');\r\n//     // const addBtn = document.createElement('button');\r\n//     // const count = document.createElement('span');\r\n//     // const subBtn = document.createElement('button');\r\n//     // count.style.color = 'palevioletred';\r\n//     // addBtn.style.color = 'palevioletred';\r\n//     // subBtn.style.color = 'palevioletred';\r\n//     // callCartAddBtn(addBtn, title, price,quantity ,cartImageListText);\r\n//     // callCartDeleteBTn(cartDeleteBtn, cartTitleListText, cartPriceListText, cartQuantityListText,cartImageListText,row, table);\r\n//     const res = await fetch(`http://localhost:5500/cart`, {\r\n//         method: 'POST',\r\n//         headers: {\r\n//             'Content-Type': 'application/json;charset=utf-8'\r\n//         },\r\n//         body: JSON.stringify({ title: title?.trim(), price: price, email: localStorage.getItem('login'), image: image })\r\n//     });\r\n//     const json = await res.text()\r\n//     const object = await JSON.parse(json);\r\n//     if (object.status === 402) {\r\n//         window.location.href = './login.html';\r\n//     }\r\n//     return object;\r\n//     // if (object.status === 300) {\r\n//     //     addBtn.innerHTML = `+`;\r\n//     //     count.innerHTML = `${object.quantity}`;\r\n//     //     subBtn.innerHTML = `-`;\r\n//     //     span.appendChild(addBtn);\r\n//     //     span.appendChild(count);\r\n//     //     span.appendChild(subBtn);\r\n//     //     btn.replaceWith(span);\r\n//     //     addBtn.addEventListener('click', (e) => {\r\n//     //         var data = object.quantity;\r\n//     //         if (data != null) {\r\n//     //             count.innerHTML = (parseInt(data) + 1).toString();\r\n//     //             callUpdateCartQuantityApi(title, price, count.innerHTML, image);\r\n//     //         }\r\n//     //     });\r\n//     //     subBtn.addEventListener('click', (e) => {\r\n//     //         var data = object.quantity;\r\n//     //         if (data != null && parseInt(data) > 1) {\r\n//     //             count.innerHTML = (parseInt(data) - 1).toString();\r\n//     //             callUpdateCartQuantityApi(title, price, count.innerHTML, image);\r\n//     //         }\r\n//     //         else {\r\n//     //             // table.removeChild(row);\r\n//     //             btn.replaceWith(btn);\r\n//     //             callApiRemove(title, price, count.innerHTML, image);\r\n//     //         }\r\n//     //     })\r\n//     //     // alert(object.message);\r\n//     // }\r\n// }\r\n// const callUpdateCartQuantityApi = async (title: string, price: string, quantity: string, image: any) => {\r\n//     const res = await fetch(`http://localhost:5500/cart/update`, {\r\n//         method: 'POST',\r\n//         headers: {\r\n//             'Content-Type': 'application/json;charset=utf-8'\r\n//         },\r\n//         body: JSON.stringify({\r\n//             title: title,\r\n//             price: price,\r\n//             quantity: quantity,\r\n//             email: localStorage.getItem('login'),\r\n//             image: image\r\n//         })\r\n//     });\r\n//     const json = await res.text()\r\n//     const object = await JSON.parse(json);\r\n//     console.log(object);\r\n//     //  window.location.href = './shoppingApp.html'\r\n// }\r\n// const callApiRemove = async (title: string, price: string, quantity: string, image: any) => {\r\n//     const res = await fetch(`http://localhost:5500/cart/remove`, {\r\n//         method: 'POST',\r\n//         headers: {\r\n//             'Content-Type': 'application/json;charset=utf-8'\r\n//         },\r\n//         body: JSON.stringify({\r\n//             title: title,\r\n//             price: price,\r\n//             quantity: quantity,\r\n//             email: localStorage.getItem('login')\r\n//         })\r\n//     });\r\n//     const json = await res.text()\r\n//     const object = await JSON.parse(json);\r\n//     console.log(object.message);\r\n//     // window.location.href = './shoppingApp.html'\r\n// }\r\nconst addToCart = (out) => {\r\n    var _a, _b, _c, _d, _e;\r\n    addItemsToCartAddedBeforeLogin();\r\n    const addToCartBtn = out.getElementsByTagName('button');\r\n    for (var btn of addToCartBtn) {\r\n        const title = (_b = (_a = btn.parentElement) === null || _a === void 0 ? void 0 : _a.querySelector('.title')) === null || _b === void 0 ? void 0 : _b.textContent;\r\n        const price = (_d = (_c = btn.parentElement) === null || _c === void 0 ? void 0 : _c.querySelector('.price')) === null || _d === void 0 ? void 0 : _d.textContent;\r\n        const image = (_e = btn.parentElement) === null || _e === void 0 ? void 0 : _e.querySelector('.image');\r\n        btnOfAddToCartBtns(btn, title, price, image === null || image === void 0 ? void 0 : image.getAttribute('src'));\r\n    }\r\n};\r\nexports.addToCart = addToCart;\r\nconst addItemsToCartAddedBeforeLogin = () => __awaiter(void 0, void 0, void 0, function* () {\r\n    if (localStorage.getItem('title') && localStorage.getItem('price') && localStorage.getItem('login')) {\r\n        const res = yield fetch(`http://localhost:5500/cart`, {\r\n            method: 'POST',\r\n            headers: {\r\n                'Content-Type': 'application/json;charset=utf-8'\r\n            },\r\n            body: JSON.stringify({ title: localStorage.getItem('title'), price: localStorage.getItem('price'), email: localStorage.getItem('login'), image: localStorage.getItem('image') })\r\n        });\r\n        const json = yield res.text();\r\n        const object = yield JSON.parse(json);\r\n        if (object.status === 200) {\r\n            localStorage.removeItem('title');\r\n            localStorage.removeItem('price');\r\n        }\r\n    }\r\n});\r\nconst btnOfAddToCartBtns = (btn, title, price, image) => {\r\n    btn.addEventListener('click', (e) => __awaiter(void 0, void 0, void 0, function* () {\r\n        e.preventDefault();\r\n        if (localStorage.getItem('login') === null) {\r\n            if (title != null && price != null && image != null) {\r\n                localStorage.setItem(\"title\", title);\r\n                localStorage.setItem(\"price\", price);\r\n                localStorage.setItem(\"image\", image);\r\n            }\r\n            window.location.href = './login.html';\r\n        }\r\n        callAddToCartApi(localStorage.getItem('login'), title, price, image);\r\n    }));\r\n};\r\nconst callAddToCartApi = (email, title, price, image) => __awaiter(void 0, void 0, void 0, function* () {\r\n    const res = yield fetch(`http://localhost:5500/cart`, {\r\n        method: 'POST',\r\n        headers: {\r\n            'Content-Type': 'application/json;charset=utf-8'\r\n        },\r\n        body: JSON.stringify({ title: title === null || title === void 0 ? void 0 : title.trim(), price: price, email: localStorage.getItem('login'), image: image })\r\n    });\r\n    const json = yield res.text();\r\n    const object = yield JSON.parse(json);\r\n    if (object.status === 402) {\r\n        window.location.href = './login.html';\r\n    }\r\n});\r\n\n\n//# sourceURL=webpack://frontend/./src/shoppingCart/cart/addToCart.ts?");
 
 /***/ }),
-/* 11 */
-/***/ ((__unused_webpack_module, exports) => {
 
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.search = void 0;
-const search = (input, e) => {
-    const term = e.target.value.toLowerCase();
-    console.log(term);
-    const products = document.querySelectorAll('.product');
-    //console.log("search",products);
-    var count = 0;
-    for (var item of products) {
-        console.log(item);
-        var title = item.getElementsByClassName('title')[0].innerHTML;
-        if (title.toLowerCase().indexOf(term) != -1) {
-            item.style.display = 'block';
-            console.log('show');
-        }
-        else {
-            item.style.display = 'none';
-        }
-    }
-};
-exports.search = search;
-
-
-/***/ }),
-/* 12 */
+/***/ "./src/shoppingCart/cart/address.ts":
+/*!******************************************!*\
+  !*** ./src/shoppingCart/cart/address.ts ***!
+  \******************************************/
 /***/ (function(__unused_webpack_module, exports) {
 
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkoutOrder = void 0;
-const checkoutOrder = () => {
-    const table = document.querySelector('.myTable');
-    const headings = table.getElementsByTagName('tr');
-    var count = 0;
-    var title = [];
-    for (var row of headings) {
-        if (count != 0) {
-            var data = row.getElementsByTagName('td')[0];
-            title.push(data.innerText);
-        }
-        count++;
-    }
-    callCheckoutApi(title, table, headings);
-};
-exports.checkoutOrder = checkoutOrder;
-const callCheckoutApi = (title, table, headings) => __awaiter(void 0, void 0, void 0, function* () {
-    const res = yield fetch(`http://localhost:5500/cart/checkout`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify({ title: title,
-            email: localStorage.getItem('login')
-        })
-    });
-    const json = yield res.text();
-    const object = yield JSON.parse(json);
-    console.log(object.status);
-    if (object.status === 200) {
-        console.log(headings.length);
-        var len = headings.length;
-        while (len--) {
-            console.log(len);
-            if (len != 0) {
-                console.log(headings[len]);
-                table.deleteRow(len);
-                const total = document.querySelector('.total');
-                if (total) {
-                    total.value = "0";
-                }
-            }
-        }
-    }
-});
-
+eval("\r\nvar __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\r\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\r\n    return new (P || (P = Promise))(function (resolve, reject) {\r\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\r\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\r\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\r\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\r\n    });\r\n};\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.getCountry = void 0;\r\nconst getCountry = (address) => __awaiter(void 0, void 0, void 0, function* () {\r\n    const country = document.querySelector('#select_country');\r\n    const countryName = country.value;\r\n    localStorage.setItem('country', countryName);\r\n    const res = yield fetch(`http://localhost:5500/address`, {\r\n        method: 'POST',\r\n        headers: {\r\n            'Content-Type': 'application/json;charset=utf-8'\r\n        },\r\n        body: JSON.stringify({ country: localStorage.getItem('country') })\r\n    });\r\n    const json = yield res.text();\r\n    const object = yield JSON.parse(json);\r\n    if (object.status == 402) {\r\n        alert('Please enter states');\r\n    }\r\n    else {\r\n        dropDownForStates(object.states, address);\r\n    }\r\n});\r\nexports.getCountry = getCountry;\r\nconst dropDownForStates = (states, address) => {\r\n    const statesDiv = document.querySelector('#state');\r\n    statesDiv.innerHTML = '';\r\n    const labelForState = document.createElement('label');\r\n    labelForState.innerHTML = `States`;\r\n    statesDiv.appendChild(labelForState);\r\n    const select = document.createElement('select');\r\n    let option = document.createElement('option');\r\n    // const select = document.querySelector('#select_state') as HTMLSelectElement;\r\n    option.innerHTML = `select state`;\r\n    select.appendChild(option);\r\n    for (let state of states) {\r\n        let option = document.createElement('option');\r\n        option.innerHTML = `${state.toUpperCase()}`;\r\n        select.appendChild(option);\r\n    }\r\n    statesDiv.appendChild(select);\r\n    statesDiv.addEventListener('change', (e) => {\r\n        e.preventDefault();\r\n        getState(statesDiv, select);\r\n    });\r\n};\r\nconst getState = (statesDiv, select) => __awaiter(void 0, void 0, void 0, function* () {\r\n    let state = select.value;\r\n    localStorage.setItem('state', state);\r\n    const res = yield fetch(`http://localhost:5500/address/city`, {\r\n        method: 'POST',\r\n        headers: {\r\n            'Content-Type': 'application/json;charset=utf-8'\r\n        },\r\n        body: JSON.stringify({ state: localStorage.getItem('state') })\r\n    });\r\n    const json = yield res.text();\r\n    const object = yield JSON.parse(json);\r\n    if (object.status == 402) {\r\n        alert('Please enter states');\r\n    }\r\n    else {\r\n        console.log(object.cities);\r\n        return dropDownForCity(object.cities);\r\n    }\r\n});\r\nconst dropDownForCity = (cities) => {\r\n    const citiesDiv = document.querySelector('#city');\r\n    citiesDiv.innerHTML = '';\r\n    const labelForState = document.createElement('label');\r\n    labelForState.innerHTML = `City`;\r\n    citiesDiv.appendChild(labelForState);\r\n    const select = document.createElement('select');\r\n    let option = document.createElement('option');\r\n    option.innerHTML = `select city`;\r\n    select.appendChild(option);\r\n    for (let state of cities) {\r\n        let option = document.createElement('option');\r\n        option.innerHTML = `${state.toUpperCase()}`;\r\n        select.appendChild(option);\r\n    }\r\n    citiesDiv.appendChild(select);\r\n    citiesDiv.addEventListener('change', (e) => {\r\n        e.preventDefault();\r\n        getCity(citiesDiv, select);\r\n    });\r\n};\r\nconst getCity = (citiesDiv, select) => __awaiter(void 0, void 0, void 0, function* () {\r\n    let cityName = select.value;\r\n    localStorage.setItem('city', cityName);\r\n    const res = yield fetch(`http://localhost:5500/address/zip`, {\r\n        method: 'POST',\r\n        headers: {\r\n            'Content-Type': 'application/json;charset=utf-8'\r\n        },\r\n        body: JSON.stringify({ city: localStorage.getItem('city') })\r\n    });\r\n    const json = yield res.text();\r\n    const object = yield JSON.parse(json);\r\n    if (object.status == 402) {\r\n        alert('Please enter states');\r\n    }\r\n    else {\r\n        console.log(object.zip);\r\n        return showZip(object.zip);\r\n    }\r\n});\r\nconst showZip = (zip) => {\r\n    const zipDiv = document.querySelector('#zip');\r\n    zipDiv.innerHTML = '';\r\n    const labelForZip = document.createElement('label');\r\n    labelForZip.innerHTML = `Zip`;\r\n    zipDiv.appendChild(labelForZip);\r\n    const div = document.createElement('div');\r\n    div.innerHTML = `${zip}`;\r\n    zipDiv.appendChild(div);\r\n};\r\n\n\n//# sourceURL=webpack://frontend/./src/shoppingCart/cart/address.ts?");
 
 /***/ }),
-/* 13 */
+
+/***/ "./src/shoppingCart/cart/cart.ts":
+/*!***************************************!*\
+  !*** ./src/shoppingCart/cart/cart.ts ***!
+  \***************************************/
 /***/ (function(__unused_webpack_module, exports) {
 
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.placedOrders = void 0;
-const placedOrders = (body) => __awaiter(void 0, void 0, void 0, function* () {
-    const res = yield fetch(`http://localhost:5500/cart/placedOrders`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify({ email: localStorage.getItem('login') })
-    });
-    const json = yield res.text();
-    const object = yield JSON.parse(json);
-    console.log(object.date.length);
-    if (localStorage.getItem('login') === null || object.date[0] === 'null') {
-        body.replaceWith('PLEASE ORDER SOMETHING');
-    }
-    var count = 0;
-    var c = 1;
-    var total = 0;
-    var checkDate = object.date[0];
-    console.log(checkDate);
-    const table = document.querySelector('.myTable');
-    for (var item of object.date) {
-        const cartTitleList = document.createElement('td');
-        const cartPriceList = document.createElement('td');
-        const cartQuantityList = document.createElement('td');
-        const cartDateList = document.createElement('td');
-        const row = document.createElement('tr');
-        const div = document.createElement('div');
-        const cartTitleListText = document.createElement('span');
-        const cartPriceListText = document.createElement('span');
-        const cartQuantityListText = document.createElement('span');
-        const cartDateListText = document.createElement('span');
-        cartTitleListText.textContent = `${object.title[count]}`;
-        cartTitleList.appendChild(cartTitleListText);
-        cartPriceListText.textContent = `${object.price[count]}`;
-        cartPriceList.appendChild(cartPriceListText);
-        cartDateListText.textContent = `${object.date[count].slice(0, 16)}`;
-        cartDateList.appendChild(cartDateListText);
-        cartQuantityListText.textContent = `${object.quantity[count]}`;
-        cartQuantityList.appendChild(cartQuantityListText);
-        row.appendChild(cartTitleList);
-        row.appendChild(cartPriceList);
-        row.appendChild(cartQuantityList);
-        row.appendChild(cartDateList);
-        if (checkDate === object.date[count]) {
-            div.innerHTML = '';
-            var matches = object.price[count].match(/(\d+)/);
-            if (matches) {
-                var price = '';
-                price = matches[0];
-                total += parseInt(object.quantity[count]) * parseInt(price);
-            }
-        }
-        else {
-            setDivContent(div, `Date: ${object.date[count - 1].slice(0, 16)}\n and Paid Bill = $${total}`);
-            checkDate = object.date[count];
-            var matches = object.price[count].match(/(\d+)/);
-            if (matches) {
-                var price = '';
-                price = matches[0];
-                total = parseInt(object.quantity[count]) * parseInt(price);
-            }
-        }
-        table.appendChild(div);
-        table.appendChild(row);
-        count++;
-    }
-    if (object.date[object.date.length - 1] !== undefined) {
-        const latestDeliveredDate = document.createElement('div');
-        table.appendChild(setDivContent(latestDeliveredDate, `Date: ${object.date[object.date.length - 1].slice(0, 16)} and Paid Bill = $${total}`));
-    }
-});
-exports.placedOrders = placedOrders;
-const setDivContent = (div, text) => {
-    div.innerHTML = text;
-    div.style.color = 'green';
-    div.style.backgroundColor = 'paleturquoise';
-    return div;
-};
-
+eval("\r\nvar __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\r\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\r\n    return new (P || (P = Promise))(function (resolve, reject) {\r\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\r\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\r\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\r\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\r\n    });\r\n};\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.callUpdateCartQuantityApi = exports.callApiRemove = exports.addCartItem = void 0;\r\nconst totalElm = document.querySelector('.total');\r\nconst table = document.querySelector('.myTable');\r\nconst addCartItem = (body) => __awaiter(void 0, void 0, void 0, function* () {\r\n    if (localStorage.getItem('login') === null) {\r\n        body.replaceWith('PLEASE LOGIN');\r\n    }\r\n    const res = yield fetch(`http://localhost:5500/cart/items`, {\r\n        method: 'POST',\r\n        headers: {\r\n            'Content-Type': 'application/json;charset=utf-8'\r\n        },\r\n        body: JSON.stringify({ email: localStorage.getItem('login') })\r\n    });\r\n    const json = yield res.text();\r\n    const object = yield JSON.parse(json);\r\n    // console.log(object);\r\n    if (object.price.length === 0) {\r\n        window.location.href = './emptyCart.html';\r\n    }\r\n    // console.log(object.price, object.title);\r\n    var count = 0;\r\n    var total = 0;\r\n    for (let item of object.title) {\r\n        const cartTitleList = document.createElement('td');\r\n        const cartPriceList = document.createElement('td');\r\n        const cartQuantityList = document.createElement('td');\r\n        const cartImageList = document.createElement('td');\r\n        const row = document.createElement('tr');\r\n        const cartTitleListText = document.createElement('span');\r\n        const cartPriceListText = document.createElement('span');\r\n        const cartQuantityListText = document.createElement('span');\r\n        const cartImageListText = document.createElement('span');\r\n        const cartRemoveBtn = document.createElement('button');\r\n        const cartAddBtn = document.createElement('button');\r\n        const cartDeleteBtn = document.createElement('button');\r\n        const img = document.createElement('img');\r\n        img.src = `${object.image[count]}`;\r\n        img.style.width = '25%';\r\n        img.style.height = '20%';\r\n        cartTitleListText.textContent = `${object.title[count]}`;\r\n        cartTitleList.appendChild(cartTitleListText);\r\n        cartPriceListText.textContent = `${object.price[count]}`;\r\n        cartPriceList.appendChild(cartPriceListText);\r\n        cartImageListText.appendChild(img);\r\n        cartImageList.appendChild(cartImageListText);\r\n        cartAddBtn.textContent = `+`;\r\n        cartQuantityList.appendChild(cartAddBtn);\r\n        cartQuantityListText.textContent = `${object.quantity[count]}`;\r\n        cartQuantityList.appendChild(cartQuantityListText);\r\n        cartDeleteBtn.textContent = `-`;\r\n        cartQuantityList.appendChild(cartDeleteBtn);\r\n        cartRemoveBtn.textContent = `REMOVE`;\r\n        cartQuantityList.appendChild(cartRemoveBtn);\r\n        row.appendChild(cartImageList);\r\n        row.appendChild(cartTitleList);\r\n        row.appendChild(cartPriceList);\r\n        row.appendChild(cartQuantityList);\r\n        table.appendChild(row);\r\n        callCartAddBtn(cartAddBtn, cartTitleListText, cartPriceListText, cartQuantityListText, cartImageListText);\r\n        callCartDeleteBTn(cartDeleteBtn, cartTitleListText, cartPriceListText, cartQuantityListText, cartImageListText, row, table);\r\n        cartRemoveBtn.addEventListener('click', () => {\r\n            table.removeChild(row);\r\n            (0, exports.callApiRemove)(cartTitleListText, cartPriceListText, cartQuantityListText, cartImageListText);\r\n        });\r\n        var matches = object.price[count].match(/(\\d+)/);\r\n        if (matches) {\r\n            var price = '';\r\n            price = matches[0];\r\n            total += parseInt(object.quantity[count]) * parseInt(price);\r\n        }\r\n        // console.log(\"grandTotal\", total);\r\n        totalElm.value = total.toString();\r\n        count = count + 1;\r\n    }\r\n});\r\nexports.addCartItem = addCartItem;\r\nconst callCartAddBtn = (cartAddBtn, cartTitleListText, cartPriceListText, cartQuantityListText, cartImageListText) => {\r\n    cartAddBtn.addEventListener('click', () => {\r\n        var data = cartQuantityListText.textContent;\r\n        if (data != null) {\r\n            cartQuantityListText.textContent = (parseInt(data) + 1).toString();\r\n            (0, exports.callUpdateCartQuantityApi)(cartTitleListText, cartPriceListText, cartQuantityListText, cartImageListText);\r\n        }\r\n    });\r\n};\r\nconst callCartDeleteBTn = (cartDeleteBtn, cartTitleListText, cartPriceListText, cartQuantityListText, cartImageListText, row, table) => {\r\n    cartDeleteBtn.addEventListener('click', () => {\r\n        var data = cartQuantityListText.textContent;\r\n        if (data != null && parseInt(data) > 1) {\r\n            cartQuantityListText.textContent = (parseInt(data) - 1).toString();\r\n            (0, exports.callUpdateCartQuantityApi)(cartTitleListText, cartPriceListText, cartQuantityListText, cartImageListText);\r\n        }\r\n        else {\r\n            table.removeChild(row);\r\n            (0, exports.callApiRemove)(cartTitleListText, cartPriceListText, cartQuantityListText, cartImageListText);\r\n        }\r\n    });\r\n};\r\nconst callApiRemove = (cartTitleListText, cartPriceListText, cartQuantityListText, cartImageListText) => __awaiter(void 0, void 0, void 0, function* () {\r\n    // console.log(cartTitleListText.textContent);\r\n    const res = yield fetch(`http://localhost:5500/cart/remove`, {\r\n        method: 'POST',\r\n        headers: {\r\n            'Content-Type': 'application/json;charset=utf-8'\r\n        },\r\n        body: JSON.stringify({\r\n            title: cartTitleListText.textContent,\r\n            price: cartPriceListText.textContent,\r\n            quantity: cartQuantityListText.textContent,\r\n            email: localStorage.getItem('login')\r\n        })\r\n    });\r\n    const json = yield res.text();\r\n    const object = yield JSON.parse(json);\r\n    console.log(object.message);\r\n    window.location.href = './cart.html';\r\n});\r\nexports.callApiRemove = callApiRemove;\r\nconst callUpdateCartQuantityApi = (cartTitleListText, cartPriceListText, cartQuantityListText, cartImageListText) => __awaiter(void 0, void 0, void 0, function* () {\r\n    console.log(cartTitleListText.textContent);\r\n    const res = yield fetch(`http://localhost:5500/cart/update`, {\r\n        method: 'POST',\r\n        headers: {\r\n            'Content-Type': 'application/json;charset=utf-8'\r\n        },\r\n        body: JSON.stringify({\r\n            title: cartTitleListText.textContent,\r\n            price: cartPriceListText.textContent,\r\n            quantity: cartQuantityListText.textContent,\r\n            email: localStorage.getItem('login'),\r\n            image: cartImageListText.textContent\r\n        })\r\n    });\r\n    const json = yield res.text();\r\n    const object = yield JSON.parse(json);\r\n    // console.log(object.message);\r\n    window.location.href = './cart.html';\r\n});\r\nexports.callUpdateCartQuantityApi = callUpdateCartQuantityApi;\r\n\n\n//# sourceURL=webpack://frontend/./src/shoppingCart/cart/cart.ts?");
 
 /***/ }),
-/* 14 */
+
+/***/ "./src/shoppingCart/checkout/checkoutOrder.ts":
+/*!****************************************************!*\
+  !*** ./src/shoppingCart/checkout/checkoutOrder.ts ***!
+  \****************************************************/
+/***/ (function(__unused_webpack_module, exports) {
+
+eval("\r\nvar __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\r\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\r\n    return new (P || (P = Promise))(function (resolve, reject) {\r\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\r\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\r\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\r\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\r\n    });\r\n};\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.checkoutOrder = void 0;\r\nconst checkoutOrder = () => {\r\n    const table = document.querySelector('.myTable');\r\n    const headings = table.getElementsByTagName('tr');\r\n    console.log(headings);\r\n    var count = 0;\r\n    var title = [];\r\n    for (var row of headings) {\r\n        if (count != 0) {\r\n            var data = row.getElementsByTagName('td')[1];\r\n            title.push(data.innerText);\r\n        }\r\n        count++;\r\n    }\r\n    callCheckoutApi(title, table, headings);\r\n};\r\nexports.checkoutOrder = checkoutOrder;\r\nconst callCheckoutApi = (title, table, headings) => __awaiter(void 0, void 0, void 0, function* () {\r\n    const res = yield fetch(`http://localhost:5500/cart/checkout`, {\r\n        method: 'POST',\r\n        headers: {\r\n            'Content-Type': 'application/json;charset=utf-8'\r\n        },\r\n        body: JSON.stringify({\r\n            title: title,\r\n            email: localStorage.getItem('login'),\r\n            country: localStorage.getItem('country'), state: localStorage.getItem('state'),\r\n            city: localStorage.getItem('city')\r\n        })\r\n    });\r\n    const json = yield res.text();\r\n    const object = yield JSON.parse(json);\r\n    console.log(object.status);\r\n    if (object.status === 200) {\r\n        console.log(headings.length);\r\n        var len = headings.length;\r\n        while (len--) {\r\n            console.log(len);\r\n            if (len != 0) {\r\n                console.log(headings[len]);\r\n                table.deleteRow(len);\r\n                const total = document.querySelector('.total');\r\n                if (total) {\r\n                    total.value = \"0\";\r\n                }\r\n                localStorage.removeItem('country');\r\n                localStorage.removeItem('state');\r\n                localStorage.removeItem('city');\r\n            }\r\n        }\r\n    }\r\n});\r\n\n\n//# sourceURL=webpack://frontend/./src/shoppingCart/checkout/checkoutOrder.ts?");
+
+/***/ }),
+
+/***/ "./src/shoppingCart/filter/filters.ts":
+/*!********************************************!*\
+  !*** ./src/shoppingCart/filter/filters.ts ***!
+  \********************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.showProductFilter = void 0;
-const products_1 = __webpack_require__(6);
-const showProductFilter = (productFilter) => {
-    if (document.getElementById('show_product_filter').style.display === 'block') {
-        document.getElementById('show_product_filter').style.display === 'none';
-    }
-    document.getElementById('show_product_filter').style.display = 'block';
-    var checkboxeOnColor = document.getElementsByName('filter');
-    var checkboxeOnSize = document.getElementsByName('size_filter');
-    for (var checkbox of checkboxeOnColor) {
-        if (checkbox.checked === true) {
-            console.log(checkbox.value);
-            localStorage.setItem('color', checkbox.value);
-        }
-    }
-    for (var checkbox of checkboxeOnSize) {
-        if (checkbox.checked === true) {
-            console.log(checkbox.value);
-            localStorage.setItem('size', checkbox.value);
-        }
-    }
-    (0, products_1.product)();
-};
-exports.showProductFilter = showProductFilter;
-
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.showProductFilter = void 0;\r\nconst products_1 = __webpack_require__(/*! ../products/products */ \"./src/shoppingCart/products/products.ts\");\r\nconst showProductFilter = (productFilter) => {\r\n    if (document.getElementById('show_product_filter').style.display === 'block') {\r\n        document.getElementById('show_product_filter').style.display === 'none';\r\n    }\r\n    document.getElementById('show_product_filter').style.display = 'block';\r\n    var checkboxeOnColor = document.getElementsByName('filter');\r\n    var checkboxeOnSize = document.getElementsByName('size_filter');\r\n    for (var checkbox of checkboxeOnColor) {\r\n        if (checkbox.checked === true) {\r\n            console.log(checkbox.value);\r\n            localStorage.setItem('color', checkbox.value);\r\n        }\r\n    }\r\n    for (var checkbox of checkboxeOnSize) {\r\n        if (checkbox.checked === true) {\r\n            console.log(checkbox.value);\r\n            localStorage.setItem('size', checkbox.value);\r\n        }\r\n    }\r\n    (0, products_1.product)();\r\n};\r\nexports.showProductFilter = showProductFilter;\r\n\n\n//# sourceURL=webpack://frontend/./src/shoppingCart/filter/filters.ts?");
 
 /***/ }),
-/* 15 */
+
+/***/ "./src/shoppingCart/placedOrders/placedOrders.ts":
+/*!*******************************************************!*\
+  !*** ./src/shoppingCart/placedOrders/placedOrders.ts ***!
+  \*******************************************************/
 /***/ (function(__unused_webpack_module, exports) {
 
+eval("\r\nvar __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\r\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\r\n    return new (P || (P = Promise))(function (resolve, reject) {\r\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\r\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\r\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\r\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\r\n    });\r\n};\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.placedOrders = void 0;\r\nconst placedOrders = (body) => __awaiter(void 0, void 0, void 0, function* () {\r\n    const res = yield fetch(`http://localhost:5500/cart/placedOrders`, {\r\n        method: 'POST',\r\n        headers: {\r\n            'Content-Type': 'application/json;charset=utf-8'\r\n        },\r\n        body: JSON.stringify({ email: localStorage.getItem('login') })\r\n    });\r\n    const json = yield res.text();\r\n    const object = yield JSON.parse(json);\r\n    console.log(object.date.length);\r\n    if (localStorage.getItem('login') === null || object.date[0] === 'null') {\r\n        body.replaceWith('PLEASE ORDER SOMETHING');\r\n    }\r\n    var count = 0;\r\n    var total = 0;\r\n    var checkDate = object.date[0];\r\n    const table = document.querySelector('.myTable');\r\n    for (var item of object.date) {\r\n        const cartImageList = document.createElement('td');\r\n        const cartTitleList = document.createElement('td');\r\n        const cartPriceList = document.createElement('td');\r\n        const cartQuantityList = document.createElement('td');\r\n        const row = document.createElement('tr');\r\n        const divForDate = document.createElement('div');\r\n        const divForPrice = document.createElement('div');\r\n        const divForaddress = document.createElement('div');\r\n        const cartImageListText = document.createElement('span');\r\n        const cartTitleListText = document.createElement('span');\r\n        const cartPriceListText = document.createElement('span');\r\n        const cartQuantityListText = document.createElement('span');\r\n        const img = document.createElement('img');\r\n        img.src = `${object.image[count]}`;\r\n        img.style.width = '25%';\r\n        img.style.height = '20%';\r\n        cartImageListText.appendChild(img);\r\n        cartImageList.appendChild(cartImageListText);\r\n        cartTitleListText.textContent = `${object.title[count]}`;\r\n        cartTitleList.appendChild(cartTitleListText);\r\n        cartPriceListText.textContent = object.price[count].slice(6);\r\n        cartPriceList.appendChild(cartPriceListText);\r\n        cartQuantityListText.textContent = `${object.quantity[count]}`;\r\n        cartQuantityList.appendChild(cartQuantityListText);\r\n        row.appendChild(cartImageList);\r\n        row.appendChild(cartTitleList);\r\n        row.appendChild(cartPriceList);\r\n        row.appendChild(cartQuantityList);\r\n        row.style.backgroundColor = 'whitesmoke';\r\n        if (checkDate === object.date[count]) {\r\n            divForDate.innerHTML = '';\r\n            divForPrice.innerHTML = '';\r\n            divForaddress.innerHTML = '';\r\n            var matches = object.price[count].match(/(\\d+)/);\r\n            if (matches) {\r\n                var price = '';\r\n                price = matches[0];\r\n                total += parseInt(object.quantity[count]) * parseInt(price);\r\n            }\r\n        }\r\n        else {\r\n            setDivContent(divForDate, `Date: ${object.date[count - 1].slice(0, 16)}`);\r\n            setDivContent(divForPrice, `Total bill: ${total}$`);\r\n            setDivContent(divForaddress, `Address: ${object.address[count - 1]}`);\r\n            checkDate = object.date[count];\r\n            var matches = object.price[count].match(/(\\d+)/);\r\n            if (matches) {\r\n                var price = '';\r\n                price = matches[0];\r\n                total = parseInt(object.quantity[count]) * parseInt(price);\r\n            }\r\n        }\r\n        table.appendChild(divForDate);\r\n        table.appendChild(divForPrice);\r\n        table.appendChild(divForaddress);\r\n        table.appendChild(row);\r\n        count++;\r\n    }\r\n    if (object.date[object.date.length - 1] !== undefined) {\r\n        const latestDeliveredDate = document.createElement('div');\r\n        const latestDeliveryBill = document.createElement('div');\r\n        const latestDeliveryAddress = document.createElement('div');\r\n        table.appendChild(setDivContent(latestDeliveredDate, `Date: ${object.date[object.date.length - 1].slice(0, 16)}`));\r\n        table.appendChild(setDivContent(latestDeliveryBill, `Total bill: ${total}$`));\r\n        table.appendChild(setDivContent(latestDeliveryAddress, `Address: ${object.address[object.address.length - 1]}`));\r\n    }\r\n});\r\nexports.placedOrders = placedOrders;\r\nconst setDivContent = (div, text) => {\r\n    div.innerHTML = text;\r\n    div.style.color = 'green';\r\n    // div.style.backgroundColor='paleturquoise'\r\n    return div;\r\n};\r\n\n\n//# sourceURL=webpack://frontend/./src/shoppingCart/placedOrders/placedOrders.ts?");
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.detailsPage = exports.callApiToGetProductDetails = void 0;
-const callApiToGetProductDetails = () => __awaiter(void 0, void 0, void 0, function* () {
-    const response = yield fetch(`http://localhost:5500/products/details`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify({ title: localStorage.getItem('title'), price: localStorage.getItem('price') })
-    });
-    const json = yield response.text();
-    const obj = yield JSON.parse(json);
-    console.log(obj.description);
-    console.log(obj.message);
-    return obj;
-});
-exports.callApiToGetProductDetails = callApiToGetProductDetails;
-const detailsPage = (body) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield (0, exports.callApiToGetProductDetails)();
-    if (data.description != null) {
-        localStorage.removeItem('title');
-        localStorage.removeItem('price');
-    }
-    const details = body.querySelector('.product_details');
-    let output = "";
-    output += `<div class="product" name="product">
-    <img src="${data.image}" width='50%' height="20%" alt="${data.description}">
-    <p class="title">${data.title}</p>
-    <p class="description">${data.description}</p>
-    <p class="price">
-       <span>price ${data.price}</span>
-    </p><br><br>
- </div>`;
-    details.innerHTML = output;
-});
-exports.detailsPage = detailsPage;
+/***/ }),
 
+/***/ "./src/shoppingCart/productDetails/productsDetailsPage.ts":
+/*!****************************************************************!*\
+  !*** ./src/shoppingCart/productDetails/productsDetailsPage.ts ***!
+  \****************************************************************/
+/***/ (function(__unused_webpack_module, exports) {
+
+eval("\r\nvar __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\r\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\r\n    return new (P || (P = Promise))(function (resolve, reject) {\r\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\r\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\r\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\r\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\r\n    });\r\n};\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.detailsPage = exports.callApiToGetProductDetails = void 0;\r\nconst callApiToGetProductDetails = () => __awaiter(void 0, void 0, void 0, function* () {\r\n    const response = yield fetch(`http://localhost:5500/products/details`, {\r\n        method: 'POST',\r\n        headers: {\r\n            'Content-Type': 'application/json;charset=utf-8'\r\n        },\r\n        body: JSON.stringify({ title: localStorage.getItem('title'), price: localStorage.getItem('price') })\r\n    });\r\n    const json = yield response.text();\r\n    const obj = yield JSON.parse(json);\r\n    console.log(obj.description);\r\n    console.log(obj.message);\r\n    return obj;\r\n});\r\nexports.callApiToGetProductDetails = callApiToGetProductDetails;\r\nconst detailsPage = (body) => __awaiter(void 0, void 0, void 0, function* () {\r\n    const data = yield (0, exports.callApiToGetProductDetails)();\r\n    if (data.description != null) {\r\n        localStorage.removeItem('title');\r\n        localStorage.removeItem('price');\r\n    }\r\n    const details = body.querySelector('.product_details');\r\n    let output = \"\";\r\n    output += `<div class=\"product\" name=\"product\">\r\n    <img src=\"${data.image}\" width='50%' height=\"20%\" alt=\"${data.description}\">\r\n    <p class=\"title\">${data.title}</p>\r\n    <p class=\"description\">${data.description}</p>\r\n    <p class=\"price\">\r\n       <span>price ${data.price}</span>\r\n    </p><br><br>\r\n </div>`;\r\n    details.innerHTML = output;\r\n});\r\nexports.detailsPage = detailsPage;\r\n\n\n//# sourceURL=webpack://frontend/./src/shoppingCart/productDetails/productsDetailsPage.ts?");
+
+/***/ }),
+
+/***/ "./src/shoppingCart/productDetails/showProductsDetails.ts":
+/*!****************************************************************!*\
+  !*** ./src/shoppingCart/productDetails/showProductsDetails.ts ***!
+  \****************************************************************/
+/***/ (function(__unused_webpack_module, exports) {
+
+eval("\r\nvar __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\r\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\r\n    return new (P || (P = Promise))(function (resolve, reject) {\r\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\r\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\r\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\r\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\r\n    });\r\n};\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.showProductsDetails = void 0;\r\nconst showProductsDetails = (out, product) => {\r\n    var _a, _b, _c, _d, _e, _f;\r\n    const viewProductDetailsBtn = out.querySelectorAll('.view-details');\r\n    for (var btn of viewProductDetailsBtn) {\r\n        const title = (_c = ((_b = (_a = btn.parentElement) === null || _a === void 0 ? void 0 : _a.querySelector('.title')) === null || _b === void 0 ? void 0 : _b.textContent)) === null || _c === void 0 ? void 0 : _c.toLowerCase();\r\n        const price = (_f = ((_e = (_d = btn.parentElement) === null || _d === void 0 ? void 0 : _d.querySelector('.price')) === null || _e === void 0 ? void 0 : _e.textContent)) === null || _f === void 0 ? void 0 : _f.toLowerCase();\r\n        btnOfviewProductDetailsBtns(btn, title, price, product);\r\n    }\r\n};\r\nexports.showProductsDetails = showProductsDetails;\r\nconst btnOfviewProductDetailsBtns = (btn, title, price, product) => {\r\n    console.log(title, price);\r\n    btn.addEventListener('click', (e) => __awaiter(void 0, void 0, void 0, function* () {\r\n        e.preventDefault();\r\n        for (let data of product) {\r\n            if ((data.title).toLowerCase() === title && (data.price).toLowerCase() === price) {\r\n                console.log(\"match\");\r\n            }\r\n        }\r\n        if (localStorage.getItem('title')) {\r\n            window.location.href = './productDetails.html';\r\n            return;\r\n        }\r\n        localStorage.setItem('title', title);\r\n        localStorage.setItem('price', price);\r\n        console.log(title, price, \"title\");\r\n    }));\r\n};\r\n\n\n//# sourceURL=webpack://frontend/./src/shoppingCart/productDetails/showProductsDetails.ts?");
+
+/***/ }),
+
+/***/ "./src/shoppingCart/products/products.ts":
+/*!***********************************************!*\
+  !*** ./src/shoppingCart/products/products.ts ***!
+  \***********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+eval("\r\nvar __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\r\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\r\n    return new (P || (P = Promise))(function (resolve, reject) {\r\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\r\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\r\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\r\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\r\n    });\r\n};\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.product = void 0;\r\nconst showProductsDetails_1 = __webpack_require__(/*! ../productDetails/showProductsDetails */ \"./src/shoppingCart/productDetails/showProductsDetails.ts\");\r\nconst addToCart_1 = __webpack_require__(/*! ../cart/addToCart */ \"./src/shoppingCart/cart/addToCart.ts\");\r\nconst out = document.querySelector('.products');\r\nconst product = () => {\r\n    const params = getParams();\r\n    productService(params, localStorage.getItem('color'), localStorage.getItem('size'));\r\n};\r\nexports.product = product;\r\nconst getParams = () => {\r\n    const queryString = window.location.search;\r\n    const urlParams = new URLSearchParams(queryString);\r\n    const param = urlParams.get('filter');\r\n    console.log(param);\r\n    return param;\r\n};\r\nconst productService = (params, color, size) => __awaiter(void 0, void 0, void 0, function* () {\r\n    const product = yield productFetchApi(params, color, size);\r\n    let output = \"\";\r\n    for (let item of product) {\r\n        output += `\r\n        <div class=\"product\" name=\"product\">\r\n           <img class=\"image\" src=\"${item.image}\">\r\n           <p class=\"title\">${item.title}</p>\r\n           <p class=\"price\">\r\n              <span>price ${item.price}</span>\r\n              </p><br><br>\r\n           <button style=\"color:palevioletred\" name=\"addCart\">Add to cart</button>\r\n           <div>\r\n           <div style=\"display:none;color:palevioletred\" class=\"add-btn\">+</div>\r\n           <div style=\"display:none;color:palevioletred\" class=\"quantity\"></div>\r\n           <div style=\"display:none;color:palevioletred\" class=\"subtract-btn\">-</div>\r\n           </div>\r\n\r\n           <br><br>\r\n           <div style=\"color:palevioletred\" style=\"cursor:pointer;\" name=\"view\" class=\"view-details\">Details</div>\r\n        </div>`;\r\n    }\r\n    out.innerHTML = output;\r\n    (0, addToCart_1.addToCart)(out);\r\n    // onceAddedProductInCart(out);\r\n    (0, showProductsDetails_1.showProductsDetails)(out, product);\r\n});\r\nconst productFetchApi = (params, color, size) => __awaiter(void 0, void 0, void 0, function* () {\r\n    const response = yield fetch(`http://localhost:5500/products`, {\r\n        method: 'POST',\r\n        headers: {\r\n            'Content-Type': 'application/json;charset=utf-8'\r\n        },\r\n        body: JSON.stringify({ color: color, size: size, filter: params })\r\n    });\r\n    console.log(typeof response);\r\n    const json = yield response.text();\r\n    console.log(typeof json);\r\n    const obj = yield JSON.parse(json);\r\n    return obj;\r\n});\r\n\n\n//# sourceURL=webpack://frontend/./src/shoppingCart/products/products.ts?");
+
+/***/ }),
+
+/***/ "./src/shoppingCart/searchBar/serachBar.ts":
+/*!*************************************************!*\
+  !*** ./src/shoppingCart/searchBar/serachBar.ts ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.search = void 0;\r\nconst search = (input, e) => {\r\n    const term = e.target.value.toLowerCase();\r\n    const products = document.querySelectorAll('.product');\r\n    for (var item of products) {\r\n        console.log(item);\r\n        var title = item.getElementsByClassName('title')[0].innerHTML;\r\n        if (title.toLowerCase().indexOf(term) != -1) {\r\n            item.style.display = 'block';\r\n            console.log('show');\r\n        }\r\n        else {\r\n            item.style.display = 'none';\r\n        }\r\n    }\r\n};\r\nexports.search = search;\r\n\n\n//# sourceURL=webpack://frontend/./src/shoppingCart/searchBar/serachBar.ts?");
+
+/***/ }),
+
+/***/ "./src/user.ts":
+/*!*********************!*\
+  !*** ./src/user.ts ***!
+  \*********************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+eval("\r\nvar __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\r\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\r\n    return new (P || (P = Promise))(function (resolve, reject) {\r\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\r\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\r\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\r\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\r\n    });\r\n};\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nconst login_1 = __webpack_require__(/*! ./user/login */ \"./src/user/login.ts\");\r\nconst signup_1 = __webpack_require__(/*! ./user/signup */ \"./src/user/signup.ts\");\r\nconst forgot_1 = __webpack_require__(/*! ./user/forgot */ \"./src/user/forgot.ts\");\r\nconst resetPass_1 = __webpack_require__(/*! ./user/resetPass */ \"./src/user/resetPass.ts\");\r\nconst products_1 = __webpack_require__(/*! ./shoppingCart/products/products */ \"./src/shoppingCart/products/products.ts\");\r\nconst loginBtn = document.querySelector('#login');\r\nconst logoutBtn = document.querySelector('#logout');\r\nif (loginBtn && localStorage.getItem('login') && logoutBtn) {\r\n    if (loginBtn.style.display === \"none\") {\r\n        loginBtn.style.display = \"block\";\r\n    }\r\n    else {\r\n        logoutBtn.style.display = 'block';\r\n        loginBtn.style.display = \"none\";\r\n    }\r\n}\r\nif (logoutBtn) {\r\n    logoutBtn.onclick = (e) => {\r\n        e.preventDefault();\r\n        localStorage.removeItem('login');\r\n        if (logoutBtn.style.display === \"none\") {\r\n            logoutBtn.style.display = \"block\";\r\n        }\r\n        else {\r\n            logoutBtn.style.display = \"none\";\r\n        }\r\n        loginBtn.style.display = 'block';\r\n    };\r\n}\r\nconst l = document.getElementById('loginPage');\r\nif (l && localStorage.getItem('login')) {\r\n    window.location.href = 'shoppingApp.html';\r\n}\r\nconst signupFormEle = document.querySelector('#signupSubmit');\r\nif (signupFormEle !== null) {\r\n    signupFormEle.addEventListener('click', (e) => {\r\n        e.preventDefault();\r\n        (0, signup_1.signupForm)(signupFormEle);\r\n    });\r\n}\r\nconst form = document.getElementById('resetPage');\r\nif (form !== null) {\r\n    form.onload = (e) => __awaiter(void 0, void 0, void 0, function* () {\r\n        e.preventDefault();\r\n        const query = window.location.search;\r\n        const url = new URLSearchParams(query);\r\n        const token = yield url.get('token');\r\n        const res = yield fetch(`http://localhost:5500/forgot/token}`, {\r\n            method: 'POST',\r\n            headers: {\r\n                'Content-Type': 'application/json;charset=utf-8'\r\n            },\r\n            body: JSON.stringify({ token: token })\r\n        });\r\n        const json = yield res.text();\r\n        const object = yield JSON.parse(json);\r\n        console.log(object);\r\n        if (object.status === 400 || object.status === 404) {\r\n            window.location.href = './expiredPage.html';\r\n        }\r\n        else {\r\n            const mailArea = document.getElementById('forgot-email');\r\n            mailArea.value = object.email;\r\n        }\r\n    });\r\n}\r\nconst loginFormEle = document.querySelector('#loginSubmit');\r\nconsole.log(loginFormEle);\r\nif (loginFormEle !== null) {\r\n    loginFormEle.addEventListener('click', (e) => {\r\n        e.preventDefault();\r\n        (0, login_1.loginForm)(loginFormEle);\r\n    });\r\n}\r\nconst resetFormEle = document.querySelector('#resetSubmit');\r\nif (resetFormEle !== null) {\r\n    resetFormEle.addEventListener('click', (e) => {\r\n        e.preventDefault();\r\n        (0, resetPass_1.resetForm)(resetFormEle);\r\n    });\r\n}\r\nconst forgotFormEle = document.querySelector('#forgotSubmit');\r\nif (forgotFormEle !== null) {\r\n    forgotFormEle.addEventListener('click', (e) => {\r\n        e.preventDefault();\r\n        (0, forgot_1.forgotForm)(forgotFormEle);\r\n    });\r\n}\r\nconst redirectLogin = document.querySelector('.redirect_login');\r\nif (redirectLogin !== null) {\r\n    redirectLogin.addEventListener('click', (e) => {\r\n        e.preventDefault();\r\n        window.location.href = './login.html';\r\n    });\r\n}\r\nconst redirectSignup = document.querySelector('.redirect_signup');\r\nif (redirectSignup !== null) {\r\n    redirectSignup.addEventListener('click', (e) => {\r\n        e.preventDefault();\r\n        window.location.href = './signup.html';\r\n    });\r\n}\r\nconst redirectForgot = document.querySelector('#redirect_forgot');\r\nif (redirectForgot !== null) {\r\n    redirectForgot.addEventListener('click', (e) => {\r\n        e.preventDefault();\r\n        window.location.href = './forgot.html';\r\n    });\r\n}\r\nconst shoppingApp = document.querySelector('.shoppingApp');\r\nif (shoppingApp) {\r\n    logoutBtn.style.display = 'none';\r\n    if (localStorage.getItem('login')) {\r\n        logoutBtn.style.display = 'block';\r\n    }\r\n    (0, products_1.product)();\r\n}\r\n\n\n//# sourceURL=webpack://frontend/./src/user.ts?");
+
+/***/ }),
+
+/***/ "./src/user/forgot.ts":
+/*!****************************!*\
+  !*** ./src/user/forgot.ts ***!
+  \****************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+eval("\r\nvar __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\r\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\r\n    return new (P || (P = Promise))(function (resolve, reject) {\r\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\r\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\r\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\r\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\r\n    });\r\n};\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.forgotForm = void 0;\r\nconst validation_1 = __webpack_require__(/*! ./utilities/validation */ \"./src/user/utilities/validation.ts\");\r\nconst forgotForm = (button) => {\r\n    const emailElem = document.querySelector('#forgot-email');\r\n    const errorElem = document.querySelector('.forgot-error');\r\n    const successElem = document.querySelector('.successfull-mail-sent');\r\n    const email = emailElem.value;\r\n    if (!email) {\r\n        errorElem.innerHTML = 'Please enter email';\r\n    }\r\n    else {\r\n        checkValidEmailOrNot(email, errorElem, successElem);\r\n    }\r\n};\r\nexports.forgotForm = forgotForm;\r\nconst checkValidEmailOrNot = (email, errorElem, successElem) => {\r\n    if ((0, validation_1.isValidEmail)(email)) {\r\n        callForgotApi(email, errorElem, successElem);\r\n    }\r\n    else {\r\n        errorElem.innerHTML = 'Please provide a valid email address.';\r\n    }\r\n};\r\nconst callForgotApi = (email, errorElem, successElem) => __awaiter(void 0, void 0, void 0, function* () {\r\n    const res = yield fetch('http://localhost:5500/forgot', {\r\n        method: 'POST',\r\n        headers: {\r\n            'Content-Type': 'application/json;charset=utf-8'\r\n        },\r\n        body: JSON.stringify({ email: email })\r\n    });\r\n    const json = yield res.text();\r\n    const obj = yield JSON.parse(json);\r\n    if (obj.message === \"Mail sent successfully\") {\r\n        successElem.innerHTML = obj.message;\r\n    }\r\n    else {\r\n        errorElem.innerHTML = obj.message;\r\n    }\r\n});\r\n\n\n//# sourceURL=webpack://frontend/./src/user/forgot.ts?");
+
+/***/ }),
+
+/***/ "./src/user/login.ts":
+/*!***************************!*\
+  !*** ./src/user/login.ts ***!
+  \***************************/
+/***/ (function(__unused_webpack_module, exports) {
+
+eval("\r\nvar __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\r\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\r\n    return new (P || (P = Promise))(function (resolve, reject) {\r\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\r\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\r\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\r\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\r\n    });\r\n};\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.loginForm = void 0;\r\nconst loginForm = (button) => {\r\n    const emailElm = document.querySelector('#login-email');\r\n    const passwordElm = document.querySelector('#login-password');\r\n    const errorElm = document.querySelector('.login-error');\r\n    errorElm.innerHTML = '';\r\n    if (!emailElm.value || !passwordElm.value) {\r\n        errorElm.innerHTML = \"Please enter all fields.\";\r\n    }\r\n    else {\r\n        checkValidEmail(emailElm.value, passwordElm.value, errorElm);\r\n    }\r\n};\r\nexports.loginForm = loginForm;\r\nconst checkValidEmail = (email, password, errorElm) => {\r\n    const filter = /^[a-zA-Z.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z-]+)+$/;\r\n    if (!email.match(filter)) {\r\n        errorElm.innerHTML = 'Please enter valid email.';\r\n    }\r\n    else {\r\n        callLoginApi(email, password, errorElm);\r\n    }\r\n};\r\nconst callLoginApi = (email, password, errorElm) => __awaiter(void 0, void 0, void 0, function* () {\r\n    const successElm = document.querySelector('.successfull-login');\r\n    const res = yield fetch('http://localhost:5500/login', {\r\n        method: 'POST',\r\n        headers: {\r\n            'Content-Type': 'application/json;charset=utf-8'\r\n        },\r\n        body: JSON.stringify({\r\n            email: email,\r\n            password: password\r\n        })\r\n    });\r\n    const json = yield res.text();\r\n    const obj = yield JSON.parse(json);\r\n    console.log(obj.status);\r\n    if (obj.message === 'Login Successfully.') {\r\n        window.location.href = `./shoppingApp.html`;\r\n        localStorage.setItem('login', obj.email);\r\n        successElm.innerHTML = obj.message;\r\n    }\r\n    else {\r\n        errorElm.innerHTML = obj.message;\r\n    }\r\n});\r\n\n\n//# sourceURL=webpack://frontend/./src/user/login.ts?");
+
+/***/ }),
+
+/***/ "./src/user/resetPass.ts":
+/*!*******************************!*\
+  !*** ./src/user/resetPass.ts ***!
+  \*******************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+eval("\r\nvar __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\r\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\r\n    return new (P || (P = Promise))(function (resolve, reject) {\r\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\r\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\r\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\r\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\r\n    });\r\n};\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.resetForm = void 0;\r\nconst validation_1 = __webpack_require__(/*! ./utilities/validation */ \"./src/user/utilities/validation.ts\");\r\nconst resetForm = (button) => {\r\n    const email = document.querySelector('#forgot-email');\r\n    const password = document.querySelector('#forgot-password');\r\n    const confirmPassword = document.querySelector('#forgot-confirm_password');\r\n    const error = document.querySelector(\".reset-error\");\r\n    const success = document.querySelector(\".successfull-reset\");\r\n    const user = {\r\n        password: password.value\r\n    };\r\n    if (user.password && confirmPassword.value) {\r\n        passwordValidation(email.value, user.password, confirmPassword.value, error, success);\r\n    }\r\n    else {\r\n        error.innerHTML = 'Please enter all fields.';\r\n    }\r\n};\r\nexports.resetForm = resetForm;\r\nconst passwordValidation = (email, password, confirmPassword, error, success) => {\r\n    if (!(0, validation_1.isValidPassword)(password)) {\r\n        error.innerHTML = 'Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters';\r\n    }\r\n    else if (password !== confirmPassword) {\r\n        error.innerHTML = \"Confirm password didn't match\";\r\n    }\r\n    else {\r\n        callResetPassApi(email, password, confirmPassword, error, success);\r\n    }\r\n};\r\nconst callResetPassApi = (email, password, confirmPassword, error, success) => __awaiter(void 0, void 0, void 0, function* () {\r\n    const query = window.location.search;\r\n    const url = new URLSearchParams(query);\r\n    const token = url.get('token');\r\n    const api = \"http://localhost:5500/resetPass\";\r\n    const res = yield fetch(api, {\r\n        method: 'PATCH',\r\n        headers: {\r\n            'Content-Type': 'application/json;charset=utf-8'\r\n        },\r\n        body: JSON.stringify({\r\n            email,\r\n            password,\r\n            token\r\n        })\r\n    });\r\n    const json = yield res.text();\r\n    const obj = yield JSON.parse(json);\r\n    if (obj.message === \"Password Reset Successfully\") {\r\n        success.innerHTML = obj.message;\r\n        window.location.href = './login.html';\r\n    }\r\n    else if (obj.status === 404) {\r\n        window.location.href = './expiredPage.html';\r\n    }\r\n    else {\r\n        error.innerHTML = obj.message;\r\n    }\r\n});\r\n\n\n//# sourceURL=webpack://frontend/./src/user/resetPass.ts?");
+
+/***/ }),
+
+/***/ "./src/user/signup.ts":
+/*!****************************!*\
+  !*** ./src/user/signup.ts ***!
+  \****************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+eval("\r\nvar __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\r\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\r\n    return new (P || (P = Promise))(function (resolve, reject) {\r\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\r\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\r\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\r\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\r\n    });\r\n};\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.signupForm = void 0;\r\nconst validation_1 = __webpack_require__(/*! ./utilities/validation */ \"./src/user/utilities/validation.ts\");\r\nconst signupForm = (button) => {\r\n    const name = document.querySelector('#signup-name');\r\n    const email = document.querySelector('#signup-email');\r\n    const address = document.querySelector('#signup-address');\r\n    const password = document.querySelector('#signup-password');\r\n    const confirmPassword = document.querySelector('#signup-confirm_password');\r\n    const error = document.querySelector(\".signup-error\");\r\n    error.innerHTML = \"\";\r\n    const user = {\r\n        name: name.value,\r\n        email: email.value,\r\n        address: address.value,\r\n        password: password.value\r\n    };\r\n    if (checkFields(user.name, user.email, user.password, confirmPassword.value, user.address)) {\r\n        emailValidation(user.name, user.email, user.address, user.password, confirmPassword.value, error);\r\n    }\r\n    else {\r\n        error.innerHTML = 'Please enter all fields.';\r\n    }\r\n};\r\nexports.signupForm = signupForm;\r\nconst checkFields = (name, email, password, confirmPassword, address) => {\r\n    return (name && email && password && address) ? true : false;\r\n};\r\nconst emailValidation = (name, email, address, password, confirmPassword, error) => {\r\n    if ((0, validation_1.isValidEmail)(email)) {\r\n        passwordValidation(name, email, address, password, confirmPassword, error);\r\n    }\r\n    else {\r\n        error.innerHTML = 'Please provide a valid email address.';\r\n    }\r\n};\r\nconst passwordValidation = (name, email, address, password, confirmPassword, error) => {\r\n    const filter = /^[a-zA-Z.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z-]+)+$/;\r\n    if (!email.match(filter)) {\r\n        error.innerHTML = 'Please provide a valid email address';\r\n    }\r\n    else if (password !== confirmPassword) {\r\n        error.innerHTML = \"Confirm password didn't match\";\r\n    }\r\n    else {\r\n        callApi(name, email, address, password, confirmPassword, error);\r\n    }\r\n};\r\nconst callApi = (name, email, address, password, confirmPassword, error) => __awaiter(void 0, void 0, void 0, function* () {\r\n    const success = document.querySelector(\".successfull-signup\");\r\n    const url = \"http://localhost:5500/signup\";\r\n    const res = yield fetch(url, {\r\n        method: 'POST',\r\n        headers: {\r\n            'Content-Type': 'application/json;charset=utf-8'\r\n        },\r\n        body: JSON.stringify({\r\n            name,\r\n            email,\r\n            address,\r\n            password\r\n        })\r\n    });\r\n    const json = yield res.text();\r\n    const obj = yield JSON.parse(json);\r\n    if (obj.message === \"Successfully Registered.\") {\r\n        success.innerHTML = obj.message;\r\n        window.location.href = './login.html';\r\n    }\r\n    else {\r\n        error.innerHTML = obj.message;\r\n    }\r\n});\r\n\n\n//# sourceURL=webpack://frontend/./src/user/signup.ts?");
+
+/***/ }),
+
+/***/ "./src/user/utilities/validation.ts":
+/*!******************************************!*\
+  !*** ./src/user/utilities/validation.ts ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.isValidPassword = exports.isValidEmail = void 0;\r\nconst isValidEmail = (email) => {\r\n    return !(email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$/)) ? false : true;\r\n};\r\nexports.isValidEmail = isValidEmail;\r\nconst isValidPassword = (password) => {\r\n    return (password.match(/^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$/)) ? true : false;\r\n};\r\nexports.isValidPassword = isValidPassword;\r\n\n\n//# sourceURL=webpack://frontend/./src/user/utilities/validation.ts?");
 
 /***/ })
-/******/ 	]);
+
+/******/ 	});
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
@@ -1133,8 +211,8 @@ exports.detailsPage = detailsPage;
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	__webpack_require__(0);
-/******/ 	var __webpack_exports__ = __webpack_require__(9);
+/******/ 	__webpack_require__("./src/user.ts");
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/shoppingCart.ts");
 /******/ 	
 /******/ })()
 ;
