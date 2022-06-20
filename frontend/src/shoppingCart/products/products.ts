@@ -1,6 +1,6 @@
 import { showProductsDetails } from "../productDetails/showProductsDetails";
 import { addToCart } from "../cart/addToCart";
-import { onceAddedProductInCart } from "../cart/onceAddedProductInCart";
+
 const out = document.querySelector('.products') as HTMLParagraphElement;
 export const product=()=>{
     const params:string|null= getParams();
@@ -26,7 +26,7 @@ const productService=async(params:string|null,color?:string|null,size?:string|nu
            <p class="price">
               <span>price ${item.price}</span>
               </p><br><br>
-           <button style="color:palevioletred" name="addCart">Add to cart</button>
+           <button style="color:palevioletred;display:block;" name="addCart">Add to cart</button>
            <div>
            <div style="display:none;color:palevioletred" class="add-btn">+</div>
            <div style="display:none;color:palevioletred" class="quantity"></div>
@@ -39,7 +39,6 @@ const productService=async(params:string|null,color?:string|null,size?:string|nu
     }
     out.innerHTML = output; 
     addToCart(out);
-    // onceAddedProductInCart(out);
     showProductsDetails(out,product);
 }
 

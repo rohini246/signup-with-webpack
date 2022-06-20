@@ -72,3 +72,18 @@ if (searchBtn) {
         }
     })
 }
+
+// const filterBtn = document.querySelector('#filter_btn') as HTMLDivElement;
+// if(filterBtn){
+//     filterBtn.addEventListener('click',(e)=>{
+//         e.preventDefault();
+//         const productFilter = document.querySelector('#product_filter') as HTMLDivElement;
+//         if (productFilter) {
+//         productFilter.addEventListener('click', (e) => {
+//             e.preventDefault();
+//             showProductFilter(productFilter);
+//         })
+//     }
+//     })
+
+// }
