@@ -39,6 +39,11 @@
         <a id='login' href="./login.html">
             <i color="back">Login</i>
         </a>
+        <i class="material-icons">fa</i>
+        <a id='user' href="./userDetails.html">
+            <i class="fa fa-user fa_custom fa-2x" color="back"></i>
+        </a>
+        <i class="material-icons">fa</i>
         <button id='logout' style="background-color:palevioletred">
             <i color="back">Logout</i>
         </button>
@@ -51,22 +56,23 @@
                 placeholder="Enter items to be searched">
             <button style="background-color:palevioletred;padding:15px" id="search">search</button>
             <div id="product_filter">Filters
-                <div id="show_product_filter" style="display:none ;">
+                <div id="show_product_filter" style="display:block;">
                     <div>Color<br>
-                       <label> Red:<input type="radio" name="filter" value="red" ></label>
-                       <label> Black:<input type="radio" name="filter" value="black" ></label>
-                       <label>Blue:<input type="radio" name="filter" value="blue" ></label>
-                       <label>White:<input type="radio" name="filter" value="white" ></label>
-                       <label>Pink:<input type="radio" name="filter" value="pink"  ></label>
+                       <label> Red:<input type="checkbox" name="filter" value="red" id="1" ></label>
+                       <label> Black:<input type="checkbox" name="filter" value="black" id="2" ></label>
+                       <label>Blue:<input type="checkbox" name="filter" value="blue" id="3"></label>
+                       <label>White:<input type="checkbox" name="filter" value="white" id="4"></label>
+                       <label>Pink:<input type="checkbox" name="filter" value="pink"  id="5"></label>
                     </div>
                     <div>Size <br>
-                        <label>Small:<input type="radio" name="size_filter" value="S"  ></label>
-                        <label>Medium:<input type="radio" name="size_filter" value="M" ></label>
-                        <label>Large:<input type="radio" name="size_filter" value="L" ></label>
-                        <label>XL:<input type="radio" name="size_filter" value="XL" ></label>
-                        <label>XXL:<input type="radio" name="size_filter" value="XXL" ></label>
+                        <label>Small:</label><input type="checkbox" name="size_filter" id="6" value="S"  >
+                        <label>Medium:</label><input type="checkbox" name="size_filter" id="7" value="M" >
+                        <label>Large:</label><input type="checkbox" name="size_filter" id="8" value="L" >
+                        <label>XL:</label><input type="checkbox" name="size_filter" id="9" value="XL" >
+                        <label>XXL:</label><input type="checkbox" name="size_filter" id="10" value="XXL" >
                     </div>
-                    <!-- <div id="filter_btn">search</div> -->
+                    <div id="clear-filter">Clear Filter</div>
+                    <div id="filter_btn">search</div>
                 </div>
             </div>
         </div>

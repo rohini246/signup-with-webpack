@@ -1,3 +1,4 @@
+const countryName = document.querySelector('#select_country') as HTMLSelectElement;
 export const getCountry = async (address: HTMLDivElement) => {
     const country = document.querySelector('#select_country') as HTMLSelectElement;
     const countryName = country.value;
@@ -57,13 +58,13 @@ const getState = async(statesDiv: HTMLDivElement, select: HTMLSelectElement) => 
     });
     const json = await res.text()
     const object = await JSON.parse(json);
-    if (object.status == 402) {
-        alert('Please enter states');
-    }
-    else {
+    // if (object.status == 402) {
+    //     alert('Please enter states');
+    // }
+    // else {
         console.log(object.cities);
         return dropDownForCity(object.cities);
-    }
+    // }
 
 }
 
@@ -125,4 +126,50 @@ const showZip = (zip:number)=>{
     const div = document.createElement('div');
     div.innerHTML = `${zip}`;
     zipDiv.appendChild(div);
+}
+
+export const getAddresses = async(address:HTMLDivElement)=>{
+    
+    const addresses = await callApiToGetAddress();
+    
+
+    const select = document.createElement('select');
+    select.className = 'select-address';
+    
+    let option = document.createElement('option');
+    option.innerHTML = `Select Address`;
+    select.appendChild(option);
+    for (let address of addresses.address) {
+        if(address!=='NULL'){
+
+            let option = document.createElement('option');
+            option.innerHTML = `${address.toUpperCase()}`;
+            select.appendChild(option);
+        }
+
+    }
+    address.appendChild(select);
+
+    address.addEventListener('change',(e)=>{
+        e.preventDefault();
+        addAdressToDb(select);
+    })
+}
+export const addAdressToDb = (select:HTMLSelectElement)=>{
+    let address = select.value;
+    localStorage.setItem('address',address);
+
+}
+
+const callApiToGetAddress = async()=>{
+    const res = await fetch(`http://localhost:5500/cart/address`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({email:localStorage.getItem('login') })
+    });
+    const json = await res.text()
+    const object = await JSON.parse(json);
+    return object;
 }

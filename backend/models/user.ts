@@ -10,3 +10,9 @@ export interface IuserSignup{
     password:string
     token?:string
 }
+
+export interface IupdateUser{
+    name:string,
+    email:string,
+    address:string
+}

@@ -7,7 +7,6 @@ import { Iuser } from "../models/user";
 dotenv.config();
 
 export const loginService = async (data: Iuser) => {
-    console.log("in body");
     const email: string = data.email;
     const password: string = data.password;
     let message: string = '';
@@ -15,8 +14,6 @@ export const loginService = async (data: Iuser) => {
     let emailId: string = '';
     const existingUser = await findUser(email);
     if (!existingUser[0]) {
-        console.log(existingUser[0]);
-        console.log("in not existingUser")
         message = Message.unauthorized
         status = Status.unauthorized;
         return { message, status, emailId }
@@ -45,4 +42,16 @@ const userIsNotExisting = async (password: string, existingName: string, existin
         emailId = existingEmail;
     }
     return { message, status, emailId }
+}
+
+export const loginDetailsService = async(email:string)=>{
+    const existingUser = await findUser(email);
+    if (!existingUser[0]) {
+        return { message:Message.notExist, status:Status.notExist, userDetails:"" }
+    }
+    else {   
+        return {message:Message.successfullySentDetails,status:Status.success,userDetails:existingUser[0]}
+
+    }
+
 }

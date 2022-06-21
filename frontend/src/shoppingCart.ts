@@ -4,14 +4,31 @@ import { checkoutOrder } from "./shoppingCart/checkout/checkoutOrder";
 import { placedOrders } from "./shoppingCart/placedOrders/placedOrders";
 import { showProductFilter } from "./shoppingCart/filter/filters";
 import { detailsPage } from "./shoppingCart/productDetails/productsDetailsPage";
-import { getCountry } from './shoppingCart/cart/address';
+import { getCountry ,getAddresses} from './shoppingCart/cart/address';
+import { product } from './shoppingCart/products/products';
+import { userDetailsPage } from './shoppingCart/userDetails';
+import { editDetailsPage } from './shoppingCart/editDetails';
+
+const address = document.querySelector('#get-address') as HTMLDivElement;
+if(address){
+    getAddresses(address);
+}
+
+
 const country = document.querySelector('#country') as HTMLDivElement;
 if (country) {
     country.addEventListener('change', (e) => {
         e.preventDefault();
         getCountry(country);
     })
-
+}
+const userDetails = document.querySelector('#user-details') as HTMLBodyElement;
+if(userDetails){
+    userDetailsPage();
+}
+const user = document.querySelector('#user') as HTMLAnchorElement;
+if(!localStorage.getItem('login')){
+    user.style.display='none';
 }
 
 
@@ -41,49 +58,48 @@ if (searchBar !== null) {
 
 const productFilter = document.querySelector('#product_filter') as HTMLDivElement;
 if (productFilter) {
-    productFilter.addEventListener('click', (e) => {
-        e.preventDefault();
-        showProductFilter(productFilter);
-    })
+  showProductFilter();
+   
 }
-
 const checkout = document.querySelector('.checkout') as HTMLDivElement;
 if (checkout) {
     checkout.addEventListener('click', (e) => {
         e.preventDefault();
-        const countryName = country.querySelector('#select_country') as HTMLSelectElement;
-        if (countryName.value === 'Select Country') {
-            alert('please select region')
-        }
+        if(localStorage.getItem('address')==='Select Address' || !localStorage.getItem('address')){
+            alert('please select address or add new address')
+        } 
         else {
             checkoutOrder();
             alert("confirm order")
+            localStorage.removeItem('address');
+            window.location.href='./emptyCart.html'
         }
     })
 }
+
 
 const searchBtn = document.querySelector('#search') as HTMLButtonElement;
 if (searchBtn) {
     searchBtn.addEventListener('click', (e) => {
         e.preventDefault();
         console.log(searchBar.value);
-        if(!searchBar.value){
+        if (!searchBar.value) {
             alert('please enter something.');
         }
     })
 }
 
-// const filterBtn = document.querySelector('#filter_btn') as HTMLDivElement;
-// if(filterBtn){
-//     filterBtn.addEventListener('click',(e)=>{
-//         e.preventDefault();
-//         const productFilter = document.querySelector('#product_filter') as HTMLDivElement;
-//         if (productFilter) {
-//         productFilter.addEventListener('click', (e) => {
-//             e.preventDefault();
-//             showProductFilter(productFilter);
-//         })
-//     }
-//     })
+const clearFilter = document.querySelector('#clear-filter') as HTMLDivElement;
+if(clearFilter){
+    clearFilter.addEventListener('click',(e)=>{
+        e.preventDefault();
+        localStorage.removeItem('color');
+        localStorage.removeItem('size');
+        product();
+    })
+}
 
-// }
+const editDetails = document.querySelector('#edit-details-page') as HTMLBodyElement;
+if(editDetails){
+    editDetailsPage();
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type='button' style="height:30px;width:10px;background-color:purple">
+    <br>
+    <input type='button' style="height:40px;width:10px;background-color:purple">
+</body>
+<script>
+    const inputs = document.getElementsByTagName('input');
+    inputs[0].addEventListener('click', (e) => {
+        e.preventDefault();
+        const newHeight = parseInt(inputs[1].style.height) + 10;
+        inputs[1].style.height = newHeight + 'px'
+    })
+    inputs[1].addEventListener('click', (e) => {
+        e.preventDefault();
+        const newHeight = parseInt(inputs[0].style.height) + 10;
+        inputs[0].style.height = newHeight + 'px'
+    })
+    console.log("after", input.style.height);
+
+</script>
+
+</html>

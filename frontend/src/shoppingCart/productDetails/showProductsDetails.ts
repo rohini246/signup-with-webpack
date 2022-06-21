@@ -24,7 +24,7 @@ const btnOfviewProductDetailsBtns = (btn: Element, title: string, price: string,
         }
         localStorage.setItem('title', title);
         localStorage.setItem('price', price)
-        console.log(title, price, "title");
+        // console.log(title, price, "title");
     })
 
 }

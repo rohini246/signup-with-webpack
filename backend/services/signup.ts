@@ -1,26 +1,39 @@
 import bcrypt from 'bcryptjs';
-import { findUser,saveUser } from "../repo/user";
+import { findUser, saveUser, updateUser } from "../repo/user";
 import { Status } from "../constants/status";
 import { Message } from "../constants/message";
-import { IuserSignup } from "../models/user";
+import { IupdateUser, IuserSignup } from "../models/user";
 
-export interface IUser{
-    name:string,
-    email:string,
-    address:string,
-    password:string
+export interface IUser {
+    name: string,
+    email: string,
+    address: string,
+    password: string
 }
-export const signService = async(data:IuserSignup)=>{ 
+export const signService = async (data: IuserSignup) => {
     const userExist = await findUser(data.email);
-    console.log("userExist",userExist[0]);
-   let message:string;
+    console.log("userExist", userExist[0]);
+    let message: string;
     message = Message.userAlreadyRegistered;
-    let status=Status.conflict;
-    if(!userExist[0]){
-        const hashedValue = await bcrypt.hash(data.password,10)        
-        await saveUser(data,hashedValue);
-        message="Successfully Registered.";
-        status=201;             
+    let status = Status.conflict;
+    if (!userExist[0]) {
+        const hashedValue = await bcrypt.hash(data.password, 10)
+        await saveUser(data, hashedValue);
+        message = "Successfully Registered.";
+        status = 201;
     }
-    return {message,status};
+    return { message, status };
 }
+
+export const updateService = async (data: IupdateUser) => {
+    const userExist = await findUser(data.email);
+    if (!userExist[0]) {
+        return { message: Message.notExist, status: Status.notExist }
+    }
+    else {
+        await updateUser(data.email, "address", data.address)
+        return { message: Message.successfullyUpdatedInDb, status: Status.success }
+    }
+}
+
+

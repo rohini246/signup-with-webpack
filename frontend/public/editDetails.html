@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Edit Details</title>
+    <style></style>
+</head>
+
+<body id="edit-details-page">
+    <h1 style="color: purple">Update Information</h1>
+    <span id="edit-error" style="color:red ;"></span>
+    <div><label>Name: </label>
+        <input type="text" name="name" id="edit-name" placeholder="user name" />
+    </div>
+    <div><label>Email: </label>
+        <input type="email" name="email" id="edit-email" placeholder="Email" disabled/>
+    </div>
+    <div><label>Address: </label>
+        <input type="text" name="address" id="edit-address" placeholder="Hno.,street" />
+    </div>
+    <div id="address">
+        <div id="country">
+            <label for="country">Country</label>
+            <select name="country"id='select_country'>
+                <option>Select Country</option>
+                <option>INDIA</option>
+                <option>USA</option>
+            </select>
+        </div>
+
+
+        <div id="state">
+        </div>
+        <div id="city">
+        </div>
+        <div id="zip"></div>
+
+    </div>
+    <div><button id="save" style="color:purple"> save </button></div>
+    <div id="back to home" style="color:purple;cursor:pointer" onclick="window.location.href='./'"> back to home page</button></div>
+    <br>
+    <br>
+
+    </div>
+    <script src="./main.js"></script>
+
+
+</body>
+
+</html>

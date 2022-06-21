@@ -22,8 +22,7 @@ const callCheckoutApi = async (title: string[], table: HTMLTableElement, heading
         body: JSON.stringify({
             title: title,
             email: localStorage.getItem('login'),
-            country: localStorage.getItem('country'), state: localStorage.getItem('state'),
-            city: localStorage.getItem('city')
+            address:localStorage.getItem('address')
         })
     });
     const json = await res.text()

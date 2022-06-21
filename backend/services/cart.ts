@@ -171,7 +171,7 @@ const updateCartQuantityServiceIfUserAndDataExist = async (title: string, email:
     return { message: Message.successfullyUpdatedInDb, status: Status.success };
 }
 
-export const checkoutService = async (email: string, titles: string[], country: string, state: string, city: string) => {
+export const checkoutService = async (email: string, titles: string[], address:string) => {
     let message: string = '';
     let status = 0;
     const existingUser = await findUser(email);
@@ -181,10 +181,10 @@ export const checkoutService = async (email: string, titles: string[], country: 
         status = Status.notExist;
     }
     else {
-        console.log("titles", titles);
+        // console.log("titles", titles);
         if (titles) {
 
-            let data = await checkoutServiceIfUserExist(email, titles, country, state, city);
+            let data = await checkoutServiceIfUserExist(email, titles, address);
             message = data.message;
             status = data.status;
         }
@@ -193,23 +193,23 @@ export const checkoutService = async (email: string, titles: string[], country: 
             status = Status.notExist;
         }
     }
-    console.log(message, status);
+    // console.log(message, status);
     return { message, status }
 }
 
-const checkoutServiceIfUserExist = async (email: string, titles: string[], country: string, state: string, city: string) => {
+const checkoutServiceIfUserExist = async (email: string, titles: string[], address: string) => {
     let message: string = '';
     let status = 0;
     for (let title of titles) {
         const existingCartData = await findProductTitle(email, title, "null");
         if (!existingCartData[0]) {
-            console.log(existingCartData[0]);
+            // console.log(existingCartData[0]);
             // console.log("not existing cart")
             message = Message.notExist;
             status = Status.notExist;
         }
         else {
-            let data = await checkoutServiceIfUserAndDataExist(existingCartData[0].title, existingCartData[0].email, country, state, city);
+            let data = await checkoutServiceIfUserAndDataExist(existingCartData[0].title, existingCartData[0].email, address);
             message = data.message;
             status = data.status;
         }
@@ -217,9 +217,8 @@ const checkoutServiceIfUserExist = async (email: string, titles: string[], count
     return { message, status };
 }
 
-const checkoutServiceIfUserAndDataExist = async (title: string, email: string, country: string, state: string, city: string) => {
+const checkoutServiceIfUserAndDataExist = async (title: string, email: string, address: string) => {
     const date = new Date();
-    const address: string = `${country},${state},${city}`
     await updateCartData(email, title, 'null', date, "date");
     await updateCartData(email, title, date, address, "address");
     return { message: Message.successfullyUpdatedInDb, status: Status.ok }
@@ -254,4 +253,31 @@ export const placedOrdersService = async (email: string) => {
         status = Status.success;
     }
     return { message, status, title, price, quantity, date, address, image };
+}
+
+export const addressService = async(email:string)=>{
+    const existingUser = await findEmail(email);
+    if(!existingUser[0]){
+        return {message:Message.notExist,status:Status.notExist,address:''}
+    }
+    else{
+        const user = await findUser(email);
+        let setOfAddress = new Set();
+        for(let address of existingUser){
+            if(address.address!=='null'){
+                setOfAddress.add(address.address);
+            }
+        }
+        if(!user[0]){
+            console.log(setOfAddress)
+            return {message:Message.successfullySentDetails,status:Status.success,address:Array.from(setOfAddress)}
+        }
+        else{
+            setOfAddress.add(user[0].address)
+            console.log(setOfAddress)
+            return {message:Message.successfullySentDetails,status:Status.success,address:Array.from(setOfAddress.add(user[0].address))}
+
+        }
+    }
+
 }
