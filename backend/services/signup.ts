@@ -3,6 +3,7 @@ import { findUser, saveUser, updateUser } from "../repo/user";
 import { Status } from "../constants/status";
 import { Message } from "../constants/message";
 import { IupdateUser, IuserSignup } from "../models/user";
+import { CLIENT_RENEG_LIMIT } from 'tls';
 
 export interface IUser {
     name: string,
@@ -31,6 +32,7 @@ export const updateService = async (data: IupdateUser) => {
         return { message: Message.notExist, status: Status.notExist }
     }
     else {
+        console.log(data.address,"user");   
         await updateUser(data.email, "address", data.address)
         return { message: Message.successfullyUpdatedInDb, status: Status.success }
     }

@@ -32,8 +32,11 @@ const filteredData = (products: Iproducts[], data: Iproducts[], color: string, s
         sizeData = findFilteredProductsOnSize(products, size);
         output = (data.filter(x => sizeData.indexOf(x) !== -1))
     }
-    else {
+    else if (color === '' && size === '') {
         output = data
+    }
+    else {
+        output = data;
     }
     return output;
 

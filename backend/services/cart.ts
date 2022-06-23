@@ -203,12 +203,10 @@ const checkoutServiceIfUserExist = async (email: string, titles: string[], addre
     for (let title of titles) {
         const existingCartData = await findProductTitle(email, title, "null");
         if (!existingCartData[0]) {
-            // console.log(existingCartData[0]);
-            // console.log("not existing cart")
             message = Message.notExist;
             status = Status.notExist;
         }
-        else {
+        else {    
             let data = await checkoutServiceIfUserAndDataExist(existingCartData[0].title, existingCartData[0].email, address);
             message = data.message;
             status = data.status;
@@ -265,7 +263,7 @@ export const addressService = async(email:string)=>{
         let setOfAddress = new Set();
         for(let address of existingUser){
             if(address.address!=='null'){
-                setOfAddress.add(address.address);
+                setOfAddress.add(address.address.toLowerCase());
             }
         }
         if(!user[0]){
@@ -273,10 +271,9 @@ export const addressService = async(email:string)=>{
             return {message:Message.successfullySentDetails,status:Status.success,address:Array.from(setOfAddress)}
         }
         else{
-            setOfAddress.add(user[0].address)
+            setOfAddress.add(user[0].address.toLowerCase());
             console.log(setOfAddress)
-            return {message:Message.successfullySentDetails,status:Status.success,address:Array.from(setOfAddress.add(user[0].address))}
-
+            return {message:Message.successfullySentDetails,status:Status.success,address:Array.from(setOfAddress)}
         }
     }
 

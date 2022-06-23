@@ -7,7 +7,7 @@ export const findUser = async (email:string):Promise<any> => {
 }
 
 export const saveUser = async(data:IuserSignup,password:string)=>{
-    const sqlQuery:string = `INSERT INTO shoppingcart.user  VALUE ('${data.name}','${data.email}','${data.address}','${password}',null)`;
+    const sqlQuery:string = `INSERT INTO shoppingcart.user  VALUE ('${data.name}','${data.email}','${data.address}','${password}','null')`;
     await runQuery(sqlQuery);
 }
 

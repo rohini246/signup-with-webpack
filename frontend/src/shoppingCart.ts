@@ -5,7 +5,6 @@ import { placedOrders } from "./shoppingCart/placedOrders/placedOrders";
 import { showProductFilter } from "./shoppingCart/filter/filters";
 import { detailsPage } from "./shoppingCart/productDetails/productsDetailsPage";
 import { getCountry ,getAddresses} from './shoppingCart/cart/address';
-import { product } from './shoppingCart/products/products';
 import { userDetailsPage } from './shoppingCart/userDetails';
 import { editDetailsPage } from './shoppingCart/editDetails';
 
@@ -89,15 +88,6 @@ if (searchBtn) {
     })
 }
 
-const clearFilter = document.querySelector('#clear-filter') as HTMLDivElement;
-if(clearFilter){
-    clearFilter.addEventListener('click',(e)=>{
-        e.preventDefault();
-        localStorage.removeItem('color');
-        localStorage.removeItem('size');
-        product();
-    })
-}
 
 const editDetails = document.querySelector('#edit-details-page') as HTMLBodyElement;
 if(editDetails){
